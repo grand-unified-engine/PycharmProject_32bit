@@ -1,0 +1,7 @@
+[2020-09-26 20:52:10,554] I EventLoop.py | Kiwoom-_event_connect_slot-0063 I DEBUG    > 정상처리
+[2020-09-26 23:42:02,035] I EventLoop.py | Kiwoom-_event_connect_slot-0063 I DEBUG    > 정상처리
+[2020-09-26 23:54:06,153] I EventLoop.py | Kiwoom-_event_connect_slot-0063 I DEBUG    > 정상처리
+[2020-09-26 23:56:57,030] I EventLoop.py | Kiwoom-_event_connect_slot-0063 I DEBUG    > 정상처리
+[2020-09-26 23:56:57,030] I Signal.py | Kiwoom-get_account_info-0033 I DEBUG    > 계좌번호 : 8
+[2020-09-26 23:57:54,265] I EventLoop.py | Kiwoom-_event_connect_slot-0063 I DEBUG    > 정상처리
+[2020-09-26 23:57:54,265] I Signal.py | Kiwoom-get_account_info-0033 I DEBUG    > 계좌번호 : 8141851011

@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="d744bce2-d3f1-4f24-8ec6-15dbfbbc48b4" name="Default Changelist" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectId" id="1YhSTeYyaaQSTOnDhAMd0w7oC9U" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Pycharm\Recommend" />
+      <recent name="D:\Pycharm\recommend" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="pymon" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="Recommend" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/pymon.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.pymon" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="d744bce2-d3f1-4f24-8ec6-15dbfbbc48b4" name="Default Changelist" comment="" />
+      <created>1583393342033</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1583393342033</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="499" y="162" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1583394010255">
+      <screen x="0" y="0" width="1536" height="826" />
+    </state>
+    <state x="499" y="162" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1536.826@0.0.1536.826" timestamp="1583394010255" />
+    <state x="549" y="156" key="FileChooserDialogImpl" timestamp="1583451615382">
+      <screen x="0" y="0" width="1536" height="826" />
+    </state>
+    <state x="549" y="156" key="FileChooserDialogImpl/0.0.1536.826@0.0.1536.826" timestamp="1583451615382" />
+    <state width="1514" height="206" key="GridCell.Tab.0.bottom" timestamp="1583418591151">
+      <screen x="0" y="0" width="1536" height="826" />
+    </state>
+    <state width="1514" height="206" key="GridCell.Tab.0.bottom/0.0.1536.826@0.0.1536.826" timestamp="1583418591151" />
+    <state width="1514" height="206" key="GridCell.Tab.0.center" timestamp="1583418591150">
+      <screen x="0" y="0" width="1536" height="826" />
+    </state>
+    <state width="1514" height="206" key="GridCell.Tab.0.center/0.0.1536.826@0.0.1536.826" timestamp="1583418591150" />
+    <state width="1514" height="206" key="GridCell.Tab.0.left" timestamp="1583418591150">
+      <screen x="0" y="0" width="1536" height="826" />
+    </state>
+    <state width="1514" height="206" key="GridCell.Tab.0.left/0.0.1536.826@0.0.1536.826" timestamp="1583418591150" />
+    <state width="1514" height="206" key="GridCell.Tab.0.right" timestamp="1583418591151">
+      <screen x="0" y="0" width="1536" height="826" />
+    </state>
+    <state width="1514" height="206" key="GridCell.Tab.0.right/0.0.1536.826@0.0.1536.826" timestamp="1583418591151" />
+    <state width="1514" height="256" key="GridCell.Tab.1.bottom" timestamp="1583399007562">
+      <screen x="0" y="0" width="1536" height="826" />
+    </state>
+    <state width="1514" height="256" key="GridCell.Tab.1.bottom/0.0.1536.826@0.0.1536.826" timestamp="1583399007562" />
+    <state width="1514" height="256" key="GridCell.Tab.1.center" timestamp="1583399007561">
+      <screen x="0" y="0" width="1536" height="826" />
+    </state>
+    <state width="1514" height="256" key="GridCell.Tab.1.center/0.0.1536.826@0.0.1536.826" timestamp="1583399007561" />
+    <state width="1514" height="256" key="GridCell.Tab.1.left" timestamp="1583399007561">
+      <screen x="0" y="0" width="1536" height="826" />
+    </state>
+    <state width="1514" height="256" key="GridCell.Tab.1.left/0.0.1536.826@0.0.1536.826" timestamp="1583399007561" />
+    <state width="1514" height="256" key="GridCell.Tab.1.right" timestamp="1583399007561">
+      <screen x="0" y="0" width="1536" height="826" />
+    </state>
+    <state width="1514" height="256" key="GridCell.Tab.1.right/0.0.1536.826@0.0.1536.826" timestamp="1583399007561" />
+    <state x="279" y="44" key="SettingsEditor" timestamp="1583410679003">
+      <screen x="0" y="0" width="1536" height="826" />
+    </state>
+    <state x="279" y="44" key="SettingsEditor/0.0.1536.826@0.0.1536.826" timestamp="1583410679003" />
+    <state x="471" y="240" key="com.intellij.ide.util.TipDialog" timestamp="1583459011837">
+      <screen x="0" y="0" width="1536" height="826" />
+    </state>
+    <state x="471" y="240" key="com.intellij.ide.util.TipDialog/0.0.1536.826@0.0.1536.826" timestamp="1583459011837" />
+  </component>
+</project>

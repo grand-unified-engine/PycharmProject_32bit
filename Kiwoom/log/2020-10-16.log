@@ -1,0 +1,397 @@
+[2020-10-16 00:55:56,062] I EventLoop.py | Kiwoom-_event_connect_slot-0095 I DEBUG    > 정상처리
+[2020-10-16 00:56:53,848] I EventLoop.py | Kiwoom-_event_connect_slot-0095 I DEBUG    > 정상처리
+[2020-10-16 00:57:41,864] I EventLoop.py | Kiwoom-_event_connect_slot-0095 I DEBUG    > 정상처리
+[2020-10-16 01:00:33,870] I EventLoop.py | Kiwoom-_event_connect_slot-0095 I DEBUG    > 정상처리
+[2020-10-16 01:01:09,219] I EventLoop.py | Kiwoom-_event_connect_slot-0095 I DEBUG    > 정상처리
+[2020-10-16 01:02:19,091] I EventLoop.py | Kiwoom-_event_connect_slot-0095 I DEBUG    > 정상처리
+[2020-10-16 01:04:10,019] I EventLoop.py | Kiwoom-_event_connect_slot-0095 I DEBUG    > 정상처리
+[2020-10-16 01:04:42,310] I EventLoop.py | Kiwoom-_event_connect_slot-0095 I DEBUG    > 정상처리
+[2020-10-16 01:07:42,222] I EventLoop.py | Kiwoom-_event_connect_slot-0095 I DEBUG    > 정상처리
+[2020-10-16 01:16:51,198] I EventLoop.py | Kiwoom-_event_connect_slot-0095 I DEBUG    > 정상처리
+[2020-10-16 01:18:32,154] I EventLoop.py | Kiwoom-_event_connect_slot-0095 I DEBUG    > 정상처리
+[2020-10-16 01:19:26,280] I EventLoop.py | Kiwoom-_event_connect_slot-0095 I DEBUG    > 정상처리
+[2020-10-16 01:22:00,809] I EventLoop.py | Kiwoom-_event_connect_slot-0095 I DEBUG    > 정상처리
+[2020-10-16 01:23:20,702] I EventLoop.py | Kiwoom-_event_connect_slot-0095 I DEBUG    > 정상처리
+[2020-10-16 01:24:44,013] I EventLoop.py | Kiwoom-_event_connect_slot-0095 I DEBUG    > 정상처리
+[2020-10-16 01:25:54,407] I EventLoop.py | Kiwoom-_event_connect_slot-0095 I DEBUG    > 정상처리
+[2020-10-16 01:27:05,993] I EventLoop.py | Kiwoom-_event_connect_slot-0095 I DEBUG    > 정상처리
+[2020-10-16 01:28:15,008] I EventLoop.py | Kiwoom-_event_connect_slot-0095 I DEBUG    > 정상처리
+[2020-10-16 08:29:31,204] I EventLoop.py | Kiwoom-_event_connect_slot-0095 I DEBUG    > 정상처리
+[2020-10-16 08:29:31,233] I EventLoop.py | Kiwoom-msg_slot-1306 I DEBUG    > 스크린: 2000, 요청이름: 예수금상세현황요청, tr코드: opw00001 --- [00Z310] 모의투자 조회가 완료되었습니다
+[2020-10-16 08:29:31,235] I EventLoop.py | Kiwoom-_tr_data_slot-0151 I DEBUG    > 예수금 : 48818165
+[2020-10-16 08:29:31,301] I EventLoop.py | Kiwoom-msg_slot-1306 I DEBUG    > 스크린: 2000, 요청이름: 계좌평가잔고내역요청, tr코드: opw00018 --- [00Z310] 모의투자 조회가 완료되었습니다
+[2020-10-16 08:29:31,303] I EventLoop.py | Kiwoom-_tr_data_slot-0166 I DEBUG    > 계좌평가잔고내역요청 싱글데이터 : 000000000000000 - 000000000000000 - 000000000.00
+[2020-10-16 08:29:31,303] I EventLoop.py | Kiwoom-_tr_data_slot-0205 I DEBUG    > sPreNext : <built-in function next>
+[2020-10-16 08:29:36,340] I EventLoop.py | Kiwoom-msg_slot-1306 I DEBUG    > 스크린: , 요청이름: , tr코드:  ---  조회가 완료되었습니다.
+[2020-10-16 08:30:34,753] I EventLoop.py | Kiwoom-_event_connect_slot-0095 I DEBUG    > 정상처리
+[2020-10-16 08:30:34,790] I EventLoop.py | Kiwoom-msg_slot-1306 I DEBUG    > 스크린: 2000, 요청이름: 예수금상세현황요청, tr코드: opw00001 --- [00Z310] 모의투자 조회가 완료되었습니다
+[2020-10-16 08:30:34,791] I EventLoop.py | Kiwoom-_tr_data_slot-0151 I DEBUG    > 예수금 : 48818165
+[2020-10-16 08:30:34,870] I EventLoop.py | Kiwoom-msg_slot-1306 I DEBUG    > 스크린: 2000, 요청이름: 계좌평가잔고내역요청, tr코드: opw00018 --- [00Z310] 모의투자 조회가 완료되었습니다
+[2020-10-16 08:30:34,872] I EventLoop.py | Kiwoom-_tr_data_slot-0166 I DEBUG    > 계좌평가잔고내역요청 싱글데이터 : 000000000000000 - 000000000000000 - 000000000.00
+[2020-10-16 08:30:34,872] I EventLoop.py | Kiwoom-_tr_data_slot-0205 I DEBUG    > sPreNext : <built-in function next>
+[2020-10-16 08:30:39,901] I EventLoop.py | Kiwoom-msg_slot-1306 I DEBUG    > 스크린: , 요청이름: , tr코드:  ---  조회가 완료되었습니다.
+[2020-10-16 08:32:14,359] I EventLoop.py | Kiwoom-_event_connect_slot-0095 I DEBUG    > 정상처리
+[2020-10-16 08:32:14,383] I EventLoop.py | Kiwoom-msg_slot-1306 I DEBUG    > 스크린: 2000, 요청이름: 예수금상세현황요청, tr코드: opw00001 --- [00Z310] 모의투자 조회가 완료되었습니다
+[2020-10-16 08:32:14,385] I EventLoop.py | Kiwoom-_tr_data_slot-0151 I DEBUG    > 예수금 : 48818165
+[2020-10-16 08:32:14,475] I EventLoop.py | Kiwoom-msg_slot-1306 I DEBUG    > 스크린: 2000, 요청이름: 계좌평가잔고내역요청, tr코드: opw00018 --- [00Z310] 모의투자 조회가 완료되었습니다
+[2020-10-16 08:32:14,477] I EventLoop.py | Kiwoom-_tr_data_slot-0166 I DEBUG    > 계좌평가잔고내역요청 싱글데이터 : 000000000000000 - 000000000000000 - 000000000.00
+[2020-10-16 08:32:14,477] I EventLoop.py | Kiwoom-_tr_data_slot-0205 I DEBUG    > sPreNext : <built-in function next>
+[2020-10-16 08:32:19,506] I EventLoop.py | Kiwoom-msg_slot-1306 I DEBUG    > 스크린: , 요청이름: , tr코드:  ---  조회가 완료되었습니다.
+[2020-10-16 08:32:46,597] I EventLoop.py | Kiwoom-_event_connect_slot-0095 I DEBUG    > 정상처리
+[2020-10-16 08:32:46,625] I EventLoop.py | Kiwoom-msg_slot-1306 I DEBUG    > 스크린: 2000, 요청이름: 예수금상세현황요청, tr코드: opw00001 --- [00Z310] 모의투자 조회가 완료되었습니다
+[2020-10-16 08:32:46,627] I EventLoop.py | Kiwoom-_tr_data_slot-0151 I DEBUG    > 예수금 : 48818165
+[2020-10-16 08:32:46,694] I EventLoop.py | Kiwoom-msg_slot-1306 I DEBUG    > 스크린: 2000, 요청이름: 계좌평가잔고내역요청, tr코드: opw00018 --- [00Z310] 모의투자 조회가 완료되었습니다
+[2020-10-16 08:32:46,695] I EventLoop.py | Kiwoom-_tr_data_slot-0166 I DEBUG    > 계좌평가잔고내역요청 싱글데이터 : 000000000000000 - 000000000000000 - 000000000.00
+[2020-10-16 08:32:46,695] I EventLoop.py | Kiwoom-_tr_data_slot-0205 I DEBUG    > sPreNext : <built-in function next>
+[2020-10-16 08:32:51,716] I EventLoop.py | Kiwoom-msg_slot-1306 I DEBUG    > 스크린: , 요청이름: , tr코드:  ---  조회가 완료되었습니다.
+[2020-10-16 08:33:25,613] I EventLoop.py | Kiwoom-_event_connect_slot-0095 I DEBUG    > 정상처리
+[2020-10-16 08:33:25,633] I EventLoop.py | Kiwoom-msg_slot-1306 I DEBUG    > 스크린: 2000, 요청이름: 예수금상세현황요청, tr코드: opw00001 --- [00Z310] 모의투자 조회가 완료되었습니다
+[2020-10-16 08:33:25,635] I EventLoop.py | Kiwoom-_tr_data_slot-0151 I DEBUG    > 예수금 : 48818165
+[2020-10-16 08:33:25,757] I EventLoop.py | Kiwoom-msg_slot-1306 I DEBUG    > 스크린: 2000, 요청이름: 계좌평가잔고내역요청, tr코드: opw00018 --- [00Z310] 모의투자 조회가 완료되었습니다
+[2020-10-16 08:33:25,759] I EventLoop.py | Kiwoom-_tr_data_slot-0166 I DEBUG    > 계좌평가잔고내역요청 싱글데이터 : 000000000000000 - 000000000000000 - 000000000.00
+[2020-10-16 08:33:25,760] I EventLoop.py | Kiwoom-_tr_data_slot-0205 I DEBUG    > sPreNext : <built-in function next>
+[2020-10-16 08:33:30,792] I EventLoop.py | Kiwoom-msg_slot-1306 I DEBUG    > 스크린: , 요청이름: , tr코드:  ---  조회가 완료되었습니다.
+[2020-10-16 08:34:46,711] I EventLoop.py | Kiwoom-_event_connect_slot-0095 I DEBUG    > 정상처리
+[2020-10-16 08:34:46,737] I EventLoop.py | Kiwoom-msg_slot-1306 I DEBUG    > 스크린: 2000, 요청이름: 예수금상세현황요청, tr코드: opw00001 --- [00Z310] 모의투자 조회가 완료되었습니다
+[2020-10-16 08:34:46,739] I EventLoop.py | Kiwoom-_tr_data_slot-0151 I DEBUG    > 예수금 : 48818165
+[2020-10-16 08:34:46,805] I EventLoop.py | Kiwoom-msg_slot-1306 I DEBUG    > 스크린: 2000, 요청이름: 계좌평가잔고내역요청, tr코드: opw00018 --- [00Z310] 모의투자 조회가 완료되었습니다
+[2020-10-16 08:34:46,807] I EventLoop.py | Kiwoom-_tr_data_slot-0166 I DEBUG    > 계좌평가잔고내역요청 싱글데이터 : 000000000000000 - 000000000000000 - 000000000.00
+[2020-10-16 08:34:46,807] I EventLoop.py | Kiwoom-_tr_data_slot-0205 I DEBUG    > sPreNext : <built-in function next>
+[2020-10-16 08:34:51,829] I EventLoop.py | Kiwoom-msg_slot-1306 I DEBUG    > 스크린: , 요청이름: , tr코드:  ---  조회가 완료되었습니다.
+[2020-10-16 08:35:45,491] I EventLoop.py | Kiwoom-_event_connect_slot-0095 I DEBUG    > 정상처리
+[2020-10-16 08:35:45,521] I EventLoop.py | Kiwoom-msg_slot-1306 I DEBUG    > 스크린: 2000, 요청이름: 예수금상세현황요청, tr코드: opw00001 --- [00Z310] 모의투자 조회가 완료되었습니다
+[2020-10-16 08:35:45,523] I EventLoop.py | Kiwoom-_tr_data_slot-0151 I DEBUG    > 예수금 : 48818165
+[2020-10-16 08:35:45,601] I EventLoop.py | Kiwoom-msg_slot-1306 I DEBUG    > 스크린: 2000, 요청이름: 계좌평가잔고내역요청, tr코드: opw00018 --- [00Z310] 모의투자 조회가 완료되었습니다
+[2020-10-16 08:35:45,603] I EventLoop.py | Kiwoom-_tr_data_slot-0166 I DEBUG    > 계좌평가잔고내역요청 싱글데이터 : 000000000000000 - 000000000000000 - 000000000.00
+[2020-10-16 08:35:45,603] I EventLoop.py | Kiwoom-_tr_data_slot-0205 I DEBUG    > sPreNext : <built-in function next>
+[2020-10-16 08:35:50,632] I EventLoop.py | Kiwoom-msg_slot-1306 I DEBUG    > 스크린: , 요청이름: , tr코드:  ---  조회가 완료되었습니다.
+[2020-10-16 08:38:12,194] I EventLoop.py | Kiwoom-_event_connect_slot-0095 I DEBUG    > 정상처리
+[2020-10-16 08:38:12,225] I EventLoop.py | Kiwoom-msg_slot-1306 I DEBUG    > 스크린: 2000, 요청이름: 예수금상세현황요청, tr코드: opw00001 --- [00Z310] 모의투자 조회가 완료되었습니다
+[2020-10-16 08:38:12,227] I EventLoop.py | Kiwoom-_tr_data_slot-0151 I DEBUG    > 예수금 : 48818165
+[2020-10-16 08:38:12,316] I EventLoop.py | Kiwoom-msg_slot-1306 I DEBUG    > 스크린: 2000, 요청이름: 계좌평가잔고내역요청, tr코드: opw00018 --- [00Z310] 모의투자 조회가 완료되었습니다
+[2020-10-16 08:38:12,317] I EventLoop.py | Kiwoom-_tr_data_slot-0166 I DEBUG    > 계좌평가잔고내역요청 싱글데이터 : 000000000000000 - 000000000000000 - 000000000.00
+[2020-10-16 08:38:12,318] I EventLoop.py | Kiwoom-_tr_data_slot-0205 I DEBUG    > sPreNext : <built-in function next>
+[2020-10-16 08:38:17,346] I EventLoop.py | Kiwoom-msg_slot-1306 I DEBUG    > 스크린: , 요청이름: , tr코드:  ---  조회가 완료되었습니다.
+[2020-10-16 08:39:32,702] I EventLoop.py | Kiwoom-_event_connect_slot-0095 I DEBUG    > 정상처리
+[2020-10-16 08:39:32,732] I EventLoop.py | Kiwoom-msg_slot-1306 I DEBUG    > 스크린: 2000, 요청이름: 예수금상세현황요청, tr코드: opw00001 --- [00Z310] 모의투자 조회가 완료되었습니다
+[2020-10-16 08:39:32,734] I EventLoop.py | Kiwoom-_tr_data_slot-0151 I DEBUG    > 예수금 : 48818165
+[2020-10-16 08:39:32,801] I EventLoop.py | Kiwoom-msg_slot-1306 I DEBUG    > 스크린: 2000, 요청이름: 계좌평가잔고내역요청, tr코드: opw00018 --- [00Z310] 모의투자 조회가 완료되었습니다
+[2020-10-16 08:39:32,803] I EventLoop.py | Kiwoom-_tr_data_slot-0166 I DEBUG    > 계좌평가잔고내역요청 싱글데이터 : 000000000000000 - 000000000000000 - 000000000.00
+[2020-10-16 08:39:32,803] I EventLoop.py | Kiwoom-_tr_data_slot-0205 I DEBUG    > sPreNext : <built-in function next>
+[2020-10-16 08:39:37,832] I EventLoop.py | Kiwoom-msg_slot-1306 I DEBUG    > 스크린: , 요청이름: , tr코드:  ---  조회가 완료되었습니다.
+[2020-10-16 08:39:54,264] I EventLoop.py | Kiwoom-_event_connect_slot-0095 I DEBUG    > 정상처리
+[2020-10-16 08:39:54,288] I EventLoop.py | Kiwoom-msg_slot-1306 I DEBUG    > 스크린: 2000, 요청이름: 예수금상세현황요청, tr코드: opw00001 --- [00Z310] 모의투자 조회가 완료되었습니다
+[2020-10-16 08:39:54,290] I EventLoop.py | Kiwoom-_tr_data_slot-0151 I DEBUG    > 예수금 : 48818165
+[2020-10-16 08:39:54,357] I EventLoop.py | Kiwoom-msg_slot-1306 I DEBUG    > 스크린: 2000, 요청이름: 계좌평가잔고내역요청, tr코드: opw00018 --- [00Z310] 모의투자 조회가 완료되었습니다
+[2020-10-16 08:39:54,359] I EventLoop.py | Kiwoom-_tr_data_slot-0166 I DEBUG    > 계좌평가잔고내역요청 싱글데이터 : 000000000000000 - 000000000000000 - 000000000.00
+[2020-10-16 08:39:54,359] I EventLoop.py | Kiwoom-_tr_data_slot-0205 I DEBUG    > sPreNext : <built-in function next>
+[2020-10-16 08:39:59,390] I EventLoop.py | Kiwoom-msg_slot-1306 I DEBUG    > 스크린: , 요청이름: , tr코드:  ---  조회가 완료되었습니다.
+[2020-10-16 08:41:31,604] I EventLoop.py | Kiwoom-_event_connect_slot-0095 I DEBUG    > 정상처리
+[2020-10-16 08:41:31,638] I EventLoop.py | Kiwoom-msg_slot-1306 I DEBUG    > 스크린: 2000, 요청이름: 예수금상세현황요청, tr코드: opw00001 --- [00Z310] 모의투자 조회가 완료되었습니다
+[2020-10-16 08:41:31,640] I EventLoop.py | Kiwoom-_tr_data_slot-0151 I DEBUG    > 예수금 : 48818165
+[2020-10-16 08:41:31,707] I EventLoop.py | Kiwoom-msg_slot-1306 I DEBUG    > 스크린: 2000, 요청이름: 계좌평가잔고내역요청, tr코드: opw00018 --- [00Z310] 모의투자 조회가 완료되었습니다
+[2020-10-16 08:41:31,709] I EventLoop.py | Kiwoom-_tr_data_slot-0166 I DEBUG    > 계좌평가잔고내역요청 싱글데이터 : 000000000000000 - 000000000000000 - 000000000.00
+[2020-10-16 08:41:31,709] I EventLoop.py | Kiwoom-_tr_data_slot-0205 I DEBUG    > sPreNext : <built-in function next>
+[2020-10-16 08:41:36,737] I EventLoop.py | Kiwoom-msg_slot-1306 I DEBUG    > 스크린: , 요청이름: , tr코드:  ---  조회가 완료되었습니다.
+[2020-10-16 08:43:02,774] I EventLoop.py | Kiwoom-_receive_real_data_slot-0741 I DEBUG    > 장 시작 전
+[2020-10-16 08:43:03,152] I EventLoop.py | Kiwoom-_event_connect_slot-0095 I DEBUG    > 정상처리
+[2020-10-16 08:43:03,180] I EventLoop.py | Kiwoom-msg_slot-1307 I DEBUG    > 스크린: 2000, 요청이름: 예수금상세현황요청, tr코드: opw00001 --- [00Z310] 모의투자 조회가 완료되었습니다
+[2020-10-16 08:43:03,181] I EventLoop.py | Kiwoom-_tr_data_slot-0151 I DEBUG    > 예수금 : 48818165
+[2020-10-16 08:43:03,246] I EventLoop.py | Kiwoom-msg_slot-1307 I DEBUG    > 스크린: 2000, 요청이름: 계좌평가잔고내역요청, tr코드: opw00018 --- [00Z310] 모의투자 조회가 완료되었습니다
+[2020-10-16 08:43:03,248] I EventLoop.py | Kiwoom-_tr_data_slot-0166 I DEBUG    > 계좌평가잔고내역요청 싱글데이터 : 000000000000000 - 000000000000000 - 000000000.00
+[2020-10-16 08:43:03,248] I EventLoop.py | Kiwoom-_tr_data_slot-0205 I DEBUG    > sPreNext : <built-in function next>
+[2020-10-16 08:43:08,276] I EventLoop.py | Kiwoom-msg_slot-1307 I DEBUG    > 스크린: , 요청이름: , tr코드:  ---  조회가 완료되었습니다.
+[2020-10-16 08:44:50,879] I EventLoop.py | Kiwoom-_event_connect_slot-0095 I DEBUG    > 정상처리
+[2020-10-16 08:44:50,911] I EventLoop.py | Kiwoom-msg_slot-1307 I DEBUG    > 스크린: 2000, 요청이름: 예수금상세현황요청, tr코드: opw00001 --- [00Z310] 모의투자 조회가 완료되었습니다
+[2020-10-16 08:44:50,912] I EventLoop.py | Kiwoom-_tr_data_slot-0151 I DEBUG    > 예수금 : 48818165
+[2020-10-16 08:44:50,991] I EventLoop.py | Kiwoom-msg_slot-1307 I DEBUG    > 스크린: 2000, 요청이름: 계좌평가잔고내역요청, tr코드: opw00018 --- [00Z310] 모의투자 조회가 완료되었습니다
+[2020-10-16 08:44:50,993] I EventLoop.py | Kiwoom-_tr_data_slot-0166 I DEBUG    > 계좌평가잔고내역요청 싱글데이터 : 000000000000000 - 000000000000000 - 000000000.00
+[2020-10-16 08:44:50,993] I EventLoop.py | Kiwoom-_tr_data_slot-0205 I DEBUG    > sPreNext : <built-in function next>
+[2020-10-16 08:44:56,023] I EventLoop.py | Kiwoom-msg_slot-1307 I DEBUG    > 스크린: , 요청이름: , tr코드:  ---  조회가 완료되었습니다.
+[2020-10-16 08:52:08,032] I EventLoop.py | Kiwoom-_event_connect_slot-0095 I DEBUG    > 정상처리
+[2020-10-16 08:52:08,093] I EventLoop.py | Kiwoom-msg_slot-1307 I DEBUG    > 스크린: 2000, 요청이름: 예수금상세현황요청, tr코드: opw00001 --- [00Z310] 모의투자 조회가 완료되었습니다
+[2020-10-16 08:52:08,095] I EventLoop.py | Kiwoom-_tr_data_slot-0151 I DEBUG    > 예수금 : 48818165
+[2020-10-16 08:52:08,951] I EventLoop.py | Kiwoom-msg_slot-1307 I DEBUG    > 스크린: 2000, 요청이름: 계좌평가잔고내역요청, tr코드: opw00018 --- [00Z310] 모의투자 조회가 완료되었습니다
+[2020-10-16 08:52:08,952] I EventLoop.py | Kiwoom-_tr_data_slot-0166 I DEBUG    > 계좌평가잔고내역요청 싱글데이터 : 000000000000000 - 000000000000000 - 000000000.00
+[2020-10-16 08:52:08,953] I EventLoop.py | Kiwoom-_tr_data_slot-0205 I DEBUG    > sPreNext : <built-in function next>
+[2020-10-16 08:52:13,984] I EventLoop.py | Kiwoom-msg_slot-1307 I DEBUG    > 스크린: , 요청이름: , tr코드:  ---  조회가 완료되었습니다.
+[2020-10-16 08:53:02,732] I EventLoop.py | Kiwoom-_receive_real_data_slot-0741 I DEBUG    > 장 시작 전
+[2020-10-16 08:54:02,733] I EventLoop.py | Kiwoom-_receive_real_data_slot-0741 I DEBUG    > 장 시작 전
+[2020-10-16 08:55:38,315] I EventLoop.py | Kiwoom-_event_connect_slot-0095 I DEBUG    > 정상처리
+[2020-10-16 08:55:38,346] I EventLoop.py | Kiwoom-msg_slot-1307 I DEBUG    > 스크린: 2000, 요청이름: 예수금상세현황요청, tr코드: opw00001 --- [00Z310] 모의투자 조회가 완료되었습니다
+[2020-10-16 08:55:38,348] I EventLoop.py | Kiwoom-_tr_data_slot-0151 I DEBUG    > 예수금 : 48818165
+[2020-10-16 08:55:40,697] I EventLoop.py | Kiwoom-msg_slot-1307 I DEBUG    > 스크린: 2000, 요청이름: 계좌평가잔고내역요청, tr코드: opw00018 --- [00Z310] 모의투자 조회가 완료되었습니다
+[2020-10-16 08:55:40,699] I EventLoop.py | Kiwoom-_tr_data_slot-0166 I DEBUG    > 계좌평가잔고내역요청 싱글데이터 : 000000000000000 - 000000000000000 - 000000000.00
+[2020-10-16 08:55:40,699] I EventLoop.py | Kiwoom-_tr_data_slot-0205 I DEBUG    > sPreNext : <built-in function next>
+[2020-10-16 08:55:45,722] I EventLoop.py | Kiwoom-msg_slot-1307 I DEBUG    > 스크린: , 요청이름: , tr코드:  ---  조회가 완료되었습니다.
+[2020-10-16 08:56:59,282] I EventLoop.py | Kiwoom-_event_connect_slot-0095 I DEBUG    > 정상처리
+[2020-10-16 08:56:59,310] I EventLoop.py | Kiwoom-msg_slot-1307 I DEBUG    > 스크린: 2000, 요청이름: 예수금상세현황요청, tr코드: opw00001 --- [00Z310] 모의투자 조회가 완료되었습니다
+[2020-10-16 08:56:59,312] I EventLoop.py | Kiwoom-_tr_data_slot-0151 I DEBUG    > 예수금 : 48818165
+[2020-10-16 08:57:01,465] I EventLoop.py | Kiwoom-msg_slot-1307 I DEBUG    > 스크린: 2000, 요청이름: 계좌평가잔고내역요청, tr코드: opw00018 --- [00Z310] 모의투자 조회가 완료되었습니다
+[2020-10-16 08:57:01,466] I EventLoop.py | Kiwoom-_tr_data_slot-0166 I DEBUG    > 계좌평가잔고내역요청 싱글데이터 : 000000000000000 - 000000000000000 - 000000000.00
+[2020-10-16 08:57:01,467] I EventLoop.py | Kiwoom-_tr_data_slot-0205 I DEBUG    > sPreNext : <built-in function next>
+[2020-10-16 08:57:02,676] I EventLoop.py | Kiwoom-_receive_real_data_slot-0741 I DEBUG    > 장 시작 전
+[2020-10-16 08:57:06,496] I EventLoop.py | Kiwoom-msg_slot-1307 I DEBUG    > 스크린: , 요청이름: , tr코드:  ---  조회가 완료되었습니다.
+[2020-10-16 08:57:51,802] I EventLoop.py | Kiwoom-_event_connect_slot-0095 I DEBUG    > 정상처리
+[2020-10-16 08:57:51,856] I EventLoop.py | Kiwoom-msg_slot-1307 I DEBUG    > 스크린: 2000, 요청이름: 예수금상세현황요청, tr코드: opw00001 --- [00Z310] 모의투자 조회가 완료되었습니다
+[2020-10-16 08:57:51,858] I EventLoop.py | Kiwoom-_tr_data_slot-0151 I DEBUG    > 예수금 : 48818165
+[2020-10-16 08:57:51,999] I EventLoop.py | Kiwoom-msg_slot-1307 I DEBUG    > 스크린: 2000, 요청이름: 계좌평가잔고내역요청, tr코드: opw00018 --- [00Z310] 모의투자 조회가 완료되었습니다
+[2020-10-16 08:57:52,001] I EventLoop.py | Kiwoom-_tr_data_slot-0166 I DEBUG    > 계좌평가잔고내역요청 싱글데이터 : 000000000000000 - 000000000000000 - 000000000.00
+[2020-10-16 08:57:52,001] I EventLoop.py | Kiwoom-_tr_data_slot-0205 I DEBUG    > sPreNext : <built-in function next>
+[2020-10-16 08:57:57,036] I EventLoop.py | Kiwoom-msg_slot-1307 I DEBUG    > 스크린: , 요청이름: , tr코드:  ---  조회가 완료되었습니다.
+[2020-10-16 09:06:16,173] I EventLoop.py | Kiwoom-_event_connect_slot-0095 I DEBUG    > 정상처리
+[2020-10-16 09:06:16,231] I EventLoop.py | Kiwoom-msg_slot-1307 I DEBUG    > 스크린: 2000, 요청이름: 예수금상세현황요청, tr코드: opw00001 --- [00Z310] 모의투자 조회가 완료되었습니다
+[2020-10-16 09:06:16,233] I EventLoop.py | Kiwoom-_tr_data_slot-0151 I DEBUG    > 예수금 : 48818165
+[2020-10-16 09:06:18,976] I EventLoop.py | Kiwoom-msg_slot-1307 I DEBUG    > 스크린: 2000, 요청이름: 계좌평가잔고내역요청, tr코드: opw00018 --- [00Z310] 모의투자 조회가 완료되었습니다
+[2020-10-16 09:06:18,977] I EventLoop.py | Kiwoom-_tr_data_slot-0166 I DEBUG    > 계좌평가잔고내역요청 싱글데이터 : 000000000000000 - 000000000000000 - 000000000.00
+[2020-10-16 09:06:18,978] I EventLoop.py | Kiwoom-_tr_data_slot-0205 I DEBUG    > sPreNext : <built-in function next>
+[2020-10-16 09:06:19,093] I EventLoop.py | Kiwoom-_receive_real_data_slot-1099 I DEBUG    > 매수조건 통과 038530 
+[2020-10-16 09:06:19,093] I EventLoop.py | Kiwoom-_receive_real_data_slot-1100 I DEBUG    > (최우선)매도호가 2280 
+[2020-10-16 09:06:19,100] I EventLoop.py | Kiwoom-_receive_real_data_slot-1134 I DEBUG    > 매수주문 전달 실패
+[2020-10-16 09:06:20,875] I EventLoop.py | Kiwoom-msg_slot-1307 I DEBUG    > 스크린: 8001, 요청이름: 신규매수, tr코드: KOA_NORMAL_BUY_KQ_ORD --- [00Z112] 모의투자 정상처리 되었습니다
+[2020-10-16 09:11:27,337] I EventLoop.py | Kiwoom-_event_connect_slot-0095 I DEBUG    > 정상처리
+[2020-10-16 09:11:27,724] I EventLoop.py | Kiwoom-msg_slot-1310 I DEBUG    > 스크린: 2000, 요청이름: 예수금상세현황요청, tr코드: opw00001 --- [00Z310] 모의투자 조회가 완료되었습니다
+[2020-10-16 09:11:27,725] I EventLoop.py | Kiwoom-_tr_data_slot-0151 I DEBUG    > 예수금 : 48818165
+[2020-10-16 09:11:31,104] I EventLoop.py | Kiwoom-msg_slot-1310 I DEBUG    > 스크린: 2000, 요청이름: 계좌평가잔고내역요청, tr코드: opw00018 --- [00Z310] 모의투자 조회가 완료되었습니다
+[2020-10-16 09:11:31,106] I EventLoop.py | Kiwoom-_tr_data_slot-0166 I DEBUG    > 계좌평가잔고내역요청 싱글데이터 : 000000000498225 - -00000000010166 - -00000002.04
+[2020-10-16 09:11:31,107] I EventLoop.py | Kiwoom-_tr_data_slot-0182 I DEBUG    > 종목코드: 038530 - 종목명: 골드퍼시픽                               - 보유수량: 000000000000219 - 매입가:000000000002275 - 수익률: -00000002.26 - 현재가: 000000002245
+[2020-10-16 09:11:31,107] I EventLoop.py | Kiwoom-_tr_data_slot-0205 I DEBUG    > sPreNext : <built-in function next>
+[2020-10-16 09:12:47,562] I EventLoop.py | Kiwoom-_receive_real_data_slot-1014 I DEBUG    > 매도주문 전달 실패
+[2020-10-16 09:12:49,256] I EventLoop.py | Kiwoom-_receive_real_data_slot-1014 I DEBUG    > 매도주문 전달 실패
+[2020-10-16 09:12:49,837] I EventLoop.py | Kiwoom-_receive_real_data_slot-1014 I DEBUG    > 매도주문 전달 실패
+[2020-10-16 09:12:50,428] I EventLoop.py | Kiwoom-msg_slot-1310 I DEBUG    > 스크린: 6001, 요청이름: 신규매도, tr코드: KOA_NORMAL_SELL_KQ_ORD --- [00Z113] 모의투자 정상처리 되었습니다
+[2020-10-16 09:12:50,439] I EventLoop.py | Kiwoom-_receive_real_data_slot-1014 I DEBUG    > 매도주문 전달 실패
+[2020-10-16 09:31:39,994] I EventLoop.py | Kiwoom-_event_connect_slot-0095 I DEBUG    > 정상처리
+[2020-10-16 09:31:40,725] I EventLoop.py | Kiwoom-msg_slot-1338 I DEBUG    > 스크린: 2000, 요청이름: 예수금상세현황요청, tr코드: opw00001 --- [00Z310] 모의투자 조회가 완료되었습니다
+[2020-10-16 09:31:40,726] I EventLoop.py | Kiwoom-_tr_data_slot-0151 I DEBUG    > 예수금 : 48818165
+[2020-10-16 09:31:44,335] I EventLoop.py | Kiwoom-msg_slot-1338 I DEBUG    > 스크린: 2000, 요청이름: 계좌평가잔고내역요청, tr코드: opw00018 --- [00Z310] 모의투자 조회가 완료되었습니다
+[2020-10-16 09:31:44,337] I EventLoop.py | Kiwoom-_tr_data_slot-0166 I DEBUG    > 계좌평가잔고내역요청 싱글데이터 : 000000000000000 - 000000000000000 - 000000000.00
+[2020-10-16 09:31:44,337] I EventLoop.py | Kiwoom-_tr_data_slot-0205 I DEBUG    > sPreNext : <built-in function next>
+[2020-10-16 09:31:44,563] I EventLoop.py | Kiwoom-_receive_real_data_slot-1129 I DEBUG    > 매수조건 통과 025750 
+[2020-10-16 09:31:44,564] I EventLoop.py | Kiwoom-_receive_real_data_slot-1130 I DEBUG    > (최우선)매도호가 2175 
+[2020-10-16 09:31:44,567] I EventLoop.py | Kiwoom-_receive_real_data_slot-1164 I DEBUG    > 매수주문 전달 실패
+[2020-10-16 09:31:46,405] I EventLoop.py | Kiwoom-_receive_real_data_slot-1129 I DEBUG    > 매수조건 통과 025750 
+[2020-10-16 09:31:46,405] I EventLoop.py | Kiwoom-_receive_real_data_slot-1130 I DEBUG    > (최우선)매도호가 2175 
+[2020-10-16 09:31:46,409] I EventLoop.py | Kiwoom-_receive_real_data_slot-1129 I DEBUG    > 매수조건 통과 025750 
+[2020-10-16 09:31:46,410] I EventLoop.py | Kiwoom-_receive_real_data_slot-1130 I DEBUG    > (최우선)매도호가 2175 
+[2020-10-16 09:31:46,413] I EventLoop.py | Kiwoom-_receive_real_data_slot-1129 I DEBUG    > 매수조건 통과 025750 
+[2020-10-16 09:31:46,414] I EventLoop.py | Kiwoom-_receive_real_data_slot-1130 I DEBUG    > (최우선)매도호가 2175 
+[2020-10-16 09:31:46,417] I EventLoop.py | Kiwoom-_receive_real_data_slot-1129 I DEBUG    > 매수조건 통과 025750 
+[2020-10-16 09:31:46,417] I EventLoop.py | Kiwoom-_receive_real_data_slot-1130 I DEBUG    > (최우선)매도호가 2175 
+[2020-10-16 09:31:46,418] I EventLoop.py | Kiwoom-msg_slot-1338 I DEBUG    > 스크린: 8001, 요청이름: 신규매수, tr코드: KOA_NORMAL_BUY_KP_ORD --- [00Z112] 모의투자 정상처리 되었습니다
+[2020-10-16 09:31:46,424] I EventLoop.py | Kiwoom-_receive_real_data_slot-1129 I DEBUG    > 매수조건 통과 025750 
+[2020-10-16 09:31:46,425] I EventLoop.py | Kiwoom-_receive_real_data_slot-1130 I DEBUG    > (최우선)매도호가 2175 
+[2020-10-16 09:31:46,428] I EventLoop.py | Kiwoom-_receive_real_data_slot-1129 I DEBUG    > 매수조건 통과 025750 
+[2020-10-16 09:31:46,428] I EventLoop.py | Kiwoom-_receive_real_data_slot-1130 I DEBUG    > (최우선)매도호가 2175 
+[2020-10-16 09:54:25,999] I EventLoop.py | Kiwoom-_event_connect_slot-0095 I DEBUG    > 정상처리
+[2020-10-16 09:54:26,254] I EventLoop.py | Kiwoom-msg_slot-1342 I DEBUG    > 스크린: 2000, 요청이름: 예수금상세현황요청, tr코드: opw00001 --- [00Z310] 모의투자 조회가 완료되었습니다
+[2020-10-16 09:54:26,256] I EventLoop.py | Kiwoom-_tr_data_slot-0155 I DEBUG    > 예수금 : 48818165
+[2020-10-16 09:54:28,794] I EventLoop.py | Kiwoom-msg_slot-1342 I DEBUG    > 스크린: 2000, 요청이름: 계좌평가잔고내역요청, tr코드: opw00018 --- [00Z310] 모의투자 조회가 완료되었습니다
+[2020-10-16 09:54:28,796] I EventLoop.py | Kiwoom-_tr_data_slot-0170 I DEBUG    > 계좌평가잔고내역요청 싱글데이터 : 000000000497055 - 000000000012245 - 000000002.46
+[2020-10-16 09:54:28,796] I EventLoop.py | Kiwoom-_tr_data_slot-0186 I DEBUG    > 종목코드: 025750 - 종목명: 한솔홈데코                               - 보유수량: 000000000000229 - 매입가:000000000002170 - 수익률: 000000002.26 - 현재가: 000000002240
+[2020-10-16 09:54:28,797] I EventLoop.py | Kiwoom-_tr_data_slot-0209 I DEBUG    > sPreNext : <built-in function next>
+[2020-10-16 10:07:02,129] I EventLoop.py | Kiwoom-_event_connect_slot-0095 I DEBUG    > 정상처리
+[2020-10-16 10:07:02,899] I EventLoop.py | Kiwoom-msg_slot-1344 I DEBUG    > 스크린: 2000, 요청이름: 예수금상세현황요청, tr코드: opw00001 --- [00Z310] 모의투자 조회가 완료되었습니다
+[2020-10-16 10:07:02,901] I EventLoop.py | Kiwoom-_tr_data_slot-0155 I DEBUG    > 예수금 : 48818165
+[2020-10-16 10:07:06,026] I EventLoop.py | Kiwoom-msg_slot-1344 I DEBUG    > 스크린: 2000, 요청이름: 계좌평가잔고내역요청, tr코드: opw00018 --- [00Z310] 모의투자 조회가 완료되었습니다
+[2020-10-16 10:07:06,028] I EventLoop.py | Kiwoom-_tr_data_slot-0170 I DEBUG    > 계좌평가잔고내역요청 싱글데이터 : 000000000000000 - 000000000000000 - 000000000.00
+[2020-10-16 10:07:06,029] I EventLoop.py | Kiwoom-_tr_data_slot-0209 I DEBUG    > sPreNext : <built-in function next>
+[2020-10-16 10:07:07,499] I EventLoop.py | Kiwoom-_receive_real_data_slot-1133 I DEBUG    > 매수조건 통과 289080 
+[2020-10-16 10:07:07,500] I EventLoop.py | Kiwoom-_receive_real_data_slot-1134 I DEBUG    > (최우선)매도호가 6610 
+[2020-10-16 10:33:41,125] I EventLoop.py | Kiwoom-_event_connect_slot-0095 I DEBUG    > 정상처리
+[2020-10-16 10:33:41,765] I EventLoop.py | Kiwoom-msg_slot-1349 I DEBUG    > 스크린: 2000, 요청이름: 예수금상세현황요청, tr코드: opw00001 --- [00Z310] 모의투자 조회가 완료되었습니다
+[2020-10-16 10:35:16,679] I EventLoop.py | Kiwoom-_event_connect_slot-0095 I DEBUG    > 정상처리
+[2020-10-16 10:35:17,862] I EventLoop.py | Kiwoom-msg_slot-1349 I DEBUG    > 스크린: 2000, 요청이름: 예수금상세현황요청, tr코드: opw00001 --- [00Z310] 모의투자 조회가 완료되었습니다
+[2020-10-16 10:36:31,288] I EventLoop.py | Kiwoom-_event_connect_slot-0095 I DEBUG    > 정상처리
+[2020-10-16 10:36:33,026] I EventLoop.py | Kiwoom-msg_slot-1349 I DEBUG    > 스크린: 2000, 요청이름: 예수금상세현황요청, tr코드: opw00001 --- [00Z310] 모의투자 조회가 완료되었습니다
+[2020-10-16 10:36:33,028] I EventLoop.py | Kiwoom-_tr_data_slot-0160 I DEBUG    > 예수금 : 48818165
+[2020-10-16 10:36:36,481] I EventLoop.py | Kiwoom-msg_slot-1349 I DEBUG    > 스크린: 2000, 요청이름: 계좌평가잔고내역요청, tr코드: opw00018 --- [00Z310] 모의투자 조회가 완료되었습니다
+[2020-10-16 10:36:36,482] I EventLoop.py | Kiwoom-_tr_data_slot-0175 I DEBUG    > 계좌평가잔고내역요청 싱글데이터 : 000000000495000 - -00000000010662 - -00000002.15
+[2020-10-16 10:36:36,483] I EventLoop.py | Kiwoom-_tr_data_slot-0191 I DEBUG    > 종목코드: 289080 - 종목명: SV인베스트먼트                           - 보유수량: 000000000000075 - 매입가:000000000006600 - 수익률: -00000002.15 - 현재가: 000000006520
+[2020-10-16 10:36:36,483] I EventLoop.py | Kiwoom-_tr_data_slot-0214 I DEBUG    > sPreNext : <built-in function next>
+[2020-10-16 10:36:41,504] I EventLoop.py | Kiwoom-msg_slot-1349 I DEBUG    > 스크린: , 요청이름: , tr코드:  ---  조회가 완료되었습니다.
+[2020-10-16 10:42:07,834] I EventLoop.py | Kiwoom-_event_connect_slot-0095 I DEBUG    > 정상처리
+[2020-10-16 10:42:08,652] I EventLoop.py | Kiwoom-msg_slot-1350 I DEBUG    > 스크린: 2000, 요청이름: 예수금상세현황요청, tr코드: opw00001 --- [00Z310] 모의투자 조회가 완료되었습니다
+[2020-10-16 10:42:08,654] I EventLoop.py | Kiwoom-_tr_data_slot-0160 I DEBUG    > 예수금 : 48818165
+[2020-10-16 10:42:12,107] I EventLoop.py | Kiwoom-msg_slot-1350 I DEBUG    > 스크린: 2000, 요청이름: 계좌평가잔고내역요청, tr코드: opw00018 --- [00Z310] 모의투자 조회가 완료되었습니다
+[2020-10-16 10:42:12,109] I EventLoop.py | Kiwoom-_tr_data_slot-0175 I DEBUG    > 계좌평가잔고내역요청 싱글데이터 : 000000000495000 - -00000000008418 - -00000001.70
+[2020-10-16 10:42:12,109] I EventLoop.py | Kiwoom-_tr_data_slot-0191 I DEBUG    > 종목코드: 289080 - 종목명: SV인베스트먼트                           - 보유수량: 000000000000075 - 매입가:000000000006600 - 수익률: -00000001.70 - 현재가: 000000006550
+[2020-10-16 10:42:12,110] I EventLoop.py | Kiwoom-_tr_data_slot-0214 I DEBUG    > sPreNext : <built-in function next>
+[2020-10-16 10:42:17,157] I EventLoop.py | Kiwoom-msg_slot-1350 I DEBUG    > 스크린: , 요청이름: , tr코드:  ---  조회가 완료되었습니다.
+[2020-10-16 10:44:36,598] I EventLoop.py | Kiwoom-_event_connect_slot-0095 I DEBUG    > 정상처리
+[2020-10-16 10:44:36,774] I EventLoop.py | Kiwoom-msg_slot-1350 I DEBUG    > 스크린: 2000, 요청이름: 예수금상세현황요청, tr코드: opw00001 --- [00Z310] 모의투자 조회가 완료되었습니다
+[2020-10-16 10:44:36,776] I EventLoop.py | Kiwoom-_tr_data_slot-0160 I DEBUG    > 예수금 : 48818165
+[2020-10-16 10:44:40,100] I EventLoop.py | Kiwoom-msg_slot-1350 I DEBUG    > 스크린: 2000, 요청이름: 계좌평가잔고내역요청, tr코드: opw00018 --- [00Z310] 모의투자 조회가 완료되었습니다
+[2020-10-16 10:44:40,101] I EventLoop.py | Kiwoom-_tr_data_slot-0175 I DEBUG    > 계좌평가잔고내역요청 싱글데이터 : 000000000495000 - -00000000008418 - -00000001.70
+[2020-10-16 10:44:40,102] I EventLoop.py | Kiwoom-_tr_data_slot-0191 I DEBUG    > 종목코드: 289080 - 종목명: SV인베스트먼트                           - 보유수량: 000000000000075 - 매입가:000000000006600 - 수익률: -00000001.70 - 현재가: 000000006550
+[2020-10-16 10:44:40,102] I EventLoop.py | Kiwoom-_tr_data_slot-0214 I DEBUG    > sPreNext : <built-in function next>
+[2020-10-16 10:44:45,130] I EventLoop.py | Kiwoom-msg_slot-1350 I DEBUG    > 스크린: , 요청이름: , tr코드:  ---  조회가 완료되었습니다.
+[2020-10-16 10:47:11,715] I EventLoop.py | Kiwoom-_event_connect_slot-0095 I DEBUG    > 정상처리
+[2020-10-16 10:47:13,764] I EventLoop.py | Kiwoom-msg_slot-1350 I DEBUG    > 스크린: 2000, 요청이름: 예수금상세현황요청, tr코드: opw00001 --- [00Z310] 모의투자 조회가 완료되었습니다
+[2020-10-16 10:47:13,765] I EventLoop.py | Kiwoom-_tr_data_slot-0160 I DEBUG    > 예수금 : 48818165
+[2020-10-16 10:48:31,892] I EventLoop.py | Kiwoom-_event_connect_slot-0095 I DEBUG    > 정상처리
+[2020-10-16 10:48:33,179] I EventLoop.py | Kiwoom-msg_slot-1350 I DEBUG    > 스크린: 2000, 요청이름: 예수금상세현황요청, tr코드: opw00001 --- [00Z310] 모의투자 조회가 완료되었습니다
+[2020-10-16 10:48:33,180] I EventLoop.py | Kiwoom-_tr_data_slot-0160 I DEBUG    > 예수금 : 48818165
+[2020-10-16 10:48:36,947] I EventLoop.py | Kiwoom-msg_slot-1350 I DEBUG    > 스크린: 2000, 요청이름: 계좌평가잔고내역요청, tr코드: opw00018 --- [00Z310] 모의투자 조회가 완료되었습니다
+[2020-10-16 10:48:36,948] I EventLoop.py | Kiwoom-_tr_data_slot-0175 I DEBUG    > 계좌평가잔고내역요청 싱글데이터 : 000000000495000 - -00000000010662 - -00000002.15
+[2020-10-16 10:48:36,949] I EventLoop.py | Kiwoom-_tr_data_slot-0191 I DEBUG    > 종목코드: 289080 - 종목명: SV인베스트먼트                           - 보유수량: 000000000000075 - 매입가:000000000006600 - 수익률: -00000002.15 - 현재가: 000000006520
+[2020-10-16 10:48:36,949] I EventLoop.py | Kiwoom-_tr_data_slot-0214 I DEBUG    > sPreNext : <built-in function next>
+[2020-10-16 10:48:41,982] I EventLoop.py | Kiwoom-msg_slot-1350 I DEBUG    > 스크린: , 요청이름: , tr코드:  ---  조회가 완료되었습니다.
+[2020-10-16 10:55:58,182] I EventLoop.py | Kiwoom-_event_connect_slot-0095 I DEBUG    > 정상처리
+[2020-10-16 10:55:59,593] I EventLoop.py | Kiwoom-msg_slot-1350 I DEBUG    > 스크린: 2000, 요청이름: 예수금상세현황요청, tr코드: opw00001 --- [00Z310] 모의투자 조회가 완료되었습니다
+[2020-10-16 10:55:59,595] I EventLoop.py | Kiwoom-_tr_data_slot-0160 I DEBUG    > 예수금 : 48818165
+[2020-10-16 10:56:03,067] I EventLoop.py | Kiwoom-msg_slot-1350 I DEBUG    > 스크린: 2000, 요청이름: 계좌평가잔고내역요청, tr코드: opw00018 --- [00Z310] 모의투자 조회가 완료되었습니다
+[2020-10-16 10:56:03,068] I EventLoop.py | Kiwoom-_tr_data_slot-0175 I DEBUG    > 계좌평가잔고내역요청 싱글데이터 : 000000000495000 - -00000000012148 - -00000002.45
+[2020-10-16 10:56:03,069] I EventLoop.py | Kiwoom-_tr_data_slot-0191 I DEBUG    > 종목코드: 289080 - 종목명: SV인베스트먼트                           - 보유수량: 000000000000075 - 매입가:000000000006600 - 수익률: -00000002.45 - 현재가: 000000006500
+[2020-10-16 10:56:03,069] I EventLoop.py | Kiwoom-_tr_data_slot-0214 I DEBUG    > sPreNext : <built-in function next>
+[2020-10-16 10:56:08,104] I EventLoop.py | Kiwoom-msg_slot-1350 I DEBUG    > 스크린: , 요청이름: , tr코드:  ---  조회가 완료되었습니다.
+[2020-10-16 11:05:34,081] I EventLoop.py | Kiwoom-_event_connect_slot-0095 I DEBUG    > 정상처리
+[2020-10-16 11:05:34,566] I EventLoop.py | Kiwoom-msg_slot-1350 I DEBUG    > 스크린: 2000, 요청이름: 예수금상세현황요청, tr코드: opw00001 --- [00Z310] 모의투자 조회가 완료되었습니다
+[2020-10-16 11:05:34,567] I EventLoop.py | Kiwoom-_tr_data_slot-0160 I DEBUG    > 예수금 : 48818165
+[2020-10-16 11:05:37,901] I EventLoop.py | Kiwoom-msg_slot-1350 I DEBUG    > 스크린: 2000, 요청이름: 계좌평가잔고내역요청, tr코드: opw00018 --- [00Z310] 모의투자 조회가 완료되었습니다
+[2020-10-16 11:05:37,903] I EventLoop.py | Kiwoom-_tr_data_slot-0175 I DEBUG    > 계좌평가잔고내역요청 싱글데이터 : 000000000495000 - -00000000014383 - -00000002.91
+[2020-10-16 11:05:37,903] I EventLoop.py | Kiwoom-_tr_data_slot-0191 I DEBUG    > 종목코드: 289080 - 종목명: SV인베스트먼트                           - 보유수량: 000000000000075 - 매입가:000000000006600 - 수익률: -00000002.91 - 현재가: 000000006470
+[2020-10-16 11:05:37,903] I EventLoop.py | Kiwoom-_tr_data_slot-0214 I DEBUG    > sPreNext : <built-in function next>
+[2020-10-16 11:05:43,080] I EventLoop.py | Kiwoom-msg_slot-1350 I DEBUG    > 스크린: , 요청이름: , tr코드:  ---  조회가 완료되었습니다.
+[2020-10-16 11:07:59,183] I EventLoop.py | Kiwoom-_event_connect_slot-0095 I DEBUG    > 정상처리
+[2020-10-16 11:08:00,084] I EventLoop.py | Kiwoom-msg_slot-1350 I DEBUG    > 스크린: 2000, 요청이름: 예수금상세현황요청, tr코드: opw00001 --- [00Z310] 모의투자 조회가 완료되었습니다
+[2020-10-16 11:08:00,086] I EventLoop.py | Kiwoom-_tr_data_slot-0160 I DEBUG    > 예수금 : 48818165
+[2020-10-16 11:08:03,966] I EventLoop.py | Kiwoom-msg_slot-1350 I DEBUG    > 스크린: 2000, 요청이름: 계좌평가잔고내역요청, tr코드: opw00018 --- [00Z310] 모의투자 조회가 완료되었습니다
+[2020-10-16 11:08:03,968] I EventLoop.py | Kiwoom-_tr_data_slot-0175 I DEBUG    > 계좌평가잔고내역요청 싱글데이터 : 000000000495000 - -00000000014383 - -00000002.91
+[2020-10-16 11:08:03,969] I EventLoop.py | Kiwoom-_tr_data_slot-0191 I DEBUG    > 종목코드: 289080 - 종목명: SV인베스트먼트                           - 보유수량: 000000000000075 - 매입가:000000000006600 - 수익률: -00000002.91 - 현재가: 000000006470
+[2020-10-16 11:08:03,969] I EventLoop.py | Kiwoom-_tr_data_slot-0214 I DEBUG    > sPreNext : <built-in function next>
+[2020-10-16 11:08:09,017] I EventLoop.py | Kiwoom-msg_slot-1350 I DEBUG    > 스크린: , 요청이름: , tr코드:  ---  조회가 완료되었습니다.
+[2020-10-16 11:10:22,466] I EventLoop.py | Kiwoom-_event_connect_slot-0095 I DEBUG    > 정상처리
+[2020-10-16 11:10:23,977] I EventLoop.py | Kiwoom-msg_slot-1350 I DEBUG    > 스크린: 2000, 요청이름: 예수금상세현황요청, tr코드: opw00001 --- [00Z310] 모의투자 조회가 완료되었습니다
+[2020-10-16 11:10:23,979] I EventLoop.py | Kiwoom-_tr_data_slot-0160 I DEBUG    > 예수금 : 48818165
+[2020-10-16 11:10:27,486] I EventLoop.py | Kiwoom-msg_slot-1350 I DEBUG    > 스크린: 2000, 요청이름: 계좌평가잔고내역요청, tr코드: opw00018 --- [00Z310] 모의투자 조회가 완료되었습니다
+[2020-10-16 11:10:27,488] I EventLoop.py | Kiwoom-_tr_data_slot-0175 I DEBUG    > 계좌평가잔고내역요청 싱글데이터 : 000000000495000 - -00000000012148 - -00000002.45
+[2020-10-16 11:10:27,488] I EventLoop.py | Kiwoom-_tr_data_slot-0191 I DEBUG    > 종목코드: 289080 - 종목명: SV인베스트먼트                           - 보유수량: 000000000000075 - 매입가:000000000006600 - 수익률: -00000002.45 - 현재가: 000000006500
+[2020-10-16 11:10:27,488] I EventLoop.py | Kiwoom-_tr_data_slot-0214 I DEBUG    > sPreNext : <built-in function next>
+[2020-10-16 11:10:32,516] I EventLoop.py | Kiwoom-msg_slot-1350 I DEBUG    > 스크린: , 요청이름: , tr코드:  ---  조회가 완료되었습니다.
+[2020-10-16 11:17:47,658] I EventLoop.py | Kiwoom-_event_connect_slot-0095 I DEBUG    > 정상처리
+[2020-10-16 11:17:48,518] I EventLoop.py | Kiwoom-msg_slot-1350 I DEBUG    > 스크린: 2000, 요청이름: 예수금상세현황요청, tr코드: opw00001 --- [00Z310] 모의투자 조회가 완료되었습니다
+[2020-10-16 11:17:48,520] I EventLoop.py | Kiwoom-_tr_data_slot-0160 I DEBUG    > 예수금 : 48818165
+[2020-10-16 11:17:51,966] I EventLoop.py | Kiwoom-msg_slot-1350 I DEBUG    > 스크린: 2000, 요청이름: 계좌평가잔고내역요청, tr코드: opw00018 --- [00Z310] 모의투자 조회가 완료되었습니다
+[2020-10-16 11:17:51,968] I EventLoop.py | Kiwoom-_tr_data_slot-0175 I DEBUG    > 계좌평가잔고내역요청 싱글데이터 : 000000000495000 - -00000000015131 - -00000003.06
+[2020-10-16 11:17:51,969] I EventLoop.py | Kiwoom-_tr_data_slot-0191 I DEBUG    > 종목코드: 289080 - 종목명: SV인베스트먼트                           - 보유수량: 000000000000075 - 매입가:000000000006600 - 수익률: -00000003.06 - 현재가: 000000006460
+[2020-10-16 11:17:51,969] I EventLoop.py | Kiwoom-_tr_data_slot-0214 I DEBUG    > sPreNext : <built-in function next>
+[2020-10-16 11:17:57,002] I EventLoop.py | Kiwoom-msg_slot-1350 I DEBUG    > 스크린: , 요청이름: , tr코드:  ---  조회가 완료되었습니다.
+[2020-10-16 11:19:16,913] I EventLoop.py | Kiwoom-_event_connect_slot-0095 I DEBUG    > 정상처리
+[2020-10-16 11:19:17,875] I EventLoop.py | Kiwoom-msg_slot-1350 I DEBUG    > 스크린: 2000, 요청이름: 예수금상세현황요청, tr코드: opw00001 --- [00Z310] 모의투자 조회가 완료되었습니다
+[2020-10-16 11:19:17,877] I EventLoop.py | Kiwoom-_tr_data_slot-0160 I DEBUG    > 예수금 : 48818165
+[2020-10-16 11:19:21,536] I EventLoop.py | Kiwoom-msg_slot-1350 I DEBUG    > 스크린: 2000, 요청이름: 계좌평가잔고내역요청, tr코드: opw00018 --- [00Z310] 모의투자 조회가 완료되었습니다
+[2020-10-16 11:19:21,538] I EventLoop.py | Kiwoom-_tr_data_slot-0175 I DEBUG    > 계좌평가잔고내역요청 싱글데이터 : 000000000495000 - -00000000015131 - -00000003.06
+[2020-10-16 11:19:21,538] I EventLoop.py | Kiwoom-_tr_data_slot-0191 I DEBUG    > 종목코드: 289080 - 종목명: SV인베스트먼트                           - 보유수량: 000000000000075 - 매입가:000000000006600 - 수익률: -00000003.06 - 현재가: 000000006460
+[2020-10-16 11:19:21,538] I EventLoop.py | Kiwoom-_tr_data_slot-0214 I DEBUG    > sPreNext : <built-in function next>
+[2020-10-16 11:19:26,574] I EventLoop.py | Kiwoom-msg_slot-1350 I DEBUG    > 스크린: , 요청이름: , tr코드:  ---  조회가 완료되었습니다.
+[2020-10-16 11:20:54,931] I EventLoop.py | Kiwoom-_event_connect_slot-0095 I DEBUG    > 정상처리
+[2020-10-16 11:20:56,371] I EventLoop.py | Kiwoom-msg_slot-1350 I DEBUG    > 스크린: 2000, 요청이름: 예수금상세현황요청, tr코드: opw00001 --- [00Z310] 모의투자 조회가 완료되었습니다
+[2020-10-16 11:20:56,373] I EventLoop.py | Kiwoom-_tr_data_slot-0160 I DEBUG    > 예수금 : 48818165
+[2020-10-16 11:20:59,919] I EventLoop.py | Kiwoom-msg_slot-1350 I DEBUG    > 스크린: 2000, 요청이름: 계좌평가잔고내역요청, tr코드: opw00018 --- [00Z310] 모의투자 조회가 완료되었습니다
+[2020-10-16 11:20:59,921] I EventLoop.py | Kiwoom-_tr_data_slot-0175 I DEBUG    > 계좌평가잔고내역요청 싱글데이터 : 000000000495000 - -00000000015131 - -00000003.06
+[2020-10-16 11:20:59,922] I EventLoop.py | Kiwoom-_tr_data_slot-0191 I DEBUG    > 종목코드: 289080 - 종목명: SV인베스트먼트                           - 보유수량: 000000000000075 - 매입가:000000000006600 - 수익률: -00000003.06 - 현재가: 000000006460
+[2020-10-16 11:20:59,922] I EventLoop.py | Kiwoom-_tr_data_slot-0214 I DEBUG    > sPreNext : <built-in function next>
+[2020-10-16 11:21:04,946] I EventLoop.py | Kiwoom-msg_slot-1350 I DEBUG    > 스크린: , 요청이름: , tr코드:  ---  조회가 완료되었습니다.
+[2020-10-16 11:22:02,109] I EventLoop.py | Kiwoom-_receive_real_data_slot-1139 I DEBUG    > 매수조건 통과 036460 
+[2020-10-16 11:22:02,109] I EventLoop.py | Kiwoom-_receive_real_data_slot-1140 I DEBUG    > (최우선)매도호가 29050 
+[2020-10-16 11:52:26,268] I EventLoop.py | Kiwoom-_event_connect_slot-0095 I DEBUG    > 정상처리
+[2020-10-16 11:56:47,863] I EventLoop.py | Kiwoom-_event_connect_slot-0095 I DEBUG    > 정상처리
+[2020-10-16 11:58:41,810] I EventLoop.py | Kiwoom-_event_connect_slot-0095 I DEBUG    > 정상처리
+[2020-10-16 12:02:58,787] I EventLoop.py | Kiwoom-_event_connect_slot-0095 I DEBUG    > 정상처리
+[2020-10-16 12:32:00,633] I EventLoop.py | Kiwoom-_event_connect_slot-0095 I DEBUG    > 정상처리
+[2020-10-16 12:40:16,047] I EventLoop.py | Kiwoom-_event_connect_slot-0095 I DEBUG    > 정상처리
+[2020-10-16 12:42:39,515] I EventLoop.py | Kiwoom-_event_connect_slot-0095 I DEBUG    > 정상처리
+[2020-10-16 13:20:32,430] I EventLoop.py | Kiwoom-_event_connect_slot-0095 I DEBUG    > 정상처리
+[2020-10-16 13:23:52,981] I EventLoop.py | Kiwoom-_event_connect_slot-0095 I DEBUG    > 정상처리
+[2020-10-16 13:24:33,990] I EventLoop.py | Kiwoom-_event_connect_slot-0095 I DEBUG    > 정상처리
+[2020-10-16 13:24:55,333] I EventLoop.py | Kiwoom-_event_connect_slot-0095 I DEBUG    > 정상처리
+[2020-10-16 13:26:01,938] I EventLoop.py | Kiwoom-_event_connect_slot-0095 I DEBUG    > 정상처리
+[2020-10-16 13:29:41,748] I EventLoop.py | Kiwoom-_event_connect_slot-0095 I DEBUG    > 정상처리
+[2020-10-16 13:30:35,452] I EventLoop.py | Kiwoom-_event_connect_slot-0095 I DEBUG    > 정상처리
+[2020-10-16 13:31:06,617] I EventLoop.py | Kiwoom-_event_connect_slot-0095 I DEBUG    > 정상처리
+[2020-10-16 13:33:52,334] I EventLoop.py | Kiwoom-_event_connect_slot-0095 I DEBUG    > 정상처리
+[2020-10-16 13:36:23,461] I EventLoop.py | Kiwoom-_event_connect_slot-0095 I DEBUG    > 정상처리
+[2020-10-16 13:37:30,781] I EventLoop.py | Kiwoom-_event_connect_slot-0095 I DEBUG    > 정상처리
+[2020-10-16 14:16:18,007] I EventLoop.py | Kiwoom-_event_connect_slot-0095 I DEBUG    > 정상처리
+[2020-10-16 14:16:18,011] I Signal.py | Kiwoom-call_send_order-0108 I DEBUG    > order_success : None
+[2020-10-16 14:16:20,000] I EventLoop.py | Kiwoom-msg_slot-1391 I DEBUG    > 스크린: 5000, 요청이름: 신규매수, tr코드: KOA_NORMAL_BUY_KP_ORD --- [00Z112] 모의투자 정상처리 되었습니다
+[2020-10-16 14:35:07,535] I EventLoop.py | Kiwoom-_event_connect_slot-0095 I DEBUG    > 정상처리
+[2020-10-16 14:41:36,224] I EventLoop.py | Kiwoom-_event_connect_slot-0095 I DEBUG    > 정상처리
+[2020-10-16 14:44:32,089] I EventLoop.py | Kiwoom-_event_connect_slot-0095 I DEBUG    > 정상처리
+[2020-10-16 14:47:36,862] I EventLoop.py | Kiwoom-_event_connect_slot-0095 I DEBUG    > 정상처리
+[2020-10-16 14:56:12,971] I EventLoop.py | Kiwoom-_event_connect_slot-0096 I DEBUG    > 정상처리
+[2020-10-16 14:58:36,215] I EventLoop.py | Kiwoom-_event_connect_slot-0096 I DEBUG    > 정상처리
+[2020-10-16 15:00:42,257] I EventLoop.py | Kiwoom-_event_connect_slot-0096 I DEBUG    > 정상처리
+[2020-10-16 15:07:08,229] I EventLoop.py | Kiwoom-_event_connect_slot-0096 I DEBUG    > 정상처리
+[2020-10-16 15:08:01,433] I EventLoop.py | Kiwoom-_event_connect_slot-0096 I DEBUG    > 정상처리
+[2020-10-16 15:09:05,165] I EventLoop.py | Kiwoom-_event_connect_slot-0096 I DEBUG    > 정상처리
+[2020-10-16 15:20:02,870] I EventLoop.py | Kiwoom-_receive_real_data_slot-0778 I DEBUG    > 장 종료, 동시호가로 넘어감
+[2020-10-16 15:21:35,779] I EventLoop.py | Kiwoom-_event_connect_slot-0096 I DEBUG    > 정상처리
+[2020-10-16 15:23:09,541] I EventLoop.py | Kiwoom-_event_connect_slot-0096 I DEBUG    > 정상처리
+[2020-10-16 15:24:06,261] I EventLoop.py | Kiwoom-_event_connect_slot-0096 I DEBUG    > 정상처리
+[2020-10-16 15:24:50,929] I EventLoop.py | Kiwoom-_event_connect_slot-0096 I DEBUG    > 정상처리
+[2020-10-16 15:25:45,000] I EventLoop.py | Kiwoom-_event_connect_slot-0096 I DEBUG    > 정상처리
+[2020-10-16 15:26:54,467] I EventLoop.py | Kiwoom-_event_connect_slot-0096 I DEBUG    > 정상처리
+[2020-10-16 15:27:02,561] I EventLoop.py | Kiwoom-_receive_real_data_slot-0778 I DEBUG    > 장 종료, 동시호가로 넘어감
+[2020-10-16 15:28:02,556] I EventLoop.py | Kiwoom-_receive_real_data_slot-0778 I DEBUG    > 장 종료, 동시호가로 넘어감
+[2020-10-16 15:28:18,229] I EventLoop.py | Kiwoom-_event_connect_slot-0096 I DEBUG    > 정상처리
+[2020-10-16 15:29:02,520] I EventLoop.py | Kiwoom-_receive_real_data_slot-0778 I DEBUG    > 장 종료, 동시호가로 넘어감
+[2020-10-16 15:29:12,527] I EventLoop.py | Kiwoom-_receive_real_data_slot-0778 I DEBUG    > 장 종료, 동시호가로 넘어감
+[2020-10-16 15:29:22,541] I EventLoop.py | Kiwoom-_receive_real_data_slot-0778 I DEBUG    > 장 종료, 동시호가로 넘어감
+[2020-10-16 15:29:32,519] I EventLoop.py | Kiwoom-_receive_real_data_slot-0778 I DEBUG    > 장 종료, 동시호가로 넘어감
+[2020-10-16 15:29:42,523] I EventLoop.py | Kiwoom-_receive_real_data_slot-0778 I DEBUG    > 장 종료, 동시호가로 넘어감
+[2020-10-16 15:29:52,552] I EventLoop.py | Kiwoom-_receive_real_data_slot-0778 I DEBUG    > 장 종료, 동시호가로 넘어감
+[2020-10-16 15:30:02,529] I EventLoop.py | Kiwoom-_receive_real_data_slot-0781 I DEBUG    > 3시30분 장 종료
+[2020-10-16 15:30:56,657] I EventLoop.py | Kiwoom-_event_connect_slot-0097 I DEBUG    > 정상처리
+[2020-10-16 15:31:45,851] I EventLoop.py | Kiwoom-_event_connect_slot-0097 I DEBUG    > 정상처리
+[2020-10-16 15:32:58,923] I EventLoop.py | Kiwoom-_event_connect_slot-0097 I DEBUG    > 정상처리
+[2020-10-16 15:34:10,901] I EventLoop.py | Kiwoom-_event_connect_slot-0097 I DEBUG    > 정상처리
+[2020-10-16 15:40:02,574] I EventLoop.py | Kiwoom-_event_connect_slot-0097 I DEBUG    > 정상처리
+[2020-10-16 15:41:46,084] I EventLoop.py | Kiwoom-_event_connect_slot-0097 I DEBUG    > 정상처리
+[2020-10-16 15:43:26,829] I EventLoop.py | Kiwoom-_event_connect_slot-0097 I DEBUG    > 정상처리
+[2020-10-16 15:44:26,033] I EventLoop.py | Kiwoom-_event_connect_slot-0097 I DEBUG    > 정상처리
+[2020-10-16 15:44:46,401] I EventLoop.py | Kiwoom-_event_connect_slot-0097 I DEBUG    > 정상처리
+[2020-10-16 15:50:16,518] I EventLoop.py | Kiwoom-_event_connect_slot-0097 I DEBUG    > 정상처리
+[2020-10-16 15:51:09,625] I EventLoop.py | Kiwoom-_event_connect_slot-0097 I DEBUG    > 정상처리
+[2020-10-16 15:51:46,246] I EventLoop.py | Kiwoom-_event_connect_slot-0097 I DEBUG    > 정상처리
+[2020-10-16 15:52:10,962] I EventLoop.py | Kiwoom-_event_connect_slot-0097 I DEBUG    > 정상처리
+[2020-10-16 15:53:48,023] I EventLoop.py | Kiwoom-_event_connect_slot-0097 I DEBUG    > 정상처리
+[2020-10-16 15:55:31,525] I EventLoop.py | Kiwoom-_event_connect_slot-0097 I DEBUG    > 정상처리
+[2020-10-16 15:56:19,206] I EventLoop.py | Kiwoom-_event_connect_slot-0097 I DEBUG    > 정상처리
+[2020-10-16 15:57:32,859] I EventLoop.py | Kiwoom-_event_connect_slot-0097 I DEBUG    > 정상처리
+[2020-10-16 15:58:32,333] I EventLoop.py | Kiwoom-_event_connect_slot-0097 I DEBUG    > 정상처리
+[2020-10-16 16:00:59,052] I EventLoop.py | Kiwoom-_event_connect_slot-0097 I DEBUG    > 정상처리
+[2020-10-16 16:01:17,975] I EventLoop.py | Kiwoom-_event_connect_slot-0097 I DEBUG    > 정상처리
+[2020-10-16 16:02:17,702] I EventLoop.py | Kiwoom-_event_connect_slot-0097 I DEBUG    > 정상처리
+[2020-10-16 16:03:58,526] I EventLoop.py | Kiwoom-_event_connect_slot-0097 I DEBUG    > 정상처리
+[2020-10-16 16:05:09,057] I EventLoop.py | Kiwoom-_event_connect_slot-0097 I DEBUG    > 정상처리
+[2020-10-16 16:05:39,736] I EventLoop.py | Kiwoom-_event_connect_slot-0097 I DEBUG    > 정상처리
+[2020-10-16 16:09:33,617] I EventLoop.py | Kiwoom-_event_connect_slot-0097 I DEBUG    > 정상처리
+[2020-10-16 16:10:23,437] I EventLoop.py | Kiwoom-_event_connect_slot-0097 I DEBUG    > 정상처리
+[2020-10-16 16:12:01,544] I EventLoop.py | Kiwoom-_event_connect_slot-0097 I DEBUG    > 정상처리
+[2020-10-16 16:12:20,302] I EventLoop.py | Kiwoom-_event_connect_slot-0097 I DEBUG    > 정상처리
+[2020-10-16 16:15:37,587] I EventLoop.py | Kiwoom-_event_connect_slot-0097 I DEBUG    > 정상처리
+[2020-10-16 16:16:27,327] I EventLoop.py | Kiwoom-_event_connect_slot-0097 I DEBUG    > 정상처리
+[2020-10-16 16:18:55,241] I EventLoop.py | Kiwoom-_event_connect_slot-0097 I DEBUG    > 정상처리
+[2020-10-16 16:21:00,834] I EventLoop.py | Kiwoom-_event_connect_slot-0097 I DEBUG    > 정상처리
+[2020-10-16 16:21:46,020] I EventLoop.py | Kiwoom-_event_connect_slot-0097 I DEBUG    > 정상처리
+[2020-10-16 16:22:24,195] I EventLoop.py | Kiwoom-_event_connect_slot-0097 I DEBUG    > 정상처리
+[2020-10-16 16:26:06,693] I EventLoop.py | Kiwoom-_event_connect_slot-0097 I DEBUG    > 정상처리
+[2020-10-16 16:26:44,719] I EventLoop.py | Kiwoom-_event_connect_slot-0097 I DEBUG    > 정상처리
+[2020-10-16 16:28:27,008] I EventLoop.py | Kiwoom-_event_connect_slot-0097 I DEBUG    > 정상처리
+[2020-10-16 16:29:08,327] I EventLoop.py | Kiwoom-_event_connect_slot-0097 I DEBUG    > 정상처리
+[2020-10-16 16:29:27,517] I EventLoop.py | Kiwoom-_event_connect_slot-0097 I DEBUG    > 정상처리
+[2020-10-16 16:29:45,791] I EventLoop.py | Kiwoom-_event_connect_slot-0097 I DEBUG    > 정상처리
+[2020-10-16 16:30:12,433] I EventLoop.py | Kiwoom-_event_connect_slot-0097 I DEBUG    > 정상처리
+[2020-10-16 16:31:11,593] I EventLoop.py | Kiwoom-_event_connect_slot-0097 I DEBUG    > 정상처리
+[2020-10-16 16:32:02,373] I EventLoop.py | Kiwoom-_event_connect_slot-0097 I DEBUG    > 정상처리
+[2020-10-16 16:34:04,668] I EventLoop.py | Kiwoom-_event_connect_slot-0097 I DEBUG    > 정상처리
+[2020-10-16 16:35:24,210] I EventLoop.py | Kiwoom-_event_connect_slot-0097 I DEBUG    > 정상처리
+[2020-10-16 16:55:40,058] I EventLoop.py | Kiwoom-_event_connect_slot-0097 I DEBUG    > 정상처리
+[2020-10-16 16:56:15,926] I EventLoop.py | Kiwoom-_event_connect_slot-0097 I DEBUG    > 정상처리
+[2020-10-16 17:21:35,177] I EventLoop.py | Kiwoom-_event_connect_slot-0097 I DEBUG    > 정상처리
+[2020-10-16 17:48:03,450] I EventLoop.py | Kiwoom-_event_connect_slot-0097 I DEBUG    > 정상처리
+[2020-10-16 18:31:00,005] I EventLoop.py | Kiwoom-_event_connect_slot-0097 I DEBUG    > 정상처리
+[2020-10-16 23:31:51,636] I EventLoop.py | Kiwoom-_event_connect_slot-0097 I DEBUG    > 정상처리
+[2020-10-16 23:33:59,283] I EventLoop.py | Kiwoom-_event_connect_slot-0097 I DEBUG    > 정상처리

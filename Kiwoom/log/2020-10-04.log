@@ -1,0 +1,37 @@
+[2020-10-04 00:27:39,435] I Signal.py | Kiwoom-screen_number_setting-0159 I DEBUG    > screen_number_setting portfolio_stock_dict : {'004770': {'주문용스크린번호': '6001', '추천사유': 'daytr', '전일종가': 4335, '스크린번호': '5001'}}
+[2020-10-04 11:42:01,028] I Signal.py | Kiwoom-screen_number_setting-0159 I DEBUG    > screen_number_setting portfolio_stock_dict : {'004770': {'스크린번호': '5001', '전일종가': 4335, '작업구분': 'daytr', '주문용스크린번호': '6001'}}
+[2020-10-04 11:44:37,101] I Signal.py | Kiwoom-screen_number_setting-0159 I DEBUG    > screen_number_setting portfolio_stock_dict : {'004770': {'작업구분': 'daytr', '주문용스크린번호': '6001', '스크린번호': '5001', '전일종가': 4335}}
+[2020-10-04 12:35:00,061] I EventLoop.py | Kiwoom-_event_connect_slot-0055 I DEBUG    > 정상처리
+[2020-10-04 12:46:39,990] I EventLoop.py | Kiwoom-_event_connect_slot-0055 I DEBUG    > 정상처리
+[2020-10-04 12:48:44,096] I EventLoop.py | Kiwoom-_event_connect_slot-0055 I DEBUG    > 정상처리
+[2020-10-04 12:49:56,764] I EventLoop.py | Kiwoom-_event_connect_slot-0055 I DEBUG    > 정상처리
+[2020-10-04 12:51:19,560] I EventLoop.py | Kiwoom-_event_connect_slot-0055 I DEBUG    > 정상처리
+[2020-10-04 12:52:19,861] I EventLoop.py | Kiwoom-_event_connect_slot-0055 I DEBUG    > 정상처리
+[2020-10-04 12:53:27,921] I EventLoop.py | Kiwoom-_event_connect_slot-0055 I DEBUG    > 정상처리
+[2020-10-04 12:55:01,329] I EventLoop.py | Kiwoom-_event_connect_slot-0055 I DEBUG    > 정상처리
+[2020-10-04 12:59:41,129] I EventLoop.py | Kiwoom-_event_connect_slot-0056 I DEBUG    > 정상처리
+[2020-10-04 13:00:30,004] I EventLoop.py | Kiwoom-_event_connect_slot-0056 I DEBUG    > 정상처리
+[2020-10-04 13:01:56,934] I EventLoop.py | Kiwoom-_event_connect_slot-0056 I DEBUG    > 정상처리
+[2020-10-04 13:03:57,442] I EventLoop.py | Kiwoom-_event_connect_slot-0056 I DEBUG    > 정상처리
+[2020-10-04 16:02:55,348] I EventLoop.py | Kiwoom-_event_connect_slot-0076 I DEBUG    > 정상처리
+[2020-10-04 16:03:21,690] I EventLoop.py | Kiwoom-_event_connect_slot-0076 I DEBUG    > 정상처리
+[2020-10-04 16:03:21,725] I EventLoop.py | Kiwoom-msg_slot-0879 I DEBUG    > 스크린: 2000, 요청이름: 예수금상세현황요청, tr코드: opw00001 --- [00Z310] 모의투자 조회가 완료되었습니다
+[2020-10-04 16:03:21,727] I EventLoop.py | Kiwoom-_tr_data_slot-0113 I DEBUG    > 예수금 : 50000000
+[2020-10-04 16:14:49,261] I EventLoop.py | Kiwoom-_event_connect_slot-0083 I DEBUG    > 정상처리
+[2020-10-04 16:14:49,296] I EventLoop.py | Kiwoom-msg_slot-0883 I DEBUG    > 스크린: 2000, 요청이름: 예수금상세현황요청, tr코드: opw00001 --- [00Z310] 모의투자 조회가 완료되었습니다
+[2020-10-04 16:14:49,298] I EventLoop.py | Kiwoom-_tr_data_slot-0120 I DEBUG    > 예수금 : 50000000
+[2020-10-04 16:14:49,375] I EventLoop.py | Kiwoom-msg_slot-0883 I DEBUG    > 스크린: 2000, 요청이름: 계좌평가잔고내역요청, tr코드: opw00018 --- [00Z310] 모의투자 조회가 완료되었습니다
+[2020-10-04 16:14:49,377] I EventLoop.py | Kiwoom-_tr_data_slot-0135 I DEBUG    > 계좌평가잔고내역요청 싱글데이터 : 000000000000000 - 000000000000000 - 000000000.00
+[2020-10-04 16:14:49,377] I EventLoop.py | Kiwoom-_tr_data_slot-0174 I DEBUG    > sPreNext : <built-in function next>
+[2020-10-04 16:21:48,088] I EventLoop.py | Kiwoom-_event_connect_slot-0083 I DEBUG    > 정상처리
+[2020-10-04 16:21:48,177] I EventLoop.py | Kiwoom-msg_slot-0878 I DEBUG    > 스크린: 2000, 요청이름: 예수금상세현황요청, tr코드: opw00001 --- [00Z310] 모의투자 조회가 완료되었습니다
+[2020-10-04 16:21:48,178] I EventLoop.py | Kiwoom-_tr_data_slot-0120 I DEBUG    > 예수금 : 50000000
+[2020-10-04 16:21:48,350] I EventLoop.py | Kiwoom-msg_slot-0878 I DEBUG    > 스크린: 2000, 요청이름: 계좌평가잔고내역요청, tr코드: opw00018 --- [00Z310] 모의투자 조회가 완료되었습니다
+[2020-10-04 16:21:48,351] I EventLoop.py | Kiwoom-_tr_data_slot-0135 I DEBUG    > 계좌평가잔고내역요청 싱글데이터 : 000000000000000 - 000000000000000 - 000000000.00
+[2020-10-04 16:21:48,352] I EventLoop.py | Kiwoom-_tr_data_slot-0174 I DEBUG    > sPreNext : <built-in function next>
+[2020-10-04 16:21:53,366] I EventLoop.py | Kiwoom-msg_slot-0878 I DEBUG    > 스크린: , 요청이름: , tr코드:  ---  조회가 완료되었습니다.
+[2020-10-04 16:33:00,292] I EventLoop.py | Kiwoom-_event_connect_slot-0083 I DEBUG    > 정상처리
+[2020-10-04 16:35:00,400] I EventLoop.py | Kiwoom-_event_connect_slot-0083 I DEBUG    > 정상처리
+[2020-10-04 16:35:28,923] I EventLoop.py | Kiwoom-_event_connect_slot-0083 I DEBUG    > 정상처리
+[2020-10-04 16:37:25,143] I EventLoop.py | Kiwoom-_event_connect_slot-0083 I DEBUG    > 정상처리
+[2020-10-04 16:53:01,277] I EventLoop.py | Kiwoom-_event_connect_slot-0083 I DEBUG    > 정상처리
