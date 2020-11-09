@@ -114,7 +114,7 @@ class Analyzer():
 
             is_buy_timing = False
 
-            ma5 = df['close'].rolling(window=5).mean()
+            df['ma5'] = df['close'].rolling(window=5).mean()
             # ma5_dpc = (ma5 / ma5.shift(1) - 1) * 100
             ma10 = df['close'].rolling(window=10).mean()
             # ma10_dpc = (ma10 / ma10.shift(1) - 1) * 100
@@ -135,18 +135,47 @@ class Analyzer():
                 '''
                 1차로 5 > 10 > 20 > 60 
                 '''
-                if ma5[-1] > ma10[-1] and ma10[-1] > ma20[-1] and ma20[-1] > ma60[-1]:
+                if df['ma5'][-1] > ma10[-1] and ma10[-1] > ma20[-1] and ma20[-1] > ma60[-1]:
                     is_buy_timing = True
 
             else:
                 '''
                 2. 종가가 240선 아래일 때
                 '''
-                pass
+                m5_pct_change = df['ma5'].pct_change(3) #5일선 3봉 변화율
+
+                if m5_pct_change[-1] < 0: # 5일선 3봉 하강이다가
+                    if df['close'][-1] > df['open'][-1]: # 양봉
+                        is_buy_timing = True
 
             return is_buy_timing
 
         except Exception as ex:
             # self.logging.logger.debug("get_target_price() -> exception! {} ".format(str(ex)))
             print("get_buy_timing() -> exception! {} ".format(str(ex)))
+            return None
+
+
+        
+    def bollinger_band(self, minute_df): # 볼린저 밴드
+        '''
+        볼린저 밴드
+        :param code:
+        :return:
+        '''
+        try:
+
+            org_df = minute_df.copy()
+            df = org_df[['close', 'low']]
+            sigma = 2
+            n = 20
+            df['center'] = df['close'].rolling(n).mean()  # 중앙 이동평균선
+            df['ub'] = df['center'] + sigma * df['close'].rolling(n).std()  # 상단 밴드
+            df['lb'] = df['center'] - sigma * df['close'].rolling(n).std()  # 하단 밴드
+
+            return df
+
+        except Exception as ex:
+            # self.logging.logger.debug("get_target_price() -> exception! {} ".format(str(ex)))
+            print("bollinger_band() -> exception! {} ".format(str(ex)))
             return None

@@ -17,7 +17,7 @@ class Signal:
         self.real_type = RealType()
         self.logging = Logging()
 
-        self.init_dict = {"매수매도": "매수", "순매수리스트": [], "전환점여부": False, "체결량리스트": [], "대량체결여부": False,
+        self.init_dict = {"매수매도": "매수", "순매수리스트": [], "매도우선호가리스트": [], "전환점여부": False, "체결량리스트": [], "세력체결조절여부": False,
                           "이평선허락": False, "신호": False}
 
         self.portfolio_stock_dict = {}
