@@ -30,16 +30,14 @@ if __name__  == "__main__":
     signal.screen_number_setting()
     # QTest.qWait(5000) #5초
     #
-    # sched = BackgroundScheduler()
-    #
-    # sched.add_job(signal.get_condition_load, 'cron', hour='09', minute='02', second="59", id='test')
-    #
-    # sched.start()
+    sched = BackgroundScheduler()
+    sched.add_job(signal.get_condition_load, 'cron', hour='09', minute='01', second="00", id='test')
+    sched.start()
 
     # signal.get_condition_load()
 
-    # screenNumbering = RealTimeScreenNumbering(signal)
-    # screenNumbering.start()
+    screenNumbering = RealTimeScreenNumbering(signal)
+    screenNumbering.start()
     #
     minuteCandle = MinuteCandle(signal)
     minuteCandle.start()
@@ -64,10 +62,10 @@ if __name__  == "__main__":
 
     app.exec_()
 
-    # count = 0
-    # while True:  # 이걸 안 하면 sched가 끝나버린다고 함
-    #     print("Running main process...............")
-    #     time.sleep(1)
+    count = 0
+    while True:  # 이걸 안 하면 sched가 끝나버린다고 함
+        print("Running main process...............")
+        time.sleep(1)
     #     count += 1
     #     if count == 10:
     #         sched.remove_job("test")

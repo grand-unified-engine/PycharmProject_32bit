@@ -36,7 +36,7 @@ if __name__  == "__main__":
     #
     # sched.start()
 
-    # signal.get_condition_load()
+    signal.get_condition_load()
 
     # sched.add_job(signal.gathering_money_fuc, 'cron', second=30, start_date=signal.event_loop.today + ' 09:02:00',
     #               end_date=signal.event_loop.today + ' 15:30:00', args=(['2']))
@@ -46,7 +46,7 @@ if __name__  == "__main__":
 
     # signal.event_loop.sign_volume_req(code="289080")
     # signal.minute_candle_req(code="021080")
-    signal.day_kiwoom_db(code="114450")
+    # signal.day_kiwoom_db(code="114450")
     # signal.calculator_fuc()
     # signal.volume_uprise_req("1", "500", "1") # 거래량 급증 요청
 

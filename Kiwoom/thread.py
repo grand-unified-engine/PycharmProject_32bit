@@ -28,7 +28,7 @@ class RealTimeScreenNumbering(QThread):
         while True:
             # print("RealTimeScreenNumbering self.signal.another_job_stop : {}".format(self.signal.another_job_stop))
             # if not self.signal.another_job_stop:
-            self.signal.real_time_new_portfolio_fuc()
+            # self.signal.real_time_new_portfolio_fuc() # 포트폴리오 테이블에 넣을 때
             self.signal.real_time_condition_stock_fuc()
             self.signal.screen_number_real_time_setting()
             # self.signal.another_job_stop = True

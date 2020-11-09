@@ -3,7 +3,7 @@ from PyQt5.QtTest import QTest
 import pandas as pd
 from datetime import datetime
 from Kiwoom.KiwoomAPI import ErrorCode
-from slacker import Slacker
+# from slacker import Slacker
 from Kiwoom.config.MariaDB import MarketDB
 import sys
 import numpy as np
@@ -21,8 +21,8 @@ class EventLoop:
 
         self.today = datetime.today().strftime('%Y-%m-%d')
 
-        token = 'xoxb-1383363554548-1362462106343-PcF4KAsYG6QVSIRkAuKXyhSa'
-        self.slack = Slacker(token)
+        # token = 'xoxb-1383363554548-1362462106343-PcF4KAsYG6QVSIRkAuKXyhSa'
+        # self.slack = Slacker(token)
 
         self.mk = MarketDB()
 
@@ -115,9 +115,9 @@ class EventLoop:
 
         condition_name_list = condition_name_list.split(";")[:-1]
 
-        condition_name_list = [x for x in condition_name_list if x.split("^")[1] == "2음봉+장악형 검색기"]
+        condition_name_list = [x for x in condition_name_list if x.split("^")[1] == "자비스전달종목"]
 
-        self.api.send_condition("0156", condition_name_list[0].split("^")[1], condition_name_list[0].split("^")[0], 1)  # 조회요청 + 실시간 조회
+        self.api.send_condition("0156", condition_name_list[0].split("^")[1], condition_name_list[0].split("^")[0], 0)  # 조회요청 + 실시간 조회
 
         # for unit_condition in condition_name_list:
         #     index = unit_condition.split("^")[0]
@@ -853,7 +853,7 @@ class EventLoop:
 
             elif value == '3':
                 self.logging.logger.debug("장 시작")
-                self.slack.chat.post_message("hellojarvis", self.today + "장 시작했습니다.")
+                # self.slack.chat.post_message("hellojarvis", self.today + "장 시작했습니다.")
 
             elif value == "2":
                 # 3시 20분부터 1분마다 신호 보내줌
@@ -861,7 +861,7 @@ class EventLoop:
 
             elif value == "4":
                 self.logging.logger.debug("3시30분 장 종료")
-                self.slack.chat.post_message("hellojarvis", self.today + "장 종료됐습니다.")
+                # self.slack.chat.post_message("hellojarvis", self.today + "장 종료됐습니다.")
 
                 for code in self.portfolio_stock_dict.keys():
                     self.api.set_real_remove(self.portfolio_stock_dict[code]['스크린번호'], code)
@@ -897,7 +897,7 @@ class EventLoop:
             i = self.api.get_comm_real_data(sCode, self.real_type.REALTYPE[sRealType]['매수호가직전대비1'])
             i = int(i)
 
-            # 굿!!
+
             if sCode in self.portfolio_stock_dict:
                 if self.portfolio_stock_dict[sCode]["매수매도"] == "매도":
                     c_list = self.portfolio_stock_dict[sCode]["순매수리스트"]
@@ -1056,7 +1056,7 @@ class EventLoop:
                             self.portfolio_stock_dict[sCode].update({"신호": False})
 
             if self.portfolio_stock_dict[sCode]["매수매도"] == "매수":
-                # self.portfolio_stock_dict[sCode].update({"신호": False})
+                self.portfolio_stock_dict[sCode].update({"신호": False})
                 # g_list = self.portfolio_stock_dict[sCode]["체결량리스트"]
                 # if len(g_list) == 10:
                 #     if sum(g_list) > 20000:  # 연속 10개 체결량이 20,000이 넘을 때
@@ -1066,17 +1066,17 @@ class EventLoop:
                 #         self.portfolio_stock_dict[sCode].update({"대량체결여부": False}) #
                 #     g_list.pop(0)
                 # g_list.append(g)
-                #
-                # if self.portfolio_stock_dict[sCode]["전환점여부"]:
-                #     if self.portfolio_stock_dict[sCode]["대량체결여부"]:
-                #         if self.portfolio_stock_dict[sCode]["이평선허락"]:
-                #             self.portfolio_stock_dict[sCode].update({"신호": True})
-                #         else:
-                #             self.portfolio_stock_dict[sCode].update({"신호": False})
-                if self.portfolio_stock_dict[sCode]["이평선허락"]:
-                    self.portfolio_stock_dict[sCode].update({"신호": True})
-                else:
-                    self.portfolio_stock_dict[sCode].update({"신호": False})
+
+                if self.portfolio_stock_dict[sCode]["전환점여부"]:
+                    if self.portfolio_stock_dict[sCode]["대량체결여부"]:
+                        if self.portfolio_stock_dict[sCode]["이평선허락"]:
+                            self.portfolio_stock_dict[sCode].update({"신호": True})
+                        else:
+                            self.portfolio_stock_dict[sCode].update({"신호": False})
+                # if self.portfolio_stock_dict[sCode]["이평선허락"]:
+                #     self.portfolio_stock_dict[sCode].update({"신호": True})
+                # else:
+                #     self.portfolio_stock_dict[sCode].update({"신호": False})
             '''
             장중일 때 테스트 구간 end
             '''
@@ -1204,8 +1204,8 @@ class EventLoop:
 
             # 여기는 매수
             # elif d > 2.0 and sCode not in self.jango_dict:
-            # elif sCode not in self.jango_dict:
-            elif 1 == 2:
+            elif sCode not in self.jango_dict:
+            # elif 1 == 2:
             #     if len(self.portfolio_stock_dict) <= 10:
                 if sCode in self.portfolio_stock_dict: # 포트폴리오에 있을 때
                     if "매수매도" in self.portfolio_stock_dict[sCode]:
