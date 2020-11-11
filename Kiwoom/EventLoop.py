@@ -135,7 +135,8 @@ class EventLoop:
         # self.logging.logger.debug("화면번호: %s, 종목코드 리스트: %s, 조건식 이름: %s, 조건식 인덱스: %s, 연속조회: %s" % (sScrNo, strCodeList, strConditionName, index, nNext))
 
         code_list = strCodeList.split(";")[:-1]
-        self.logging.logger.debug("코드 종목 \n %s" % code_list)
+        # self.logging.logger.debug("코드 종목 \n %s" % code_list)
+        # self.logging.logger.debug("코드 개수 \n %s" % len(code_list))
 
         for code in code_list:
             if code not in (self.portfolio_stock_dict or self.condition_stock):
@@ -420,7 +421,7 @@ class EventLoop:
         elif sRQName == "주식분봉차트조회": # opt10080 : 주식분봉차트조회요청 (single, multi)
 
             # self.logging.logger.debug('{}'.format(ErrorCode.errors(unused2)[1]))
-            print("주식분봉차트조회 slot")
+            print("주식분봉차트조회 slot, test_code : {}".format(self.test_code))
             # print("self.test_code : {}".format(self.test_code))
 
             ex_data = self.api.get_comm_data_ex(sTrCode, sRQName)
@@ -905,16 +906,21 @@ class EventLoop:
 
                     if len(d_list) == 2:
                         if 1000 < d <= 4000:
-                            if d < d_list[-1] - 50: # 매도호가가 확 내려갔을 때
+                            if d <= d_list[-1] - 50: # 매도호가가 확 내려갔을 때
                                 if c > 0: # 순매수가 +이면
+                                    self.logging.logger.debug("매도 종목코드 : {}, 매도호가 : {}, 시간 : {}".format(sCode, d, hoga_time))
                                     self.portfolio_stock_dict[sCode].update({"전환점여부": True})
                         elif 4000 < d <= 10000:
-                            if d < d_list[-1] - 150: # 매도호가가 확 내려갔을 때
+                            if d <= d_list[-1] - 150: # 매도호가가 확 내려갔을 때
                                 if c > 0: # 순매수가 +이면
+                                    self.logging.logger.debug(
+                                        "매도 종목코드 : {}, 매도호가 : {}, 시간 : {}".format(sCode, d, hoga_time))
                                     self.portfolio_stock_dict[sCode].update({"전환점여부": True})
                         elif 10000 < d <= 50000:
-                            if d < d_list[-1] -300: # 매도호가가 확 내려갔을 때
+                            if d <= d_list[-1] -300: # 매도호가가 확 내려갔을 때
                                 if c > 0: # 순매수가 +이면
+                                    self.logging.logger.debug(
+                                        "매도 종목코드 : {}, 매도호가 : {}, 시간 : {}".format(sCode, d, hoga_time))
                                     self.portfolio_stock_dict[sCode].update({"전환점여부": True})
                         d_list.pop(0)
                     d_list.append(d)
@@ -936,16 +942,22 @@ class EventLoop:
 
                     if len(d_list) == 2:
                         if 1000 < d <= 4000:
-                            if d > d_list[-1] + 15: # 매도호가가 15원 오를 때
+                            if d >= d_list[-1] + 15: # 매도호가가 15원 오를 때
                                 if c > 0: # 순매수가 +이면
+                                    self.logging.logger.debug(
+                                        "매수 종목코드 : {}, 매도호가 : {}, 시간 : {}".format(sCode, d, hoga_time))
                                     self.portfolio_stock_dict[sCode].update({"전환점여부": True})
                         elif 4000 < d <= 10000:
-                            if d > d_list[-1] + 100: # 매도호가가 100원 오를 때
+                            if d >= d_list[-1] + 100: # 매도호가가 100원 오를 때
                                 if c > 0: # 순매수가 +이면
+                                    self.logging.logger.debug(
+                                        "매수 종목코드 : {}, 매도호가 : {}, 시간 : {}".format(sCode, d, hoga_time))
                                     self.portfolio_stock_dict[sCode].update({"전환점여부": True})
                         elif 10000 < d <= 50000:
-                            if d > d_list[-1] + 200: # 매도호가가 200원 오를 때
+                            if d >= d_list[-1] + 200: # 매도호가가 200원 오를 때
                                 if c > 0: # 순매수가 +이면
+                                    self.logging.logger.debug(
+                                        "매수 종목코드 : {}, 매도호가 : {}, 시간 : {}".format(sCode, d, hoga_time))
                                     self.portfolio_stock_dict[sCode].update({"전환점여부": True})
                         d_list.pop(0)
                     d_list.append(d)
@@ -1075,9 +1087,10 @@ class EventLoop:
                 g_list = self.portfolio_stock_dict[sCode]["체결량리스트"]
                 if len(g_list) == 10:
                     if len([z for z in g_list if z > 0]) == 0: # 연속 10개 -
-                        # self.logging.logger.debug("매수 종목코드 : {}, 연속 10개 체결량이 20,000이 넘을 때 : {}".format(sCode, a))
+                        self.logging.logger.debug("매도 종목코드 : {}, 연속 10개 체결량이 -일 때 : {}".format(sCode, a))
                         self.portfolio_stock_dict[sCode].update({"세력체결조절여부": True})
                     elif len([z for z in g_list if z < 0]) == 0: # 연속 10개 +
+                        self.logging.logger.debug("매도 종목코드 : {}, 매도조건 이탈 : {}".format(sCode, a))
                         self.portfolio_stock_dict[sCode].update({"세력체결조절여부": False})
                     g_list.pop(0)
                 g_list.append(g)
@@ -1095,9 +1108,10 @@ class EventLoop:
                 g_list = self.portfolio_stock_dict[sCode]["체결량리스트"]
                 if len(g_list) == 10:
                     if len([z for z in g_list if z < 0]) == 0: # 연속 10개 +
-                        # self.logging.logger.debug("매수 종목코드 : {}, 연속 10개 체결량이 20,000이 넘을 때 : {}".format(sCode, a))
+                        self.logging.logger.debug("매수 종목코드 : {}, 연속 10개 체결량이 +일 때 : {}".format(sCode, a))
                         self.portfolio_stock_dict[sCode].update({"세력체결조절여부": True})
                     elif len([z for z in g_list if z > 0]) == 0: # 연속 10개 -
+                        self.logging.logger.debug("매수 종목코드 : {}, 매수조건 이탈 : {}".format(sCode, a))
                         self.portfolio_stock_dict[sCode].update({"세력체결조절여부": False}) #
                     g_list.pop(0)
                 g_list.append(g)

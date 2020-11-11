@@ -30,11 +30,12 @@ if __name__  == "__main__":
     signal.screen_number_setting()
     # QTest.qWait(5000) #5초
     #
-    sched = BackgroundScheduler()
-    sched.add_job(signal.get_condition_load, 'cron', hour='09', minute='01', second="00", id='test')
-    sched.start()
+    # sched = BackgroundScheduler()
+    # sched.add_job(signal.get_condition_load, 'cron', hour='09', minute='01', second="00", id='test')
+    # sched.start()
 
-    # signal.get_condition_load()
+    signal.get_condition_load()
+    QTest.qWait(500)  # 0.5초
 
     screenNumbering = RealTimeScreenNumbering(signal)
     screenNumbering.start()

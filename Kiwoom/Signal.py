@@ -246,14 +246,14 @@ class Signal:
             cnt += 1
 
         QTest.qWait(500)  # 분봉호출보다 real_data reg가 먼저 작업되어서 추가
-        for code in screen_overwrite:
-            screen_num = self.portfolio_stock_dict[code]['스크린번호']
-            # fids = self.real_type.REALTYPE['주식체결']['체결시간']
-            a = self.real_type.REALTYPE['주식호가잔량']['매도호가총잔량']
-            b = self.real_type.REALTYPE['주식체결']['체결시간']
-            fids = str(a) + ';' + str(b)
-            # fids = b
-            self.call_set_real_reg(screen_num, code, fids, "1")
+        # for code in screen_overwrite:
+        #     screen_num = self.portfolio_stock_dict[code]['스크린번호']
+        #     # fids = self.real_type.REALTYPE['주식체결']['체결시간']
+        #     a = self.real_type.REALTYPE['주식호가잔량']['매도호가총잔량']
+        #     b = self.real_type.REALTYPE['주식체결']['체결시간']
+        #     fids = str(a) + ';' + str(b)
+        #     # fids = b
+        #     self.call_set_real_reg(screen_num, code, fids, "1")
 
 
 
@@ -568,7 +568,7 @@ class Signal:
 
     # 분봉 데이터
     def minute_candle_req(self, code=None):
-        # QTest.qWait(3600)
+        QTest.qWait(300)
 
         # print("minute_candle_req code : {}".format(code))
         self.event_loop.test_code = code
@@ -716,8 +716,8 @@ class Signal:
                 max_hm = self.portfolio_stock_dict[code]['최종작업시간'] #초기 분봉 호출, make_minute_candle_func작업 마지막에
                 add_real_data_dict = {key: value for key, value in copy_real_data_dict.items() if key > max_hm}
                 # {'114622': {'close': [2430], 'volume': [10]}, '114616': {'close': [2425], 'volume': [200]}}
-
-                self.portfolio_stock_dict[code].update({'최종작업시간': max(copy_real_data_dict.keys())}) # 실시간 꺼로 업데이트
+                if copy_real_data_dict:
+                    self.portfolio_stock_dict[code].update({'최종작업시간': max(copy_real_data_dict.keys())}) # 실시간 꺼로 업데이트
 
                 key_list = list(add_real_data_dict.keys())
                 # ['121522', '121520', '121523']

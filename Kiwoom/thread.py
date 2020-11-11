@@ -32,6 +32,6 @@ class RealTimeScreenNumbering(QThread):
             self.signal.real_time_condition_stock_fuc()
             self.signal.screen_number_real_time_setting()
             # self.signal.another_job_stop = True
-            time.sleep(3)
+            time.sleep(180)
 
 
