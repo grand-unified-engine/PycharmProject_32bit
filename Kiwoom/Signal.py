@@ -4,7 +4,7 @@ from PyQt5.QtCore import QEventLoop
 from Kiwoom.KiwoomAPI import Api, RealType
 from Kiwoom.EventLoop import EventLoop
 from Kiwoom.config.log_class import Logging
-from Kiwoom.config.MariaDB import MarketDB
+# from Kiwoom.config.MariaDB import MarketDB
 from Kiwoom.quant.Analyzer_daily import Analyzer as Analyzer_daily
 from Kiwoom.quant.Analyzer_minute import Analyzer as Analyzer_minute
 import pandas as pd
@@ -17,16 +17,18 @@ class Signal:
         self.real_type = RealType()
         self.logging = Logging()
 
-        self.init_dict = {"매수매도": "매수", "순매수리스트": [], "매도우선호가리스트": [], "전환점여부": False, "체결량리스트": [], "세력체결조절여부": False,
-                          "이평선허락": False, "신호": False}
+        # self.init_dict = {"매수매도": "매수", "순매수리스트": [], "매도우선호가리스트": [], "매도호가직전대비1": [], "전환점여부": False, "체결량리스트": [], "세력체결조절여부": False,
+        #                   "이평선허락": False, "신호": False}
+
+        self.init_dict = {"매수매도": "매수", "이평선허락": False, "신호": False}
 
         self.portfolio_stock_dict = {}
 
-        self.mk = MarketDB()
+        # self.mk = MarketDB()
         self.analyzer_daily = Analyzer_daily()
         self.analyzer_minute = Analyzer_minute()
 
-        self.read_code()
+        # self.read_code()
 
         self.event_loop = EventLoop(self.api, self.real_type, self.logging, self.portfolio_stock_dict,
                                     self.analyzer_daily, self.analyzer_minute)
@@ -135,11 +137,11 @@ class Signal:
             # read_code에서 넣으므로 여기 매수매도 키 안 넣어도 됨
             self.minute_candle_req(code=code)  # 시스템 시작할 때 분봉 데이터를 가져온다.
 
-            with self.mk.conn.cursor() as curs:
-                sql = "UPDATE portfolio_stock SET is_receive_real = True WHERE code = '{}'" \
-                    .format(code)
-                curs.execute(sql)
-                self.mk.conn.commit()
+            # with self.mk.conn.cursor() as curs:
+            #     sql = "UPDATE portfolio_stock SET is_receive_real = True WHERE code = '{}'" \
+            #         .format(code)
+            #     curs.execute(sql)
+            #     self.mk.conn.commit()
 
         # print("self.self.portfolio_stock_dict 스크린 넘버 세팅: {}".format(self.self.portfolio_stock_dict))
 
@@ -235,11 +237,11 @@ class Signal:
             # print("screen_number_real_time_setting 코드: {}, dict: {}".format(code, self.portfolio_stock_dict[code]))
             #
             # if code not in self.event_loop.condition_stock:
-            with self.mk.conn.cursor() as curs:
-                sql = "UPDATE portfolio_stock SET is_receive_real = True WHERE code = '{}'" \
-                    .format(code)
-                curs.execute(sql)
-                self.mk.conn.commit()
+            # with self.mk.conn.cursor() as curs:
+            #     sql = "UPDATE portfolio_stock SET is_receive_real = True WHERE code = '{}'" \
+            #         .format(code)
+            #     curs.execute(sql)
+            #     self.mk.conn.commit()
 
             self.event_loop.real_data_dict.update({code: {}})  # 실시간 분봉 만들기 위한 dict 2020-10-26
 
@@ -285,7 +287,7 @@ class Signal:
         # print("real_time_condition_stock_fuc : {}".format(self.event_loop.condition_stock))
 
         copy_condition_stock = self.event_loop.condition_stock.copy()
-
+        i = 1
         for code in copy_condition_stock:
             if "portfolio_stock_dict추가여부" not in self.event_loop.condition_stock[code]:
                 # print("조건검색 새로 들어왔따: {}".format(code))
@@ -293,8 +295,11 @@ class Signal:
                     if code == '096350' or code == '96040':  # 096350(대창솔루션) 모의투자 매매 불가능
                         continue
 
+                if i > 18:
+                    break
                 self.event_loop.condition_stock[code].update({"portfolio_stock_dict추가여부": True})
                 self.portfolio_stock_dict.update({code: self.init_dict})
+            i += 1
 
     '''
     * 거래량 급증 종목 기준
@@ -767,7 +772,7 @@ class Signal:
                 df = pd.DataFrame(self.event_loop.minute_candle_dict[code])
                 df = df.T
 
-                print("df : {}".format(df))
+                # print("df : {}".format(df))
 
                 # self.event_loop.minute_candle_dict[code].update({"df_minute": df})
 

@@ -4,7 +4,7 @@ import pandas as pd
 from datetime import datetime
 from Kiwoom.KiwoomAPI import ErrorCode
 # from slacker import Slacker
-from Kiwoom.config.MariaDB import MarketDB
+# from Kiwoom.config.MariaDB import MarketDB
 import sys
 import numpy as np
 
@@ -24,7 +24,7 @@ class EventLoop:
         # token = 'xoxb-1383363554548-1362462106343-PcF4KAsYG6QVSIRkAuKXyhSa'
         # self.slack = Slacker(token)
 
-        self.mk = MarketDB()
+        # self.mk = MarketDB()
 
         ########## event loop를 실행하기 위한 변수 모음
         self.login_event_loop = QEventLoop() # 로그인을 요청하고 안전하게 완료될 때까지 기다리게 만들기 위한 이벤트 루프 변수
@@ -427,7 +427,7 @@ class EventLoop:
             ex_data = self.api.get_comm_data_ex(sTrCode, sRQName)
             # print("ex_data : {}".format(ex_data))
 
-            self._opt10080(ex_data)
+            self._opt10080_test(ex_data)
 
             self.api.set_real_remove(self.screen_calculation_stock, self.test_code)
             # self.api.disconnect_real_data(self.screen_calculation_stock)
@@ -868,7 +868,7 @@ class EventLoop:
                     self.api.set_real_remove(self.portfolio_stock_dict[code]['스크린번호'], code)
 
                 sys.exit()
-        elif sRealType == "주식호가잔량":
+        elif sRealType == "주식호가잔량": # 초단위
             hoga_time = self.api.get_comm_real_data(sCode, self.real_type.REALTYPE[sRealType]['호가시간'])  # 출력 HHMMSS
 
             a = self.api.get_comm_real_data(sCode, self.real_type.REALTYPE[sRealType]['매도호가총잔량'])
@@ -883,8 +883,8 @@ class EventLoop:
             d = self.api.get_comm_real_data(sCode, self.real_type.REALTYPE[sRealType]['매도호가1'])
             d = int(d)
 
-            e = self.api.get_comm_real_data(sCode, self.real_type.REALTYPE[sRealType]['매도호가수량1'])
-            e = int(e)
+            # e = self.api.get_comm_real_data(sCode, self.real_type.REALTYPE[sRealType]['매도호가수량1'])
+            # e = int(e)
 
             f = self.api.get_comm_real_data(sCode, self.real_type.REALTYPE[sRealType]['매도호가직전대비1'])
             f = int(f)
@@ -899,31 +899,31 @@ class EventLoop:
             i = int(i)
 
 
-            if sCode in self.portfolio_stock_dict:
-                if self.portfolio_stock_dict[sCode]["매수매도"] == "매도":
-                    # c_list = self.portfolio_stock_dict[sCode]["순매수리스트"]
-                    d_list = self.portfolio_stock_dict[sCode]["매도우선호가리스트"]
-
-                    if len(d_list) == 2:
-                        if 1000 < d <= 4000:
-                            if d <= d_list[-1] - 50: # 매도호가가 확 내려갔을 때
-                                if c > 0: # 순매수가 +이면
-                                    self.logging.logger.debug("매도 종목코드 : {}, 매도호가 : {}, 시간 : {}".format(sCode, d, hoga_time))
-                                    self.portfolio_stock_dict[sCode].update({"전환점여부": True})
-                        elif 4000 < d <= 10000:
-                            if d <= d_list[-1] - 150: # 매도호가가 확 내려갔을 때
-                                if c > 0: # 순매수가 +이면
-                                    self.logging.logger.debug(
-                                        "매도 종목코드 : {}, 매도호가 : {}, 시간 : {}".format(sCode, d, hoga_time))
-                                    self.portfolio_stock_dict[sCode].update({"전환점여부": True})
-                        elif 10000 < d <= 50000:
-                            if d <= d_list[-1] -300: # 매도호가가 확 내려갔을 때
-                                if c > 0: # 순매수가 +이면
-                                    self.logging.logger.debug(
-                                        "매도 종목코드 : {}, 매도호가 : {}, 시간 : {}".format(sCode, d, hoga_time))
-                                    self.portfolio_stock_dict[sCode].update({"전환점여부": True})
-                        d_list.pop(0)
-                    d_list.append(d)
+            # if sCode in self.portfolio_stock_dict:
+            #     if self.portfolio_stock_dict[sCode]["매수매도"] == "매도":
+            #         # c_list = self.portfolio_stock_dict[sCode]["순매수리스트"]
+            #         d_list = self.portfolio_stock_dict[sCode]["매도우선호가리스트"]
+            #
+            #         if len(d_list) == 2:
+            #             if 1000 < d <= 4000: # 매도호가1
+            #                 if d <= d_list[-1] - 50: # 매도호가가 확 내려갔을 때
+            #                     if c > 0: # 순매수가 +이면
+            #                         self.logging.logger.debug("매도 종목코드 : {}, 매도호가 : {}, 시간 : {}".format(sCode, d, hoga_time))
+            #                         self.portfolio_stock_dict[sCode].update({"전환점여부": True})
+            #             elif 4000 < d <= 10000:
+            #                 if d <= d_list[-1] - 150: # 매도호가가 확 내려갔을 때
+            #                     if c > 0: # 순매수가 +이면
+            #                         self.logging.logger.debug(
+            #                             "매도 종목코드 : {}, 매도호가 : {}, 시간 : {}".format(sCode, d, hoga_time))
+            #                         self.portfolio_stock_dict[sCode].update({"전환점여부": True})
+            #             elif 10000 < d <= 50000:
+            #                 if d <= d_list[-1] -300: # 매도호가가 확 내려갔을 때
+            #                     if c > 0: # 순매수가 +이면
+            #                         self.logging.logger.debug(
+            #                             "매도 종목코드 : {}, 매도호가 : {}, 시간 : {}".format(sCode, d, hoga_time))
+            #                         self.portfolio_stock_dict[sCode].update({"전환점여부": True})
+            #             d_list.pop(0)
+            #         d_list.append(d)
 
                     # if len(c_list) == 10:
                     #     if len([z for z in c_list if z > 0]) == 0: # 연속 10개 총매수가 더 많다가 (계속 상승하다가)
@@ -936,31 +936,35 @@ class EventLoop:
                     #     c_list.pop(0)
                     # c_list.append(c)
 
-                if self.portfolio_stock_dict[sCode]["매수매도"] == "매수":
-                    # c_list = self.portfolio_stock_dict[sCode]["순매수리스트"]
-                    d_list = self.portfolio_stock_dict[sCode]["매도우선호가리스트"]
-
-                    if len(d_list) == 2:
-                        if 1000 < d <= 4000:
-                            if d >= d_list[-1] + 15: # 매도호가가 15원 오를 때
-                                if c > 0: # 순매수가 +이면
-                                    self.logging.logger.debug(
-                                        "매수 종목코드 : {}, 매도호가 : {}, 시간 : {}".format(sCode, d, hoga_time))
-                                    self.portfolio_stock_dict[sCode].update({"전환점여부": True})
-                        elif 4000 < d <= 10000:
-                            if d >= d_list[-1] + 100: # 매도호가가 100원 오를 때
-                                if c > 0: # 순매수가 +이면
-                                    self.logging.logger.debug(
-                                        "매수 종목코드 : {}, 매도호가 : {}, 시간 : {}".format(sCode, d, hoga_time))
-                                    self.portfolio_stock_dict[sCode].update({"전환점여부": True})
-                        elif 10000 < d <= 50000:
-                            if d >= d_list[-1] + 200: # 매도호가가 200원 오를 때
-                                if c > 0: # 순매수가 +이면
-                                    self.logging.logger.debug(
-                                        "매수 종목코드 : {}, 매도호가 : {}, 시간 : {}".format(sCode, d, hoga_time))
-                                    self.portfolio_stock_dict[sCode].update({"전환점여부": True})
-                        d_list.pop(0)
-                    d_list.append(d)
+                # if self.portfolio_stock_dict[sCode]["매수매도"] == "매수":
+                #     # c_list = self.portfolio_stock_dict[sCode]["순매수리스트"]
+                #     d_list = self.portfolio_stock_dict[sCode]["매도우선호가리스트"]
+                #     f_list = self.portfolio_stock_dict[sCode]["매도호가직전대비1"]
+                #
+                #     if len(d_list) == 2:
+                #         if 1000 < d <= 4000: # 매도호가1
+                #             if d >= d_list[-1] + 20: # 매도호가가 20원 오를 때
+                #                 if c < 0: # 순매수가 -이면
+                #                     if f < 0: # 매도호가직전대비1이 -이면
+                #                         self.logging.logger.debug(
+                #                             "매수 종목코드 : {}, 매도호가 : {}, 시간 : {}".format(sCode, d, hoga_time))
+                #                         self.portfolio_stock_dict[sCode].update({"전환점여부": True})
+                #         elif 4000 < d <= 10000:
+                #             if d >= d_list[-1] + 100: # 매도호가가 100원 오를 때
+                #                 if c > 0: # 순매수가 +이면
+                #                     self.logging.logger.debug(
+                #                         "매수 종목코드 : {}, 매도호가 : {}, 시간 : {}".format(sCode, d, hoga_time))
+                #                     self.portfolio_stock_dict[sCode].update({"전환점여부": True})
+                #         elif 10000 < d <= 50000:
+                #             if d >= d_list[-1] + 200: # 매도호가가 200원 오를 때
+                #                 if c > 0: # 순매수가 +이면
+                #                     self.logging.logger.debug(
+                #                         "매수 종목코드 : {}, 매도호가 : {}, 시간 : {}".format(sCode, d, hoga_time))
+                #                     self.portfolio_stock_dict[sCode].update({"전환점여부": True})
+                #         d_list.pop(0)
+                #         f_list.pop(0)
+                #     d_list.append(d)
+                #     f_list.append(f)
 
                     # if len(c_list) == 10:
                     #     if len([z for z in c_list if z < 0]) == 0: # 연속 10개 총매수가 더 많다가 (계속 하락하다가)
@@ -979,7 +983,7 @@ class EventLoop:
 
 
 
-        elif sRealType == "주식체결":
+        elif sRealType == "주식체결": #틱단위
             # self.api.set_real_remove("0168", "ALL") # opt10023 : 거래량급증요청 호출해서 등록된 거 삭제
             # self.api.set_real_remove(self.screen_calculation_stock, sCode)  # 주식분봉차트조회 opt10080 호출해서 등록된 거 삭제
 
@@ -1014,8 +1018,9 @@ class EventLoop:
             i = self.api.get_comm_real_data(sCode, self.real_type.REALTYPE[sRealType]['고가'])  # 출력 : +(-)2520
             i = abs(int(i))
 
-            j = self.api.get_comm_real_data(sCode, self.real_type.REALTYPE[sRealType]['시가'])  # 출력 : +(-)2520
-            j = abs(int(j))
+            # 당일 시가
+            # j = self.api.get_comm_real_data(sCode, self.real_type.REALTYPE[sRealType]['시가'])  # 출력 : +(-)2520
+            # j = abs(int(j))
 
             k = self.api.get_comm_real_data(sCode, self.real_type.REALTYPE[sRealType]['저가'])  # 출력 : +(-)2520
             k = abs(int(k))
@@ -1076,56 +1081,56 @@ class EventLoop:
                 if "volume" not in self.real_data_dict[sCode][a]:
                     self.real_data_dict[sCode][a].update({"volume": []})
                 self.real_data_dict[sCode][a]["volume"].append(abs(g))
-                # if "open" not in self.real_data_dict[sCode][a]:
-                #     self.real_data_dict[sCode][a].update({"open": []})
-                # self.real_data_dict[sCode][a]["open"].append(j)
 
                 # print("self.real_data_dict - real slot : {}".format(self.real_data_dict[sCode]))
 
-            if self.portfolio_stock_dict[sCode]["매수매도"] == "매도":
+            if self.portfolio_stock_dict[sCode]["이평선허락"]:
+                self.portfolio_stock_dict[sCode].update({"신호": True})
+            else:
                 self.portfolio_stock_dict[sCode].update({"신호": False})
-                g_list = self.portfolio_stock_dict[sCode]["체결량리스트"]
-                if len(g_list) == 10:
-                    if len([z for z in g_list if z > 0]) == 0: # 연속 10개 -
-                        self.logging.logger.debug("매도 종목코드 : {}, 연속 10개 체결량이 -일 때 : {}".format(sCode, a))
-                        self.portfolio_stock_dict[sCode].update({"세력체결조절여부": True})
-                    elif len([z for z in g_list if z < 0]) == 0: # 연속 10개 +
-                        self.logging.logger.debug("매도 종목코드 : {}, 매도조건 이탈 : {}".format(sCode, a))
-                        self.portfolio_stock_dict[sCode].update({"세력체결조절여부": False})
-                    g_list.pop(0)
-                g_list.append(g)
 
-                if self.portfolio_stock_dict[sCode]["전환점여부"]:
-                    if self.portfolio_stock_dict[sCode]["세력체결조절여부"]:
-                        # if self.portfolio_stock_dict[sCode]["이평선허락"]:
-                        self.portfolio_stock_dict[sCode].update({"신호": True})
-                        # else:
-                    else:
-                        self.portfolio_stock_dict[sCode].update({"신호": False})
 
-            if self.portfolio_stock_dict[sCode]["매수매도"] == "매수":
-                self.portfolio_stock_dict[sCode].update({"신호": False})
-                g_list = self.portfolio_stock_dict[sCode]["체결량리스트"]
-                if len(g_list) == 10:
-                    if len([z for z in g_list if z < 0]) == 0: # 연속 10개 +
-                        self.logging.logger.debug("매수 종목코드 : {}, 연속 10개 체결량이 +일 때 : {}".format(sCode, a))
-                        self.portfolio_stock_dict[sCode].update({"세력체결조절여부": True})
-                    elif len([z for z in g_list if z > 0]) == 0: # 연속 10개 -
-                        self.logging.logger.debug("매수 종목코드 : {}, 매수조건 이탈 : {}".format(sCode, a))
-                        self.portfolio_stock_dict[sCode].update({"세력체결조절여부": False}) #
-                    g_list.pop(0)
-                g_list.append(g)
-
-                if self.portfolio_stock_dict[sCode]["전환점여부"]:
-                    if self.portfolio_stock_dict[sCode]["세력체결조절여부"]:
-                        if self.portfolio_stock_dict[sCode]["이평선허락"]:
-                            self.portfolio_stock_dict[sCode].update({"신호": True})
-                        else:
-                            self.portfolio_stock_dict[sCode].update({"신호": False})
-                # if self.portfolio_stock_dict[sCode]["이평선허락"]:
-                #     self.portfolio_stock_dict[sCode].update({"신호": True})
-                # else:
-                #     self.portfolio_stock_dict[sCode].update({"신호": False})
+            # if self.portfolio_stock_dict[sCode]["매수매도"] == "매도":
+            #     self.portfolio_stock_dict[sCode].update({"신호": False})
+            #     g_list = self.portfolio_stock_dict[sCode]["체결량리스트"]
+            #     if len(g_list) == 10:
+            #         if len([z for z in g_list if z > 0]) == 0: # 연속 10개 -
+            #             self.logging.logger.debug("매도 종목코드 : {}, 연속 10개 체결량이 -일 때 : {}".format(sCode, a))
+            #             self.portfolio_stock_dict[sCode].update({"세력체결조절여부": True})
+            #         elif len([z for z in g_list if z < 0]) == 0: # 연속 10개 +
+            #             self.logging.logger.debug("매도 종목코드 : {}, 매도조건 이탈 : {}".format(sCode, a))
+            #             self.portfolio_stock_dict[sCode].update({"세력체결조절여부": False})
+            #         g_list.pop(0)
+            #     g_list.append(g)
+            #
+            #     if self.portfolio_stock_dict[sCode]["전환점여부"]:
+            #         if self.portfolio_stock_dict[sCode]["세력체결조절여부"]:
+            #             # if self.portfolio_stock_dict[sCode]["이평선허락"]:
+            #             self.portfolio_stock_dict[sCode].update({"신호": True})
+            #             # else:
+            #         else:
+            #             self.portfolio_stock_dict[sCode].update({"신호": False})
+            #
+            #
+            # if self.portfolio_stock_dict[sCode]["매수매도"] == "매수":
+            #     self.portfolio_stock_dict[sCode].update({"신호": False})
+            #     g_list = self.portfolio_stock_dict[sCode]["체결량리스트"]
+            #     if len(g_list) == 2: #체결량리스트 갯수 조절용
+            #         if g_list[-1] == abs(self.portfolio_stock_dict[sCode]["매도호가직전대비1"][-1]):
+            #             self.logging.logger.debug("매수 종목코드 : {}, 이전체결량 : {}, 현재매도호가직전대비1 : {}".format(sCode, g_list[-1], abs(self.portfolio_stock_dict[sCode]["매도호가직전대비1"][-1])))
+            #             self.portfolio_stock_dict[sCode].update({"세력체결조절여부": True})
+            #         # elif len([z for z in g_list if z > 0]) == 0: # 연속 10개 -
+            #         #     self.logging.logger.debug("매수 종목코드 : {}, 매수조건 이탈 : {}".format(sCode, a))
+            #         #     self.portfolio_stock_dict[sCode].update({"세력체결조절여부": False}) #
+            #         g_list.pop(0)
+            #     g_list.append(g)
+            #
+            #     if self.portfolio_stock_dict[sCode]["전환점여부"]:
+            #         if self.portfolio_stock_dict[sCode]["세력체결조절여부"]:
+            #             if self.portfolio_stock_dict[sCode]["이평선허락"]:
+            #                 self.portfolio_stock_dict[sCode].update({"신호": True})
+            #             else:
+            #                 self.portfolio_stock_dict[sCode].update({"신호": False})
             '''
             장중일 때 테스트 구간 end
             '''
@@ -1456,10 +1461,10 @@ class EventLoop:
             else:
                 # 매수일 때
                 self.portfolio_stock_dict[sCode].update({"매수매도": "매도"})
-                self.portfolio_stock_dict[sCode].update({"순매수리스트": []})
-                self.portfolio_stock_dict[sCode].update({"전환점여부": False})
-                self.portfolio_stock_dict[sCode].update({"체결량리스트": []})
-                self.portfolio_stock_dict[sCode].update({"세력체결조절여부": False})
+                # self.portfolio_stock_dict[sCode].update({"순매수리스트": []})
+                # self.portfolio_stock_dict[sCode].update({"전환점여부": False})
+                # self.portfolio_stock_dict[sCode].update({"체결량리스트": []})
+                # self.portfolio_stock_dict[sCode].update({"세력체결조절여부": False})
                 self.portfolio_stock_dict[sCode].update({"신호": False})
                 self.portfolio_stock_dict[sCode].update({"이평선허락": False})
 
@@ -1517,30 +1522,56 @@ class EventLoop:
 
         df.index = pd.to_datetime(df.date)
 
-        df = df[['close', 'volumn', 'open', 'high', 'low']]
+        # df = df[['close', 'volumn', 'open', 'high', 'low']]
+        #
+        # df[['close', 'volumn', 'open', 'high', 'low']] = df[
+        #     ['close', 'volumn', 'open', 'high', 'low']].astype(int)
 
-        df[['close', 'volumn', 'open', 'high', 'low']] = df[
-            ['close', 'volumn', 'open', 'high', 'low']].astype(int)
+        df = df[['close']]
+
+        df[['close']] = df[
+            ['close']].astype(int)
 
         # df는 현재에서 과거로, final_df는 과거에서 현재로 - 이평선 컬럼 만들기 위해
         final_df = df.sort_index()
 
-        final_df = final_df[final_df.index.strftime('%Y-%m-%d %H:%M') <= '2020-10-29 11:14:00']
+        # final_df = final_df[final_df.index.strftime('%Y-%m-%d %H:%M') <= '2020-11-13 15:30:00']
+        # final_df = final_df.loc['2020-11-13 09:00:00':]
 
-        final_df['close'] = final_df['close'].abs()
+        book = final_df.copy()
+        book['trade'] = ''
+
+        # final_df['close'] = final_df['close'].abs()
+        #
+        final_df['MA5'] = final_df['close'].rolling(window=5).mean()
+        final_df['MA10'] = final_df['close'].rolling(window=10).mean()
+        final_df['MA20'] = final_df['close'].rolling(window=20).mean()
+        # final_df['MA240'] = final_df['close'].rolling(window=240).mean()
+        # final_df['bandwidth5-20'] = ((final_df['MA5'] - final_df['MA20']) / ((final_df['MA5'] + final_df['MA20']) / 2)) * 100
+        final_df['stddev'] = final_df['close'].rolling(window=20).std()
+        final_df['upper'] = final_df['MA20'] + (final_df['stddev'] * 2)
+        final_df['lower'] = final_df['MA20'] - (final_df['stddev'] * 2)
+        final_df['bandwidth'] = (final_df['upper'] - final_df['lower']) / final_df['MA20'] * 100
+
+        for i in final_df.index:
+            '''
+            1차로 5 > 10 > 20
+            '''
+            if final_df.loc[i, 'MA5'] > final_df.loc[i, 'MA10'] > final_df.loc[i, 'MA20']:
+                if 2 < final_df.loc[i, 'bandwidth'] < 3.1:  # 밴드폭이 2~3.1 사이
+                    book.loc[i, 'trade'] = 'buy'
+
+        book = book[book['trade'] == 'buy']
+
+        print(book.tail(300))
 
         # np.abs(final_df['close'])
 
-        ma5 = final_df['close'].rolling(window=5).mean()
-        ma5_dpc = (ma5 / ma5.shift(1) - 1) * 100
-        ma10 = final_df['close'].rolling(window=10).mean()
-        ma10_dpc = (ma10 / ma10.shift(1) - 1) * 100
-        ma20 = final_df['close'].rolling(window=20).mean()
-        ma20_dpc = (ma20 / ma20.shift(1) - 1) * 100
-        ma60 = final_df['close'].rolling(window=60).mean()
-        ma60_dpc = (ma60 / ma60.shift(1) - 1) * 100
-        ma120 = final_df['close'].rolling(window=120).mean()
-        ma120_dpc = (ma120 / ma120.shift(1) - 1) * 100
+        # ma5 = final_df['close'].rolling(window=5).mean()
+        # ma10 = final_df['close'].rolling(window=10).mean()
+        # ma20 = final_df['close'].rolling(window=20).mean()
+        # ma60 = final_df['close'].rolling(window=60).mean()
+        # ma120 = final_df['close'].rolling(window=120).mean()
 
         # print("ma5 : {}".format(ma5))
         # print("ma5_dpc : {}".format(ma5_dpc))
@@ -1552,10 +1583,10 @@ class EventLoop:
         # print("final_df['low'] : {}".format(final_df['low'][-1]))
         # print("ma120 : {}".format(ma120))
 
-        print("final_df['low'][-1] : {}".format(final_df['low'][-1]))
-        print("ma120[-1] : {}".format(ma120[-1]))
-
-        print("gab : {}".format((final_df['low'][-1]/ ma120[-1] - 1) * 100))
+        # print("final_df['low'][-1] : {}".format(final_df['low'][-1]))
+        # print("ma120[-1] : {}".format(ma120[-1]))
+        #
+        # print("gab : {}".format((final_df['low'][-1]/ ma120[-1] - 1) * 100))
 
 
 

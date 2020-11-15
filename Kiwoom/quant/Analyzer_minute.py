@@ -8,51 +8,38 @@ class Analyzer():
     def get_sell_timing(self, minute_df, stock_code):
         try:
 
-            df = minute_df
+            df = minute_df.copy()
 
             is_sell_timing = False
 
-            ma5 = df['close'].rolling(window=5).mean()
-            ma5_dpc = (ma5 / ma5.shift(1) - 1) * 100
+            df['MA3'] = df['close'].rolling(window=3).mean()
+            df['MA5'] = df['close'].rolling(window=5).mean()
             ma10 = df['close'].rolling(window=10).mean()
-            ma10_dpc = (ma10 / ma10.shift(1) - 1) * 100
-            ma20 = df['close'].rolling(window=20).mean()
-            ma20_dpc = (ma20 / ma20.shift(1) - 1) * 100
-            ma60 = df['close'].rolling(window=60).mean()
-            ma60_dpc = (ma60 / ma60.shift(1) - 1) * 100
+            df['MA20'] = df['close'].rolling(window=20).mean()
+            df['MA60'] = df['close'].rolling(window=60).mean()
             ma120 = df['close'].rolling(window=120).mean()
-            ma120_dpc = (ma120 / ma120.shift(1) - 1) * 100
-
             ma240 = df['close'].rolling(window=240).mean()
+            df['bandwidth3-20'] = ((df['MA3'] - df['MA20']) / (
+                        (df['MA3'] + df['MA20']) / 2)) * 100
 
             # 홀딩해서 수익 극대화 하는 방법 찾기 - 일봉, 주봉 좋은 종목으로 판단?
             '''
             1. 종가가 240선 위일 때
             '''
             if df['close'][-1] > ma240[-1]:
-
-                if ma5_dpc[-1] > 0 and ma10_dpc[-1] > 0 and ma20_dpc[-1] > 0:
-                    if ma5[-1] > ma10[-1] > ma20[-1]:
-                        is_sell_timing = False
-                        # portfolio_stock_dict.update({"전환점여부": False})
-                        # portfolio_stock_dict.update({"대량체결여부": False})
-                else:
-                    '''
-                    고점매도. 
-                    '''
-                    is_candle_rise = False
-                    for i in range(2, 5):  # end값은 반복범위에 포함되지 않음
-                        if df['close'][-i] >= df['open'][-i]:
-                            is_candle_rise = True
-                        else:
-                            is_candle_rise = False
-
-                    if ma5[-1] > ma10[-1] and ma20[-1]: # 5, 10, 20선 다 상승
-                        if is_candle_rise: # 2~4전 캔들이 모두 양봉
-                            if df['close'][-1] <= df['open'][-1]: # 현재 분봉이 음봉일 때
-                                is_sell_timing = True
-                                print("고점매도 : {} ".format(stock_code))
-
+                '''
+                단기에 끌어올림
+                2020.11.14
+                '''
+                if df['bandwidth3-20'][-1] > 8 or df['bandwidth3-20'][-2] > 8:
+                    is_sell_timing = True
+                '''
+                세력이탈 이탈 매도
+                2020.11.14 
+                '''
+                if (df['MA60'][-1] > df['MA20'][-1]) or (df['MA60'][-2] > df['MA20'][-2]): # 60선이 20선 위로 올라섰을 때
+                    if df['open'][-1] > df['close'][-1] and df['open'][-2] > df['close'][-2] and df['open'][-3] > df['close'][-3]: #연속 3음봉이면
+                        is_sell_timing = True
                     '''
                     추세 이탈 매도
                     2020.10.22 호가잔량으로 확인하도록 변경해서 우선 막음
@@ -80,20 +67,20 @@ class Analyzer():
                 '''
                 무조건 매도
                 '''
-                if ma5_dpc[-1] < 0 and ma10_dpc[-1] < 0 and ma20_dpc[-1] < 0 and ma60_dpc[-1] < 0 and ma120_dpc[-1] < 0:  # 모든 선 다 내려가면
-                    is_sell_timing = True
-                    print("무조건 매도 : {} ".format(stock_code))
+                # if ma5_dpc[-1] < 0 and ma10_dpc[-1] < 0 and ma20_dpc[-1] < 0 and ma60_dpc[-1] < 0:  # 모든 선 다 내려가면
+                #     is_sell_timing = True
+                #     print("무조건 매도 : {} ".format(stock_code))
 
-            else:
-                '''
-                2. 종가가 240선 아래일 때
-                '''
-                '''
-                무조건 매도
-                '''
-                if ma5_dpc[-1] < 0 and ma10_dpc[-1] < 0 and ma20_dpc[-1] < 0 and ma60_dpc[-1] < 0:  # 모든 선 다 내려가면
-                    is_sell_timing = True
-                    print("무조건 매도 : {} ".format(stock_code))
+            # else:
+            #     '''
+            #     2. 종가가 240선 아래일 때
+            #     '''
+            #     '''
+            #     무조건 매도
+            #     '''
+            #     if ma5_dpc[-1] < 0 and ma10_dpc[-1] < 0 and ma20_dpc[-1] < 0 and ma60_dpc[-1] < 0:  # 모든 선 다 내려가면
+            #         is_sell_timing = True
+            #         print("무조건 매도 : {} ".format(stock_code))
 
             return is_sell_timing
 
@@ -115,16 +102,10 @@ class Analyzer():
             is_buy_timing = False
 
             df['ma5'] = df['close'].rolling(window=5).mean()
-            # ma5_dpc = (ma5 / ma5.shift(1) - 1) * 100
             ma10 = df['close'].rolling(window=10).mean()
-            # ma10_dpc = (ma10 / ma10.shift(1) - 1) * 100
             ma20 = df['close'].rolling(window=20).mean()
-            # ma20_dpc = (ma20 / ma20.shift(1) - 1) * 100
             ma60 = df['close'].rolling(window=60).mean()
-            # ma60_dpc = (ma60 / ma60.shift(1) - 1) * 100
             ma120 = df['close'].rolling(window=120).mean()
-            # ma120_dpc = (ma120 / ma120.shift(1) - 1) * 100
-
             ma240 = df['close'].rolling(window=240).mean()
 
 
@@ -133,10 +114,12 @@ class Analyzer():
             '''
             if df['close'][-1] > ma240[-1]:
                 '''
-                1차로 5 > 10 > 20 > 60 
+                1차로 5 > 10 > 20
                 '''
-                if df['ma5'][-1] > ma10[-1] and ma10[-1] > ma20[-1] and ma20[-1] > ma60[-1]:
-                    is_buy_timing = True
+                if df['ma5'][-1] > ma10[-1] > ma20[-1]:
+                    b_df = self.bollinger_band(minute_df)
+                    if (2 < b_df['bandwidth'][-1] < 3.1) or (2 < b_df['bandwidth'][-2] < 3.1): #밴드폭이 2~3.1 사이
+                        is_buy_timing = True
 
             else:
                 '''
@@ -169,9 +152,10 @@ class Analyzer():
             df = org_df[['close', 'low']]
             sigma = 2
             n = 20
-            df['center'] = df['close'].rolling(n).mean()  # 중앙 이동평균선
-            df['ub'] = df['center'] + sigma * df['close'].rolling(n).std()  # 상단 밴드
-            df['lb'] = df['center'] - sigma * df['close'].rolling(n).std()  # 하단 밴드
+            df['center'] = df['close'].rolling(window=n).mean()  # 중앙 이동평균선
+            df['ub'] = df['center'] + sigma * df['close'].rolling(window=n).std()  # 상단 밴드
+            df['lb'] = df['center'] - sigma * df['close'].rolling(window=n).std()  # 하단 밴드
+            df['bandwidth'] = (df['ub'] - df['lb']) / df['center'] * 100
 
             return df
 
