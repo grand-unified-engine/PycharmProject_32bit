@@ -768,18 +768,15 @@ class Signal:
 
                             self.event_loop.minute_candle_dict[code][date].update({"close": value[1]["close"][-1]})
 
-
                 df = pd.DataFrame(self.event_loop.minute_candle_dict[code])
                 df = df.T
 
                 # print("df : {}".format(df))
 
-                # self.event_loop.minute_candle_dict[code].update({"df_minute": df})
-
                 if self.portfolio_stock_dict[code]["매수매도"] == "매수":
                     result = self.analyzer_minute.get_buy_timing(df)
                 else:
-                    result = self.analyzer_minute.get_sell_timing(df, stock_code=code)
+                    result = self.analyzer_minute.get_sell_timing(df)
                 self.portfolio_stock_dict[code].update({"이평선허락": result})
 
 

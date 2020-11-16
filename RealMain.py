@@ -8,7 +8,6 @@ from apscheduler.schedulers.background import BackgroundScheduler
 
 import time
 
-
 if __name__  == "__main__":
     print("Main() start")
 
@@ -39,10 +38,9 @@ if __name__  == "__main__":
 
     screenNumbering = RealTimeScreenNumbering(signal)
     screenNumbering.start()
-    #
+
     minuteCandle = MinuteCandle(signal)
     minuteCandle.start()
-
 
     # sched.add_job(signal.gathering_money_fuc, 'cron', second=30, start_date=signal.event_loop.today + ' 09:02:00',
     #               end_date=signal.event_loop.today + ' 15:30:00', args=(['2']))
@@ -50,20 +48,9 @@ if __name__  == "__main__":
     # sched.add_job(signal.get_condition_load, 'interval', seconds=10)
     # sched.start()
 
-    # signal.event_loop.sign_volume_req(code="289080")
-    # signal.minute_candle_req(code="289080")
-    # signal.calculator_fuc()
-    # signal.volume_uprise_req("1", "500", "1") # 거래량 급증 요청
-
-    # signal.new_high_req()  # 신고저가요청
-
-    # signal.gathering_money_fuc()
-
-    # signal.portfolio_sche_fuc()
-
     app.exec_()
 
-    count = 0
+    # count = 0
     while True:  # 이걸 안 하면 sched가 끝나버린다고 함
         print("Running main process...............")
         time.sleep(1)
