@@ -5,7 +5,7 @@ class Analyzer():
     def get_sell_timing(self, minute_df):
         try:
 
-            df = minute_df.copy()
+            df = minute_df
 
             is_sell_timing = False
 
@@ -18,13 +18,24 @@ class Analyzer():
             # ma240 = df['close'].rolling(window=240).mean()
             df['MA3_dpc'] = df['MA3'].pct_change()
             df['MA10_dpc'] = df['MA10'].pct_change()
-            df['MA20_dpc'] = df['MA20'].pct_change()
+            df['MA20_dpc5'] = df['MA20'].pct_change(5)
 
-            if df['MA3_dpc'][-2] >= 0 and df['MA3_dpc'][-1] < 0:  # 3일선이 상향에서 하향으로 변경
-                if df['MA10_dpc'][-2] > 0 and df['MA20_dpc'][-2] > 0:
-                    if df['close'][-1] < df['open'][-1]:  # 현재 음봉
-                        if df['close'][-1] < df['MA3'][-1] < df['open'][-1]:
-                            is_sell_timing = True
+            max_close = max(df['close'][-50:])
+            min_close = min(df['close'][-50:])
+
+            self.bollinger_band(df)
+
+            if round(df['ub'][-1]) == round(df['lb'][-1]):
+                if df['close'][-1] == max_close:
+                    is_sell_timing = True
+            else:
+                if df['close'][-1] > min_close * 1.05:
+                    if df['MA20_dpc5'][-1] < 0:
+                        if df['MA3_dpc'][-2] >= 0 and df['MA3_dpc'][-1] < 0:  # 3일선이 상향에서 하향으로 변경
+                            # if df['MA10_dpc'][-2] > 0 and df['MA20_dpc'][-2] > 0:
+                                if df['close'][-1] < df['open'][-1]:  # 현재 음봉
+                                    if df['close'][-1] < df['MA3'][-1] < df['open'][-1]:
+                                        is_sell_timing = True
 
             return is_sell_timing
 
@@ -58,7 +69,7 @@ class Analyzer():
                     if df['close'][-1] > df['open'][-1]: # 현재 양봉
                         # if final_df.loc[i, 'open'] == final_df.loc[i, 'low']: # 저가와 시가가 같을 때
                         if df['close'][-1] > df['ub'][-1] > df['open'][-1]:  # 볼린저 밴드 상향선 돌파
-                            if df['volumn'][-1] > df['volumn'][-2] * 20:  # 거래량 급증
+                            if df['volumn'][-1] > df['volumn'][-2] * 4:  # 거래량 급증
                                 is_buy_timing = True
                 elif df['bandwidth'][-2] > 2:
                     if df['MA10_dpc'][-2] > 0.00075:

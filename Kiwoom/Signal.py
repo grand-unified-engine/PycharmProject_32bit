@@ -248,14 +248,14 @@ class Signal:
             cnt += 1
 
         QTest.qWait(500)  # 분봉호출보다 real_data reg가 먼저 작업되어서 추가
-        # for code in screen_overwrite:
-        #     screen_num = self.portfolio_stock_dict[code]['스크린번호']
-        #     # fids = self.real_type.REALTYPE['주식체결']['체결시간']
-        #     a = self.real_type.REALTYPE['주식호가잔량']['매도호가총잔량']
-        #     b = self.real_type.REALTYPE['주식체결']['체결시간']
-        #     fids = str(a) + ';' + str(b)
-        #     # fids = b
-        #     self.call_set_real_reg(screen_num, code, fids, "1")
+        for code in screen_overwrite:
+            screen_num = self.portfolio_stock_dict[code]['스크린번호']
+            # fids = self.real_type.REALTYPE['주식체결']['체결시간']
+            a = self.real_type.REALTYPE['주식호가잔량']['매도호가총잔량']
+            b = self.real_type.REALTYPE['주식체결']['체결시간']
+            fids = str(a) + ';' + str(b)
+            # fids = b
+            self.call_set_real_reg(screen_num, code, fids, "1")
 
 
 
@@ -289,16 +289,18 @@ class Signal:
         copy_condition_stock = self.event_loop.condition_stock.copy()
         i = 1
         for code in copy_condition_stock:
-            if "portfolio_stock_dict추가여부" not in self.event_loop.condition_stock[code]:
-                # print("조건검색 새로 들어왔따: {}".format(code))
+            if not copy_condition_stock[code]['portfolio_stock_dict추가여부']:
+                print("조건검색 새로 들어왔따: {}".format(code))
                 if self.api.server_gubun == "1":
                     if code == '096350' or code == '96040':  # 096350(대창솔루션) 모의투자 매매 불가능
                         continue
 
-                if i > 18:
-                    break
                 self.event_loop.condition_stock[code].update({"portfolio_stock_dict추가여부": True})
                 self.portfolio_stock_dict.update({code: self.init_dict})
+
+                if i > 12:
+                    break
+
             i += 1
 
     '''
@@ -573,7 +575,7 @@ class Signal:
 
     # 분봉 데이터
     def minute_candle_req(self, code=None):
-        QTest.qWait(300)
+        QTest.qWait(500)
 
         # print("minute_candle_req code : {}".format(code))
         self.event_loop.test_code = code
@@ -771,7 +773,7 @@ class Signal:
                 df = pd.DataFrame(self.event_loop.minute_candle_dict[code])
                 df = df.T
 
-                # print("df : {}".format(df))
+                self.logging.logger.debug("code : {}, df : {}".format(code, df))
 
                 if self.portfolio_stock_dict[code]["매수매도"] == "매수":
                     result = self.analyzer_minute.get_buy_timing(df)

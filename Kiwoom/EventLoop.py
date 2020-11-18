@@ -135,12 +135,12 @@ class EventLoop:
         # self.logging.logger.debug("화면번호: %s, 종목코드 리스트: %s, 조건식 이름: %s, 조건식 인덱스: %s, 연속조회: %s" % (sScrNo, strCodeList, strConditionName, index, nNext))
 
         code_list = strCodeList.split(";")[:-1]
-        # self.logging.logger.debug("코드 종목 \n %s" % code_list)
+        self.logging.logger.debug("코드 종목 \n %s" % code_list)
         # self.logging.logger.debug("코드 개수 \n %s" % len(code_list))
 
         for code in code_list:
             if code not in (self.portfolio_stock_dict or self.condition_stock):
-                self.condition_stock.update({code: {}})
+                self.condition_stock.update({code: {"portfolio_stock_dict추가여부": False}})
 
 
 
@@ -150,7 +150,7 @@ class EventLoop:
 
         if strType == "I":
             if strCode not in (self.portfolio_stock_dict or self.condition_stock):
-                self.condition_stock.update({strCode: {}})
+                self.condition_stock.update({strCode: {"portfolio_stock_dict추가여부": False}})
                 self.logging.logger.debug("종목코드: %s, 종목편입: %s" % (strCode, strType))
 
         # elif strType == "D":
@@ -1071,21 +1071,29 @@ class EventLoop:
             장중일 때 테스트 구간 start
             '''
             # 분봉 만들기 위한 dict 2020-10-26
-            if self.real_data_dict:
-                if sCode in self.real_data_dict:
-                    if a not in self.real_data_dict[sCode]:
-                        self.real_data_dict[sCode].update({a: {}})
+            if sCode in self.real_data_dict:
+                if a not in self.real_data_dict[sCode]:
+                    self.real_data_dict[sCode].update({a: {}})
 
-                    if "close" not in self.real_data_dict[sCode][a]:
-                        self.real_data_dict[sCode][a].update({"close": []})
-                    self.real_data_dict[sCode][a]["close"].append(b)
-                    if "volume" not in self.real_data_dict[sCode][a]:
-                        self.real_data_dict[sCode][a].update({"volume": []})
-                    self.real_data_dict[sCode][a]["volume"].append(abs(g))
+                if "close" not in self.real_data_dict[sCode][a]:
+                    self.real_data_dict[sCode][a].update({"close": []})
+                self.real_data_dict[sCode][a]["close"].append(b)
+                if "volume" not in self.real_data_dict[sCode][a]:
+                    self.real_data_dict[sCode][a].update({"volume": []})
+                self.real_data_dict[sCode][a]["volume"].append(abs(g))
 
-                    # print("self.real_data_dict - real slot : {}".format(self.real_data_dict[sCode]))
+                # print("self.real_data_dict - real slot : {}".format(self.real_data_dict[sCode]))
+                # print("실시간 종목 갯수: {}".format(len(self.real_data_dict)))
 
-            if self.portfolio_stock_dict[sCode]:
+            if self.portfolio_stock_dict[sCode]["매수매도"] == "매수":
+                if self.portfolio_stock_dict[sCode]["이평선허락"]:
+                    if b < i * 0.91:
+                        self.portfolio_stock_dict[sCode].update({"신호": False})
+                    else:
+                        self.portfolio_stock_dict[sCode].update({"신호": True})
+                else:
+                    self.portfolio_stock_dict[sCode].update({"신호": False})
+            else:
                 if self.portfolio_stock_dict[sCode]["이평선허락"]:
                     self.portfolio_stock_dict[sCode].update({"신호": True})
                 else:
@@ -1266,7 +1274,7 @@ class EventLoop:
                 if sCode in self.portfolio_stock_dict: # 포트폴리오에 있을 때
                     if "매수매도" in self.portfolio_stock_dict[sCode]:
                         if self.portfolio_stock_dict[sCode]["매수매도"] == "매수":
-                            # print("종목코드 : {}, 매수신호 : {}".format(sCode, self.portfolio_stock_dict[sCode]["신호"]))
+                            # self.logging.logger.debug("종목코드 : {}, 매수신호 : {}".format(sCode, self.portfolio_stock_dict[sCode]["신호"]))
                             if self.portfolio_stock_dict[sCode]["신호"]:
                                 #     print("self.portfolio_stock_dict - 매수일 때 : {}".format(self.portfolio_stock_dict))
                                 #     print("self.portfolio_stock_dict  매수일 때 개수 : {}".format(len(self.portfolio_stock_dict)))
@@ -1510,7 +1518,7 @@ class EventLoop:
         # df = pd.DataFrame(final_dic)
         # df = df.T
         #
-        # print("df : {}".format(df))
+        # print("final_dic : {}".format(final_dic))
 
         self.minute_candle_dict.update({self.test_code: final_dic})
         self.portfolio_stock_dict[self.test_code].update({'최종작업시간': datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')[-8:].replace(":", "")})
@@ -1537,15 +1545,17 @@ class EventLoop:
         book = final_df.copy()
         book['trade'] = ''
 
-        # final_df['close'] = final_df['close'].abs()
+        final_df['close'] = final_df['close'].abs()
 
         final_df['MA3'] = final_df['close'].rolling(window=3).mean()
         final_df['MA5'] = final_df['close'].rolling(window=5).mean()
         final_df['MA10'] = final_df['close'].rolling(window=10).mean()
         final_df['MA20'] = final_df['close'].rolling(window=20).mean()
+        final_df['MA60'] = final_df['close'].rolling(window=60).mean()
         final_df['MA3_dpc'] = final_df['MA3'].pct_change()
         final_df['MA10_dpc'] = final_df['MA10'].pct_change()
-        final_df['MA20_dpc'] = final_df['MA20'].pct_change()
+        final_df['MA20_dpc5'] = final_df['MA20'].pct_change(5)
+        final_df['MA60_dpc'] = final_df['MA60'].pct_change()
         # final_df['MA240'] = final_df['close'].rolling(window=240).mean()
         # final_df['bandwidth5-20'] = ((final_df['MA5'] - final_df['MA20']) / ((final_df['MA5'] + final_df['MA20']) / 2)) * 100
         final_df['stddev'] = final_df['close'].rolling(window=20).std()
@@ -1553,12 +1563,15 @@ class EventLoop:
         final_df['lower'] = final_df['MA20'] - (final_df['stddev'] * 2)
         final_df['bandwidth'] = (final_df['upper'] - final_df['lower']) / final_df['MA20'] * 100
 
-        # print(final_df.loc['2020-11-16 10:21:00', 'MA3_dpc'])
-        # print(final_df.loc['2020-11-16 10:22:00', 'MA3_dpc'])
-        # print(final_df.loc['2020-11-16 10:22:00', 'MA10_dpc'])
-        # print(final_df.loc['2020-11-16 10:22:00', 'MA10_dpc'])
+        print(final_df.loc['2020-11-18 10:22:00', 'upper'])
+        print(final_df.loc['2020-11-18 10:22:00', 'lower'])
+        print(final_df.loc['2020-11-18 10:22:00', 'MA20'])
+        # print(final_df.loc['2020-11-18 11:05:00', 'upper'])
 
         pre_val = ''
+        index_list = []
+        max_close = 0
+        min_close = 0
 
         for i in final_df.index:
             '''
@@ -1573,7 +1586,7 @@ class EventLoop:
                         if final_df.loc[i, 'close'] > final_df.loc[i, 'open']: # 현재 양봉
                             # if final_df.loc[i, 'open'] == final_df.loc[i, 'low']: # 저가와 시가가 같을 때
                                 if final_df.loc[i, 'close'] > final_df.loc[i, 'upper'] > final_df.loc[i, 'open']: # 볼린저 밴드 상향선 돌파
-                                    if final_df.loc[i, 'volumn'] > final_df.loc[pre_val, 'volumn'] * 20: # 거래량 급증
+                                    if final_df.loc[i, 'volumn'] > final_df.loc[pre_val, 'volumn'] * 4: # 거래량 급증
                                         book.loc[i, 'trade'] = 'buy'
                     elif final_df.loc[pre_val, 'bandwidth'] > 2:
                         if final_df.loc[pre_val, 'MA10_dpc'] > 0.00075:
@@ -1593,18 +1606,31 @@ class EventLoop:
 
                 '''
                 매도
-                ''' 
-                if final_df.loc[pre_val, 'MA3_dpc'] >= 0 and final_df.loc[i, 'MA3_dpc'] < 0: # 3일선이 상향에서 하향으로 변경
-                    if final_df.loc[pre_val, 'MA10_dpc'] > 0 and final_df.loc[pre_val, 'MA20_dpc'] > 0:
-                        if final_df.loc[i, 'close'] < final_df.loc[i, 'open']:  # 현재 음봉
-                            if final_df.loc[i, 'close'] < final_df.loc[i, 'MA3'] < final_df.loc[i, 'open']:
-                                book.loc[i, 'trade'] = 'sell'
+                '''
+                if round(final_df.loc[i, 'upper']) == round(final_df.loc[i, 'lower']):
+                    if final_df.loc[i, 'close'] == max_close:
+                        book.loc[i, 'trade'] = 'sell'
+                else:
+                    if final_df.loc[i, 'close'] > min_close * 1.05:
+                        if final_df.loc[pre_val, 'MA20_dpc5'] < 0:
+                            if final_df.loc[pre_val, 'MA3_dpc'] >= 0 and final_df.loc[i, 'MA3_dpc'] < 0: # 3일선이 상향에서 하향으로 변경
+                                # if final_df.loc[pre_val, 'MA10_dpc'] > 0 and final_df.loc[pre_val, 'MA20_dpc'] > 0:
+                                    if final_df.loc[i, 'close'] < final_df.loc[i, 'open']:  # 현재 음봉
+                                        if final_df.loc[i, 'close'] < final_df.loc[i, 'MA3'] < final_df.loc[i, 'open']:
+                                            book.loc[i, 'trade'] = 'sell'
 
+                if len(index_list) == 50:
+                    index_list.pop(0)
+                index_list.append(final_df.loc[i, 'close'])
+                max_close = max(index_list)
+                min_close = min(index_list)
             pre_val = i
+
+
 
         book = book[(book['trade'] == 'buy') | (book['trade'] == 'sell')]
 
-        book = book[book.index.strftime('%Y-%m-%d %H:%M') >= '2020-11-16 09:00:00']
+        book = book[book.index.strftime('%Y-%m-%d %H:%M') >= '2020-11-18 09:00:00']
 
         print(book.tail(300))
 
