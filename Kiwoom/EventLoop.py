@@ -139,9 +139,9 @@ class EventLoop:
         # self.logging.logger.debug("코드 개수 \n %s" % len(code_list))
 
         for code in code_list:
-            if code not in (self.portfolio_stock_dict or self.condition_stock):
-                self.condition_stock.update({code: {"portfolio_stock_dict추가여부": False}})
-
+            if code not in self.portfolio_stock_dict:
+                self.condition_stock.update({code: {}})
+                self.condition_stock[code].update({"portfolio_stock_dict추가여부": False})
 
 
     # 조건식 실시간으로 받기
@@ -149,8 +149,9 @@ class EventLoop:
         # self.logging.logger.debug("종목코드: %s, 이벤트종류: %s, 조건식이름: %s, 조건명인덱스: %s" % (strCode, strType, strConditionName, strConditionIndex))
 
         if strType == "I":
-            if strCode not in (self.portfolio_stock_dict or self.condition_stock):
-                self.condition_stock.update({strCode: {"portfolio_stock_dict추가여부": False}})
+            if strCode not in self.condition_stock:
+                self.condition_stock.update({strCode: {}})
+                self.condition_stock[strCode].update({"portfolio_stock_dict추가여부": False})
                 self.logging.logger.debug("종목코드: %s, 종목편입: %s" % (strCode, strType))
 
         # elif strType == "D":
@@ -427,7 +428,7 @@ class EventLoop:
             ex_data = self.api.get_comm_data_ex(sTrCode, sRQName)
             # print("ex_data : {}".format(ex_data))
 
-            self._opt10080_test(ex_data)
+            self._opt10080(ex_data)
 
             self.api.set_real_remove(self.screen_calculation_stock, self.test_code)
             # self.api.disconnect_real_data(self.screen_calculation_stock)

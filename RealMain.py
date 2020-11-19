@@ -30,18 +30,18 @@ if __name__  == "__main__":
     # QTest.qWait(5000) #5초
     #
     # sched = BackgroundScheduler()
-    # sched.add_job(signal.get_condition_load, 'cron', hour='09', minute='01', second="00", id='test')
+    # sched.add_job(signal.get_condition_load, 'cron', hour='09', minute='03', second="00", id='test')
     # sched.start()
 
     signal.get_condition_load()
-    QTest.qWait(500)  # 0.5초
+    QTest.qWait(2000)  # 2초
 
     screenNumbering = RealTimeScreenNumbering(signal)
     screenNumbering.start()
 
-    # QTest.qWait(2000)  # 2초
-    # minuteCandle = MinuteCandle(signal)
-    # minuteCandle.start()
+    QTest.qWait(2000)  # 2초
+    minuteCandle = MinuteCandle(signal)
+    minuteCandle.start()
 
     # sched.add_job(signal.gathering_money_fuc, 'cron', second=30, start_date=signal.event_loop.today + ' 09:02:00',
     #               end_date=signal.event_loop.today + ' 15:30:00', args=(['2']))

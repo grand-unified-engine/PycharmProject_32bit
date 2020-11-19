@@ -10,6 +10,7 @@ from Kiwoom.quant.Analyzer_minute import Analyzer as Analyzer_minute
 import pandas as pd
 import operator
 
+
 class Signal:
     def __init__(self):
 
@@ -153,7 +154,7 @@ class Signal:
             self.portfolio_stock_dict.update({code: self.init_dict})
             self.portfolio_stock_dict[code].update({"매수매도": "매도"})
 
-            self.minute_candle_req(code=code) # 시스템 시작할 때 분봉 데이터를 가져온다.
+            self.minute_candle_req(code=code)  # 시스템 시작할 때 분봉 데이터를 가져온다.
 
         # print("self.account_stock_dict 스크린 넘버 세팅 : {}".format(self.event_loop.account_stock_dict))
 
@@ -175,7 +176,7 @@ class Signal:
         cnt = 0
         for code in screen_overwrite:
 
-            self.event_loop.real_data_dict.update({code: {}}) # 실시간 분봉 만들기 위한 dict 2020-10-26
+            self.event_loop.real_data_dict.update({code: {}})  # 실시간 분봉 만들기 위한 dict 2020-10-26
 
             temp_screen = int(self.screen_real_stock)
             meme_screen = int(self.screen_meme_stock)
@@ -198,7 +199,7 @@ class Signal:
 
             cnt += 1
 
-        QTest.qWait(500) # 분봉호출보다 real_data reg가 먼저 작업되어서 추가
+        QTest.qWait(500)  # 분봉호출보다 real_data reg가 먼저 작업되어서 추가
         for code in self.portfolio_stock_dict.keys():
             screen_num = self.portfolio_stock_dict[code]['스크린번호']
             # fids = self.real_type.REALTYPE['주식체결']['체결시간']
@@ -208,7 +209,6 @@ class Signal:
             # fids = b
             self.call_set_real_reg(screen_num, code, fids, "1")
 
-
     def screen_number_real_time_setting(self):
 
         screen_overwrite = []
@@ -217,7 +217,7 @@ class Signal:
             # print("screen_number_real_time_setting 코드: {}, dict: {}".format(code, self.portfolio_stock_dict[code]))
             if "스크린번호" not in self.portfolio_stock_dict[code]:
                 screen_overwrite.append(code)
-                self.minute_candle_req(code=code)  # 시스템 시작할 때 분봉 데이터를 가져온다.
+                self.minute_candle_req(code=code)
 
         # 스크린번호 할당
         cnt = 0
@@ -257,9 +257,6 @@ class Signal:
             # fids = b
             self.call_set_real_reg(screen_num, code, fids, "1")
 
-
-
-
     '''
     포트폴리오 테이블에 새로 들어온 종목
     '''
@@ -284,22 +281,28 @@ class Signal:
     '''
 
     def real_time_condition_stock_fuc(self):
-        # print("real_time_condition_stock_fuc : {}".format(self.event_loop.condition_stock))
-
         copy_condition_stock = self.event_loop.condition_stock.copy()
-        i = 1
         for code in copy_condition_stock:
-            if not copy_condition_stock[code]['portfolio_stock_dict추가여부']:
-                print("조건검색 새로 들어왔따: {}".format(code))
-                if self.api.server_gubun == "1":
-                    if code == '096350' or code == '96040':  # 096350(대창솔루션) 모의투자 매매 불가능
-                        continue
+            # print("code : {}".format(code))
+            for key, value in copy_condition_stock[code].items():
+                if value is True:
+                    del copy_condition_stock[code]
 
-                self.event_loop.condition_stock[code].update({"portfolio_stock_dict추가여부": True})
-                self.portfolio_stock_dict.update({code: self.init_dict})
+        self.logging.logger.debug("copy_condition_stock : {}".format(copy_condition_stock))
 
-                if i > 12:
-                    break
+        i = 0
+        for code in copy_condition_stock:
+            # if not copy_condition_stock[code]['portfolio_stock_dict추가여부']:
+            # print("조건검색 새로 들어왔따: {}".format(code))
+            if self.api.server_gubun == "1":
+                if code == '096350' or code == '96040':  # 096350(대창솔루션) 모의투자 매매 불가능
+                    continue
+
+            self.event_loop.condition_stock[code].update({"portfolio_stock_dict추가여부": True})
+            self.portfolio_stock_dict.update({code: self.init_dict})
+
+            if i >= 10:
+                break
 
             i += 1
 
@@ -710,9 +713,9 @@ class Signal:
 
     def make_minute_candle_func(self, code):
 
-        if code in self.event_loop.minute_candle_dict: #분봉을 먼저 읽어라
-            if code in self.event_loop.real_data_dict: #실시간 주식체결 데이터
-                copy_real_data_dict = self.event_loop.real_data_dict[code].copy() #반복문 오류를 피하기 위해. 내용은 같지만 독립적인 딕셔너리
+        if code in self.event_loop.minute_candle_dict:  # 분봉을 먼저 읽어라
+            if code in self.event_loop.real_data_dict:  # 실시간 주식체결 데이터
+                copy_real_data_dict = self.event_loop.real_data_dict[code].copy()  # 반복문 오류를 피하기 위해. 내용은 같지만 독립적인 딕셔너리
                 # {'114622': {'close': [2430], 'volume': [10]}, '114616': {'close': [2425], 'volume': [200]}}
                 # self.event_loop.real_data_dict[code] 기존거를 삭제 할 수 없을까?
 
@@ -720,11 +723,11 @@ class Signal:
                 # max_hm = max(self.event_loop.minute_candle_dict[code].items(), key=operator.itemgetter(0))[0] #분봉의 최대분 값을 가져와서
                 # '2020-10-30 11:46:00'
                 # 초까지 있어야 하므로 기존 max_hm 로직 폐기
-                max_hm = self.portfolio_stock_dict[code]['최종작업시간'] #초기 분봉 호출, make_minute_candle_func작업 마지막에
+                max_hm = self.portfolio_stock_dict[code]['최종작업시간']  # 초기 분봉 호출, make_minute_candle_func작업 마지막에
                 add_real_data_dict = {key: value for key, value in copy_real_data_dict.items() if key > max_hm}
                 # {'114622': {'close': [2430], 'volume': [10]}, '114616': {'close': [2425], 'volume': [200]}}
                 if copy_real_data_dict:
-                    self.portfolio_stock_dict[code].update({'최종작업시간': max(copy_real_data_dict.keys())}) # 실시간 꺼로 업데이트
+                    self.portfolio_stock_dict[code].update({'최종작업시간': max(copy_real_data_dict.keys())})  # 실시간 꺼로 업데이트
 
                 key_list = list(add_real_data_dict.keys())
                 # ['121522', '121520', '121523']
@@ -735,16 +738,16 @@ class Signal:
                 for index, value in enumerate(key_list):
                     key_list[index] = self.event_loop.today + " " + value[:2] + ":" + value[2:4] + ":00"
 
-                group_by_date_list = list(set(key_list)) # 분 단위로 키 합침
+                group_by_date_list = list(set(key_list))  # 분 단위로 키 합침
                 # ['2020-10-30 12:15:00']
                 ##############################################################################################################################
 
-                for date in group_by_date_list: # 추가해야 할 분 키값
+                for date in group_by_date_list:  # 추가해야 할 분 키값
                     if date not in self.event_loop.minute_candle_dict[code]:
-                        self.event_loop.minute_candle_dict[code].update({date: {}}) #분봉 dict 없는 것 분키 초기화
+                        self.event_loop.minute_candle_dict[code].update({date: {}})  # 분봉 dict 없는 것 분키 초기화
                     # low = 0
                     # high = 0
-                    for key, value in enumerate(s_add_real_data_dict): # 실시간 주식체결 데이터
+                    for key, value in enumerate(s_add_real_data_dict):  # 실시간 주식체결 데이터
                         if date == self.event_loop.today + " " + value[0][:2] + ":" + value[0][2:4] + ":00":
                             if "volume" not in self.event_loop.minute_candle_dict[code][date]:
                                 self.event_loop.minute_candle_dict[code][date].update({"volume": 0})
@@ -760,13 +763,15 @@ class Signal:
                                 self.event_loop.minute_candle_dict[code][date].update({"low": value[1]["close"][-1]})
                             else:
                                 if self.event_loop.minute_candle_dict[code][date]['low'] > value[1]["close"][-1]:
-                                    self.event_loop.minute_candle_dict[code][date].update({"low": value[1]["close"][-1]})
+                                    self.event_loop.minute_candle_dict[code][date].update(
+                                        {"low": value[1]["close"][-1]})
 
                             if "high" not in self.event_loop.minute_candle_dict[code][date]:
                                 self.event_loop.minute_candle_dict[code][date].update({"high": value[1]["close"][-1]})
                             else:
                                 if self.event_loop.minute_candle_dict[code][date]['high'] < value[1]["close"][-1]:
-                                    self.event_loop.minute_candle_dict[code][date].update({"high": value[1]["close"][-1]})
+                                    self.event_loop.minute_candle_dict[code][date].update(
+                                        {"high": value[1]["close"][-1]})
 
                             self.event_loop.minute_candle_dict[code][date].update({"close": value[1]["close"][-1]})
 
@@ -779,8 +784,5 @@ class Signal:
                     result = self.analyzer_minute.get_buy_timing(df)
                 else:
                     result = self.analyzer_minute.get_sell_timing(df)
+                self.logging.logger.debug("code : {}, result : {}".format(code, result))
                 self.portfolio_stock_dict[code].update({"이평선허락": result})
-
-
-
-
