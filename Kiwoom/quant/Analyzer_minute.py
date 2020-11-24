@@ -55,37 +55,43 @@ class Analyzer():
             is_buy_timing = False
 
             df['MA5'] = df['close'].rolling(window=5).mean()
-            df['MA10'] = df['close'].rolling(window=10).mean()
-            df['MA20'] = df['close'].rolling(window=20).mean()
-            df['MA10_dpc'] = df['MA10'].pct_change()
+            # df['MA10'] = df['close'].rolling(window=10).mean()
+            # df['MA20'] = df['close'].rolling(window=20).mean()
+            # df['MA10_dpc'] = df['MA10'].pct_change()
             # df['stddev'] = df['close'].rolling(window=20).std()
             # df['upper'] = df['MA20'] + (df['stddev'] * 2)
             # df['lower'] = df['MA20'] - (df['stddev'] * 2)
             # df['bandwidth'] = (df['upper'] - df['lower']) / df['MA20'] * 100
             self.bollinger_band(df)
 
-            if df['MA5'][-2] > df['MA20'][-2]: # 5일선이 20일선보다 위에 있을 때
-                if 1 < df['bandwidth'][-2] <= 2:  # 밴드폭이 1~2 사이
-                    if df['close'][-1] > df['open'][-1]: # 현재 양봉
-                        # if final_df.loc[i, 'open'] == final_df.loc[i, 'low']: # 저가와 시가가 같을 때
-                        if df['close'][-1] > df['ub'][-1] > df['open'][-1]:  # 볼린저 밴드 상향선 돌파
-                            if df['volumn'][-1] > df['volumn'][-2] * 4:  # 거래량 급증
-                                is_buy_timing = True
-                elif df['bandwidth'][-2] > 2:
-                    if df['MA10_dpc'][-2] > 0.00075:
-                        if df['close'][-1] > df['open'][-1]:  # 현재 양봉
-                            # if final_df.loc[i, 'open'] == final_df.loc[i, 'low']: # 저가와 시가가 같을 때
-                            if (df['close'][-1] > df['ub'][-1] > df['open'][-1]) \
-                                            or (df['ub'][-1] > df['close'][-1] > df['MA5'][-1]): #
-                                if df['volumn'][-1] > df['volumn'][-2] * 2:  #
-                                    is_buy_timing = True
-            else: # 5일선이 20일선 아래 있을 때
-                if df['bandwidth'][-2] > 5:
+            if 1 < df['bandwidth'][-2] <= 2.5:  # 밴드폭이 1~2 사이
+                if df['MA5'][-2] > df['MA5'][-1]:
                     if df['close'][-1] > df['open'][-1]:  # 현재 양봉
-                        # if final_df.loc[i, 'open'] == final_df.loc[i, 'low']: # 저가와 시가가 같을 때
-                        if df['close'][-1] > df['MA20'][-1] > df['open'][-1]:  # 20일선 상향선 돌파
-                            if df['volumn'][-1] > df['volumn'][-2] * 2:  #
+                        if df['close'][-1] > df['ub'][-1] > df['open'][-1]:  # 볼린저 밴드 상향선 돌파
+                            if df['volumn'][-1] > df['volumn'][-2] * 2.9:  # 거래량 급증
                                 is_buy_timing = True
+            # if df['MA5'][-2] > df['MA20'][-2]: # 5일선이 20일선보다 위에 있을 때
+            #     if 1 < df['bandwidth'][-2] <= 2:  # 밴드폭이 1~2 사이
+            #         if df['close'][-1] > df['open'][-1]: # 현재 양봉
+            #             # if final_df.loc[i, 'open'] == final_df.loc[i, 'low']: # 저가와 시가가 같을 때
+            #             if df['close'][-1] > df['ub'][-1] > df['open'][-1]:  # 볼린저 밴드 상향선 돌파
+            #                 if df['volumn'][-1] > df['volumn'][-2] * 4:  # 거래량 급증
+            #                     is_buy_timing = True
+            #     elif df['bandwidth'][-2] > 2:
+            #         if df['MA10_dpc'][-2] > 0.00075:
+            #             if df['close'][-1] > df['open'][-1]:  # 현재 양봉
+            #                 # if final_df.loc[i, 'open'] == final_df.loc[i, 'low']: # 저가와 시가가 같을 때
+            #                 if (df['close'][-1] > df['ub'][-1] > df['open'][-1]) \
+            #                                 or (df['ub'][-1] > df['close'][-1] > df['MA5'][-1]): #
+            #                     if df['volumn'][-1] > df['volumn'][-2] * 2:  #
+            #                         is_buy_timing = True
+            # else: # 5일선이 20일선 아래 있을 때
+            #     if df['bandwidth'][-2] > 5:
+            #         if df['close'][-1] > df['open'][-1]:  # 현재 양봉
+            #             # if final_df.loc[i, 'open'] == final_df.loc[i, 'low']: # 저가와 시가가 같을 때
+            #             if df['close'][-1] > df['MA20'][-1] > df['open'][-1]:  # 20일선 상향선 돌파
+            #                 if df['volumn'][-1] > df['volumn'][-2] * 2:  #
+            #                     is_buy_timing = True
 
             return is_buy_timing
 

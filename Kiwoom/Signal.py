@@ -176,7 +176,7 @@ class Signal:
         cnt = 0
         for code in screen_overwrite:
 
-            self.event_loop.real_data_dict.update({code: {}})  # 실시간 분봉 만들기 위한 dict 2020-10-26
+            # self.event_loop.real_data_dict.update({code: {}})  # 실시간 분봉 만들기 위한 dict 2020-10-26
 
             temp_screen = int(self.screen_real_stock)
             meme_screen = int(self.screen_meme_stock)
@@ -243,7 +243,7 @@ class Signal:
             #     curs.execute(sql)
             #     self.mk.conn.commit()
 
-            self.event_loop.real_data_dict.update({code: {}})  # 실시간 분봉 만들기 위한 dict 2020-10-26
+            # self.event_loop.real_data_dict.update({code: {}})  # 실시간 분봉 만들기 위한 dict 2020-10-26
 
             cnt += 1
 
@@ -786,3 +786,16 @@ class Signal:
                     result = self.analyzer_minute.get_sell_timing(df)
                 self.logging.logger.debug("code : {}, result : {}".format(code, result))
                 self.portfolio_stock_dict[code].update({"이평선허락": result})
+
+    def checking_minute_candle_func(self, code):
+        df = pd.DataFrame(self.event_loop.minute_candle_dict[code])
+        df = df.T
+
+        self.logging.logger.debug("code : {}, df : {}".format(code, df))
+
+        if self.portfolio_stock_dict[code]["매수매도"] == "매수":
+            result = self.analyzer_minute.get_buy_timing(df)
+        else:
+            result = self.analyzer_minute.get_sell_timing(df)
+        self.logging.logger.debug("code : {}, result : {}".format(code, result))
+        self.portfolio_stock_dict[code].update({"이평선허락": result})

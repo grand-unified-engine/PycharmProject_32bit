@@ -39,9 +39,9 @@ if __name__  == "__main__":
     screenNumbering = RealTimeScreenNumbering(signal)
     screenNumbering.start()
 
-    QTest.qWait(2000)  # 2초
-    minuteCandle = MinuteCandle(signal)
-    minuteCandle.start()
+    # QTest.qWait(2000)  # 2초
+    # minuteCandle = MinuteCandle(signal)
+    # minuteCandle.start()
 
     # sched.add_job(signal.gathering_money_fuc, 'cron', second=30, start_date=signal.event_loop.today + ' 09:02:00',
     #               end_date=signal.event_loop.today + ' 15:30:00', args=(['2']))

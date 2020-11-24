@@ -1072,19 +1072,54 @@ class EventLoop:
             장중일 때 테스트 구간 start
             '''
             # 분봉 만들기 위한 dict 2020-10-26
-            if sCode in self.real_data_dict:
-                if a not in self.real_data_dict[sCode]:
-                    self.real_data_dict[sCode].update({a: {}})
-
-                if "close" not in self.real_data_dict[sCode][a]:
-                    self.real_data_dict[sCode][a].update({"close": []})
-                self.real_data_dict[sCode][a]["close"].append(b)
-                if "volume" not in self.real_data_dict[sCode][a]:
-                    self.real_data_dict[sCode][a].update({"volume": []})
-                self.real_data_dict[sCode][a]["volume"].append(abs(g))
+            # if sCode in self.real_data_dict:
+            #     if a not in self.real_data_dict[sCode]:
+            #         self.real_data_dict[sCode].update({a: {}})
+            #
+            #     if "close" not in self.real_data_dict[sCode][a]:
+            #         self.real_data_dict[sCode][a].update({"close": []})
+            #     self.real_data_dict[sCode][a]["close"].append(b)
+            #     if "volume" not in self.real_data_dict[sCode][a]:
+            #         self.real_data_dict[sCode][a].update({"volume": []})
+            #     self.real_data_dict[sCode][a]["volume"].append(abs(g))
 
                 # print("self.real_data_dict - real slot : {}".format(self.real_data_dict[sCode]))
                 # print("실시간 종목 갯수: {}".format(len(self.real_data_dict)))
+
+            now_date = self.today + " " + a[:2] + ":" + a[2:4] + ":00"
+
+            if now_date not in self.minute_candle_dict[sCode]:
+                self.minute_candle_dict[sCode].update({now_date: {}})  # 분봉 dict 없는 것 분키 초기화
+
+            if "volume" not in self.minute_candle_dict[sCode][now_date]:
+                self.minute_candle_dict[sCode][now_date].update({"volume": 0})
+
+            volume = self.minute_candle_dict[sCode][now_date]["volume"] + abs(g)
+            self.minute_candle_dict[sCode][now_date].update({"volume": volume})
+
+            if "open" not in self.minute_candle_dict[sCode][now_date]:
+                self.minute_candle_dict[sCode][now_date].update({"open": b})
+
+            low = 0
+            if "low" not in self.minute_candle_dict[sCode][now_date]:
+                self.minute_candle_dict[sCode][now_date].update({"low": b})
+                low = b
+            else:
+                if low >= b:
+                    self.minute_candle_dict[sCode][now_date].update(
+                        {"low": b})
+
+            high = 0
+            if "high" not in self.minute_candle_dict[sCode][now_date]:
+                self.minute_candle_dict[sCode][now_date].update({"high": b})
+            else:
+                if high <= b:
+                    self.minute_candle_dict[sCode][now_date].update(
+                        {"high": b})
+
+            self.minute_candle_dict[sCode][now_date].update({"close": b})
+
+
 
             if self.portfolio_stock_dict[sCode]["매수매도"] == "매수":
                 if self.portfolio_stock_dict[sCode]["이평선허락"]:
@@ -1183,32 +1218,32 @@ class EventLoop:
                         else:
                             self.logging.logger.debug("코드 : " + sCode + " 매도주문 전달 실패")
                             # self.slack.chat.post_message("hellojarvis", "코드 : " + sCode + " 매도주문 전달 실패")
-                elif self.portfolio_stock_dict[sCode]["매수매도"] == "매도":
-
-                    if self.portfolio_stock_dict[sCode]["신호"]:
-                        if asd['매매가능수량'] > 0:
-
-                            if "오류예방비교수량" not in self.portfolio_stock_dict[sCode]:
-                                self.portfolio_stock_dict[sCode].update({"오류예방비교수량": 0})
-
-                            protection_qt = self.portfolio_stock_dict[sCode]['오류예방비교수량'] + asd['매매가능수량']
-
-                            self.portfolio_stock_dict[sCode].update({"오류예방비교수량": protection_qt})
-                            print("account_stock_dict 매매가능수량: {}, 오류예방비교수량: {}".format(asd['매매가능수량'], protection_qt))
-
-                            if protection_qt <= asd['매매가능수량']:
-
-                                order_success = self.api.send_order("신규매도", self.portfolio_stock_dict[sCode]["주문용스크린번호"],
-                                                                    self.account_num, 2, sCode, asd['매매가능수량'], 0,
-                                                                    self.real_type.SENDTYPE['거래구분']['시장가'], "")
-
-                                if order_success == 0:
-                                    self.logging.logger.debug("코드 : " + sCode + " 매도주문 전달 성공")
-                                    # self.slack.chat.post_message("hellojarvis", "코드 : " + sCode + " 매도주문 전달 성공")
-                                    del self.account_stock_dict[sCode]
-                                else:
-                                    self.logging.logger.debug("코드 : " + sCode + " 매도주문 전달 실패")
-                                    # self.slack.chat.post_message("hellojarvis", "코드 : " + sCode + " 매도주문 전달 실패")
+                # elif self.portfolio_stock_dict[sCode]["매수매도"] == "매도":
+                #
+                #     if self.portfolio_stock_dict[sCode]["신호"]:
+                #         if asd['매매가능수량'] > 0:
+                #
+                #             if "오류예방비교수량" not in self.portfolio_stock_dict[sCode]:
+                #                 self.portfolio_stock_dict[sCode].update({"오류예방비교수량": 0})
+                #
+                #             protection_qt = self.portfolio_stock_dict[sCode]['오류예방비교수량'] + asd['매매가능수량']
+                #
+                #             self.portfolio_stock_dict[sCode].update({"오류예방비교수량": protection_qt})
+                #             print("account_stock_dict 매매가능수량: {}, 오류예방비교수량: {}".format(asd['매매가능수량'], protection_qt))
+                #
+                #             if protection_qt <= asd['매매가능수량']:
+                #
+                #                 order_success = self.api.send_order("신규매도", self.portfolio_stock_dict[sCode]["주문용스크린번호"],
+                #                                                     self.account_num, 2, sCode, asd['매매가능수량'], 0,
+                #                                                     self.real_type.SENDTYPE['거래구분']['시장가'], "")
+                #
+                #                 if order_success == 0:
+                #                     self.logging.logger.debug("코드 : " + sCode + " 매도주문 전달 성공")
+                #                     # self.slack.chat.post_message("hellojarvis", "코드 : " + sCode + " 매도주문 전달 성공")
+                #                     del self.account_stock_dict[sCode]
+                #                 else:
+                #                     self.logging.logger.debug("코드 : " + sCode + " 매도주문 전달 실패")
+                #                     # self.slack.chat.post_message("hellojarvis", "코드 : " + sCode + " 매도주문 전달 실패")
 
             #  프로그램 run 한 후 주문한 종목 팔기
             elif sCode in self.jango_dict.keys():
@@ -1241,31 +1276,31 @@ class EventLoop:
                         else:
                             self.logging.logger.debug("코드 : " + sCode + " 매도주문 전달 실패")
                             # self.slack.chat.post_message("hellojarvis", "코드 : " + sCode + " 매도주문 전달 실패")
-                elif self.portfolio_stock_dict[sCode]["매수매도"] == "매도":
-
-                    if self.portfolio_stock_dict[sCode]["신호"]:
-                        if jd['주문가능수량'] > 0:
-
-                            if "오류예방비교수량" not in self.portfolio_stock_dict[sCode]:
-                                self.portfolio_stock_dict[sCode].update({"오류예방비교수량": 0})
-
-                            protection_qt = self.portfolio_stock_dict[sCode]['오류예방비교수량'] + jd['주문가능수량']
-
-                            self.portfolio_stock_dict[sCode].update({"오류예방비교수량": protection_qt})  # 주문 요청한 금액
-                            print("jango_dict 주문가능수량: {}, 오류예방비교수량: {}".format(jd['주문가능수량'], protection_qt))
-
-                            if protection_qt <= jd['주문가능수량']:  # 한 종목당 총 요청한 금액이 50만원 넘지 않게
-
-                                order_success = self.api.send_order("신규매도", self.portfolio_stock_dict[sCode]["주문용스크린번호"],
-                                                                    self.account_num, 2, sCode, jd['주문가능수량'], 0,
-                                                                    self.real_type.SENDTYPE['거래구분']['시장가'], "")
-
-                                if order_success == 0:
-                                    self.logging.logger.debug("코드 : " + sCode + " 매도주문 전달 성공")
-                                    # self.slack.chat.post_message("hellojarvis", "코드 : " + sCode + " 매도주문 전달 성공")
-                                else:
-                                    self.logging.logger.debug("코드 : " + sCode + " 매도주문 전달 실패")
-                                    # self.slack.chat.post_message("hellojarvis", "코드 : " + sCode + " 매도주문 전달 실패")
+                # elif self.portfolio_stock_dict[sCode]["매수매도"] == "매도":
+                #
+                #     if self.portfolio_stock_dict[sCode]["신호"]:
+                #         if jd['주문가능수량'] > 0:
+                #
+                #             if "오류예방비교수량" not in self.portfolio_stock_dict[sCode]:
+                #                 self.portfolio_stock_dict[sCode].update({"오류예방비교수량": 0})
+                #
+                #             protection_qt = self.portfolio_stock_dict[sCode]['오류예방비교수량'] + jd['주문가능수량']
+                #
+                #             self.portfolio_stock_dict[sCode].update({"오류예방비교수량": protection_qt})  # 주문 요청한 금액
+                #             print("jango_dict 주문가능수량: {}, 오류예방비교수량: {}".format(jd['주문가능수량'], protection_qt))
+                #
+                #             if protection_qt <= jd['주문가능수량']:  # 한 종목당 총 요청한 금액이 50만원 넘지 않게
+                #
+                #                 order_success = self.api.send_order("신규매도", self.portfolio_stock_dict[sCode]["주문용스크린번호"],
+                #                                                     self.account_num, 2, sCode, jd['주문가능수량'], 0,
+                #                                                     self.real_type.SENDTYPE['거래구분']['시장가'], "")
+                #
+                #                 if order_success == 0:
+                #                     self.logging.logger.debug("코드 : " + sCode + " 매도주문 전달 성공")
+                #                     # self.slack.chat.post_message("hellojarvis", "코드 : " + sCode + " 매도주문 전달 성공")
+                #                 else:
+                #                     self.logging.logger.debug("코드 : " + sCode + " 매도주문 전달 실패")
+                #                     # self.slack.chat.post_message("hellojarvis", "코드 : " + sCode + " 매도주문 전달 실패")
 
             # 여기는 매수
             # elif d > 2.0 and sCode not in self.jango_dict:
@@ -1460,7 +1495,7 @@ class EventLoop:
                 self.api.set_real_remove(self.portfolio_stock_dict[sCode]['스크린번호'], sCode)
                 self.api.set_real_remove(self.portfolio_stock_dict[sCode]['주문용스크린번호'], sCode)
                 del self.portfolio_stock_dict[sCode]
-                del self.real_data_dict[sCode] # 분봉을 위한 실시간 데이터 담는 dict
+                # del self.real_data_dict[sCode] # 분봉을 위한 실시간 데이터 담는 dict
                 del self.condition_stock[sCode] # 조건검색 dict 삭제
                 # 팔았을 땐 지우자. 10-25 다시 확인할 것
                 #
@@ -1495,7 +1530,7 @@ class EventLoop:
         # [['+2345', '1305', '20201028101300', '+2345', '+2345', '+2340', '', '', '', '', '', '', ''],
         #  ['+2345', '15415', '20201028101400', '+2350', '+2350', '+2335', '', '', '', '', '', '', '']......
 
-        final_dic = {}
+        final_dic = dict()
         for idx, data_list in enumerate(ex_data):
 
             convert_date = data_list[2][:4] + "-" + data_list[2][4:6] + "-" + data_list[2][6:8] + " " + data_list[2][
@@ -1511,7 +1546,6 @@ class EventLoop:
             final_dic[convert_date].update({"close": abs(int(data_list[0]))})
             final_dic[convert_date].update({"volume": int(data_list[1])})
 
-            # 우선 시가만 2020.10.21
             final_dic[convert_date].update({"open": abs(int(data_list[3]))})
             final_dic[convert_date].update({"high": abs(int(data_list[4]))})
             final_dic[convert_date].update({"low": abs(int(data_list[5]))})
@@ -1543,20 +1577,21 @@ class EventLoop:
         # df는 현재에서 과거로, final_df는 과거에서 현재로 - 이평선 컬럼 만들기 위해
         final_df = df.sort_index()
 
+        final_df['close'] = final_df['close'].abs()
+        final_df['open'] = final_df['open'].abs()
+        final_df['high'] = final_df['high'].abs()
+        final_df['low'] = final_df['low'].abs()
+
         book = final_df.copy()
         book['trade'] = ''
-
-        final_df['close'] = final_df['close'].abs()
 
         final_df['MA3'] = final_df['close'].rolling(window=3).mean()
         final_df['MA5'] = final_df['close'].rolling(window=5).mean()
         final_df['MA10'] = final_df['close'].rolling(window=10).mean()
         final_df['MA20'] = final_df['close'].rolling(window=20).mean()
         final_df['MA60'] = final_df['close'].rolling(window=60).mean()
-        final_df['MA3_dpc'] = final_df['MA3'].pct_change()
-        final_df['MA10_dpc'] = final_df['MA10'].pct_change()
-        final_df['MA20_dpc5'] = final_df['MA20'].pct_change(5)
-        final_df['MA60_dpc'] = final_df['MA60'].pct_change()
+        final_df['MA5_dpc'] = final_df['MA5'].pct_change(5)
+
         # final_df['MA240'] = final_df['close'].rolling(window=240).mean()
         # final_df['bandwidth5-20'] = ((final_df['MA5'] - final_df['MA20']) / ((final_df['MA5'] + final_df['MA20']) / 2)) * 100
         final_df['stddev'] = final_df['close'].rolling(window=20).std()
@@ -1564,99 +1599,102 @@ class EventLoop:
         final_df['lower'] = final_df['MA20'] - (final_df['stddev'] * 2)
         final_df['bandwidth'] = (final_df['upper'] - final_df['lower']) / final_df['MA20'] * 100
 
-        print(final_df.loc['2020-11-18 10:22:00', 'upper'])
-        print(final_df.loc['2020-11-18 10:22:00', 'lower'])
-        print(final_df.loc['2020-11-18 10:22:00', 'MA20'])
+        print(final_df.loc['2020-11-24 15:09:00', 'MA5_dpc'])
+        # print(final_df.loc['2020-11-18 10:22:00', 'lower'])
+        # print(final_df.loc['2020-11-18 10:22:00', 'MA20'])
         # print(final_df.loc['2020-11-18 11:05:00', 'upper'])
 
         pre_val = ''
-        index_list = []
+        close_list = []
         max_close = 0
         min_close = 0
 
+        volume_list = []
+        max_volume = 0
+        min_volume = 0
+
         for i in final_df.index:
-            '''
-            1차로 5 > 10 > 20
-            '''
+
             if pre_val != '':
                 '''
                 매수
                 '''
-                if final_df.loc[pre_val, 'MA5'] > final_df.loc[pre_val, 'MA20']:
-                    if 1 < final_df.loc[pre_val, 'bandwidth'] <= 2:  # 밴드폭이 1~2 사이
+                if 1 < final_df.loc[pre_val, 'bandwidth'] <= 2.5:  # 밴드폭이 1~2 사이
+                    if final_df.loc[pre_val, 'MA5'] < final_df.loc[i, 'MA5']:
                         if final_df.loc[i, 'close'] > final_df.loc[i, 'open']: # 현재 양봉
-                            # if final_df.loc[i, 'open'] == final_df.loc[i, 'low']: # 저가와 시가가 같을 때
-                                if final_df.loc[i, 'close'] > final_df.loc[i, 'upper'] > final_df.loc[i, 'open']: # 볼린저 밴드 상향선 돌파
-                                    if final_df.loc[i, 'volumn'] > final_df.loc[pre_val, 'volumn'] * 4: # 거래량 급증
-                                        book.loc[i, 'trade'] = 'buy'
-                    elif final_df.loc[pre_val, 'bandwidth'] > 2:
-                        if final_df.loc[pre_val, 'MA10_dpc'] > 0.00075:
-                            if final_df.loc[i, 'close'] > final_df.loc[i, 'open']: # 현재 양봉
-                                # if final_df.loc[i, 'open'] == final_df.loc[i, 'low']: # 저가와 시가가 같을 때
-                                    if (final_df.loc[i, 'close'] > final_df.loc[i, 'upper'] > final_df.loc[i, 'open']) \
-                                            or (final_df.loc[i, 'upper'] > final_df.loc[i, 'close'] > final_df.loc[i, 'MA5']): #
-                                        if final_df.loc[i, 'volumn'] > final_df.loc[pre_val, 'volumn'] * 2: #
-                                            book.loc[i, 'trade'] = 'buy'
-                else:
-                    if final_df.loc[pre_val, 'bandwidth'] > 5:
-                        if final_df.loc[i, 'close'] > final_df.loc[i, 'open']: # 현재 양봉
-                            # if final_df.loc[i, 'open'] == final_df.loc[i, 'low']: # 저가와 시가가 같을 때
-                                if final_df.loc[i, 'close'] > final_df.loc[i, 'MA20'] > final_df.loc[i, 'open']: # 20일선 상향선 돌파
-                                    if final_df.loc[i, 'volumn'] > final_df.loc[pre_val, 'volumn'] * 2: #
-                                        book.loc[i, 'trade'] = 'buy'
+                            if final_df.loc[i, 'close'] > final_df.loc[i, 'upper'] > final_df.loc[
+                                i, 'open']:  # 볼린저 밴드 상향선 돌파
+                                if final_df.loc[i, 'volumn'] > final_df.loc[pre_val, 'volumn'] * 2.9:  # 거래량 급증
+                                    book.loc[i, 'trade'] = 'buy'
+
+                # if final_df.loc[pre_val, 'MA5'] > final_df.loc[pre_val, 'MA20']:
+                #     if 1 < final_df.loc[pre_val, 'bandwidth'] <= 2:  # 밴드폭이 1~2 사이
+                #         if final_df.loc[i, 'close'] > final_df.loc[i, 'open']: # 현재 양봉
+                #             # if final_df.loc[i, 'open'] == final_df.loc[i, 'low']: # 저가와 시가가 같을 때
+                #                 if final_df.loc[i, 'close'] > final_df.loc[i, 'upper'] > final_df.loc[i, 'open']: # 볼린저 밴드 상향선 돌파
+                #                     if final_df.loc[i, 'volumn'] > final_df.loc[pre_val, 'volumn'] * 4: # 거래량 급증
+                #                         book.loc[i, 'trade'] = 'buy'
+                #     elif final_df.loc[pre_val, 'bandwidth'] > 2:
+                #         if final_df.loc[pre_val, 'MA10_dpc'] > 0.00075:
+                #             if final_df.loc[i, 'close'] > final_df.loc[i, 'open']: # 현재 양봉
+                #                 # if final_df.loc[i, 'open'] == final_df.loc[i, 'low']: # 저가와 시가가 같을 때
+                #                     if (final_df.loc[i, 'close'] > final_df.loc[i, 'upper'] > final_df.loc[i, 'open']) \
+                #                             or (final_df.loc[i, 'upper'] > final_df.loc[i, 'close'] > final_df.loc[i, 'MA5']): #
+                #                         if final_df.loc[i, 'volumn'] > final_df.loc[pre_val, 'volumn'] * 2: #
+                #                             book.loc[i, 'trade'] = 'buy'
+                # else:
+                #     if final_df.loc[pre_val, 'bandwidth'] > 5:
+                #         if final_df.loc[i, 'close'] > final_df.loc[i, 'open']: # 현재 양봉
+                #             # if final_df.loc[i, 'open'] == final_df.loc[i, 'low']: # 저가와 시가가 같을 때
+                #                 if final_df.loc[i, 'close'] > final_df.loc[i, 'MA20'] > final_df.loc[i, 'open']: # 20일선 상향선 돌파
+                #                     if final_df.loc[i, 'volumn'] > final_df.loc[pre_val, 'volumn'] * 2: #
+                #                         book.loc[i, 'trade'] = 'buy'
 
                 '''
                 매도
                 '''
-                if round(final_df.loc[i, 'upper']) == round(final_df.loc[i, 'lower']):
-                    if final_df.loc[i, 'close'] == max_close:
-                        book.loc[i, 'trade'] = 'sell'
-                else:
-                    if final_df.loc[i, 'close'] > min_close * 1.05:
-                        if final_df.loc[pre_val, 'MA20_dpc5'] < 0:
-                            if final_df.loc[pre_val, 'MA3_dpc'] >= 0 and final_df.loc[i, 'MA3_dpc'] < 0: # 3일선이 상향에서 하향으로 변경
-                                # if final_df.loc[pre_val, 'MA10_dpc'] > 0 and final_df.loc[pre_val, 'MA20_dpc'] > 0:
-                                    if final_df.loc[i, 'close'] < final_df.loc[i, 'open']:  # 현재 음봉
-                                        if final_df.loc[i, 'close'] < final_df.loc[i, 'MA3'] < final_df.loc[i, 'open']:
+                if final_df.loc[pre_val, 'MA5'] < final_df.loc[i, 'MA5'] or final_df.loc[i, 'MA5_dpc'] > 0:
+                    if max_volume > final_df.loc[i, 'volumn'] * 2:
+                        if final_df.loc[i, 'close'] < final_df.loc[i, 'open']:  # 현재 음봉
+                            if final_df.loc[i, 'bandwidth'] > 7.8:
+                                if final_df.loc[pre_val, 'close'] > final_df.loc[pre_val, 'open']: # 1분전 양봉
+                                    if final_df.loc[pre_val, 'open'] <= final_df.loc[i, 'open'] <= final_df.loc[pre_val, 'high']:
+                                            book.loc[i, 'trade'] = 'sell'
+                                else: # 1분전 음봉
+                                    if final_df.loc[pre_val, 'open'] <= final_df.loc[i, 'open'] <= final_df.loc[pre_val, 'high']:
                                             book.loc[i, 'trade'] = 'sell'
 
-                if len(index_list) == 50:
-                    index_list.pop(0)
-                index_list.append(final_df.loc[i, 'close'])
-                max_close = max(index_list)
-                min_close = min(index_list)
+                # if round(final_df.loc[i, 'upper']) == round(final_df.loc[i, 'lower']):
+                #     if final_df.loc[i, 'close'] == max_close:
+                #         book.loc[i, 'trade'] = 'sell'
+                # else:
+                #     if final_df.loc[i, 'close'] > min_close * 1.05:
+                #         if final_df.loc[pre_val, 'MA20_dpc5'] < 0:
+                #             if final_df.loc[pre_val, 'MA3_dpc'] >= 0 and final_df.loc[i, 'MA3_dpc'] < 0: # 3일선이 상향에서 하향으로 변경
+                #                 # if final_df.loc[pre_val, 'MA10_dpc'] > 0 and final_df.loc[pre_val, 'MA20_dpc'] > 0:
+                #                     if final_df.loc[i, 'close'] < final_df.loc[i, 'open']:  # 현재 음봉
+                #                         if final_df.loc[i, 'close'] < final_df.loc[i, 'MA3'] < final_df.loc[i, 'open']:
+                #                             book.loc[i, 'trade'] = 'sell'
+
+                if len(close_list) == 5:
+                    close_list.pop(0)
+                close_list.append(final_df.loc[i, 'close'])
+                max_close = max(close_list)
+                min_close = min(close_list)
+
+                if len(volume_list) == 5:
+                    volume_list.pop(0)
+                volume_list.append(final_df.loc[i, 'volumn'])
+                max_volume = max(volume_list)
+                min_volume = min(volume_list)
+
             pre_val = i
-
-
 
         book = book[(book['trade'] == 'buy') | (book['trade'] == 'sell')]
 
-        book = book[book.index.strftime('%Y-%m-%d %H:%M') >= '2020-11-18 09:00:00']
+        book = book[book.index.strftime('%Y-%m-%d %H:%M') >= '2020-11-24 09:00:00']
 
         print(book.tail(300))
-
-        # np.abs(final_df['close'])
-
-        # ma5 = final_df['close'].rolling(window=5).mean()
-        # ma10 = final_df['close'].rolling(window=10).mean()
-        # ma20 = final_df['close'].rolling(window=20).mean()
-        # ma60 = final_df['close'].rolling(window=60).mean()
-        # ma120 = final_df['close'].rolling(window=120).mean()
-
-        # print("ma5 : {}".format(ma5))
-        # print("ma5_dpc : {}".format(ma5_dpc))
-        # print("ma10_dpc : {}".format(ma10_dpc))
-        # print("ma20 : {}".format(ma20))
-        # print("ma20_dpc : {}".format(ma20_dpc))
-        # print("ma60 : {}".format(ma60))
-        # print("ma60_dpc : {}".format(ma60_dpc))
-        # print("final_df['low'] : {}".format(final_df['low'][-1]))
-        # print("ma120 : {}".format(ma120))
-
-        # print("final_df['low'][-1] : {}".format(final_df['low'][-1]))
-        # print("ma120[-1] : {}".format(ma120[-1]))
-        #
-        # print("gab : {}".format((final_df['low'][-1]/ ma120[-1] - 1) * 100))
 
 
 
