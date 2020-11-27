@@ -43,6 +43,7 @@ class Signal:
         ########################################
 
         self.another_job_stop = False
+        self.real_stock_cnt = 0
 
     def login_commConnect(self):
         self.api.comm_connect()  # 로그인 요청 시그널
@@ -213,11 +214,15 @@ class Signal:
 
         screen_overwrite = []
 
+        self.real_stock_cnt = 0
         for code in self.portfolio_stock_dict.keys():
-            # print("screen_number_real_time_setting 코드: {}, dict: {}".format(code, self.portfolio_stock_dict[code]))
+            print("screen_number_real_time_setting 코드: {}, dict: {}".format(code, self.portfolio_stock_dict[code]))
             if "스크린번호" not in self.portfolio_stock_dict[code]:
                 screen_overwrite.append(code)
                 self.minute_candle_req(code=code)
+            else:
+                self.real_stock_cnt += 1
+        print("실시간 도는 종목 수 : {}".format(self.real_stock_cnt))
 
         # 스크린번호 할당
         cnt = 0
@@ -247,7 +252,7 @@ class Signal:
 
             cnt += 1
 
-        QTest.qWait(500)  # 분봉호출보다 real_data reg가 먼저 작업되어서 추가
+        # QTest.qWait(500)  # 분봉호출보다 real_data reg가 먼저 작업되어서 추가
         for code in screen_overwrite:
             screen_num = self.portfolio_stock_dict[code]['스크린번호']
             # fids = self.real_type.REALTYPE['주식체결']['체결시간']
@@ -282,9 +287,9 @@ class Signal:
 
     def real_time_condition_stock_fuc(self):
         copy_condition_stock = self.event_loop.condition_stock.copy()
-        for code in copy_condition_stock:
+        for code in self.event_loop.condition_stock:
             # print("code : {}".format(code))
-            for key, value in copy_condition_stock[code].items():
+            for key, value in self.event_loop.condition_stock[code].items():
                 if value is True:
                     del copy_condition_stock[code]
 
@@ -298,11 +303,11 @@ class Signal:
                 if code == '096350' or code == '96040':  # 096350(대창솔루션) 모의투자 매매 불가능
                     continue
 
-            self.event_loop.condition_stock[code].update({"portfolio_stock_dict추가여부": True})
-            self.portfolio_stock_dict.update({code: self.init_dict})
-
-            if i >= 10:
+            if i >= 5:
                 break
+
+            self.portfolio_stock_dict.update({code: self.init_dict.copy()})
+            self.event_loop.condition_stock[code].update({"portfolio_stock_dict추가여부": True})
 
             i += 1
 

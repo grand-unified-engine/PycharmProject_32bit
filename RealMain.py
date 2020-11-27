@@ -9,15 +9,14 @@ from apscheduler.schedulers.background import BackgroundScheduler
 import time
 
 if __name__  == "__main__":
-    print("Main() start")
-
+    # print("Main() start")
     app = QApplication(sys.argv)
 
     signal = Signal()
 
     ############### 초기 셋팅 함수들 ################
     signal.login_commConnect()  # 로그인 요청 함수
-    signal.get_account_info()  # 계좌번호 가져오기, 접속서버 구분 포함'
+    signal.get_account_info()  # 계좌번호 가져오기, 접속서버 구분 포함
     signal.detail_account_info() #예수금 요청 시그널 포함
     signal.detail_account_mystock()  # 계좌평가잔고내역 --> account_stock_dict에 담는다.
     # QTest.qWait(5000)
@@ -52,9 +51,9 @@ if __name__  == "__main__":
     app.exec_()
 
     # count = 0
-    while True:  # 이걸 안 하면 sched가 끝나버린다고 함
-        print("Running main process...............")
-        time.sleep(1)
+    # while True:  # 이걸 안 하면 sched가 끝나버린다고 함
+    #     print("Running main process...............")
+    #     time.sleep(1)
     #     count += 1
     #     if count == 10:
     #         sched.remove_job("test")
