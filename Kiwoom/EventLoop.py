@@ -430,7 +430,7 @@ class EventLoop:
 
             self._opt10080(ex_data)
 
-            self.api.set_real_remove(self.screen_calculation_stock, self.test_code)
+            # self.api.set_real_remove(self.screen_calculation_stock, self.test_code)
             # self.api.disconnect_real_data(self.screen_calculation_stock)
 
             self.calculator_event_loop.exit()
@@ -1029,8 +1029,8 @@ class EventLoop:
             # l = self.api.get_comm_real_data(sCode, self.real_type.REALTYPE[sRealType]['전일거래량대비(비율)'])  # 출력 : +(-)2520
             # l = float(l)
 
-            if sCode not in self.portfolio_stock_dict:
-                print("포트폴리오 없는 코드 : {}".format(sCode))
+            # if sCode not in self.portfolio_stock_dict:
+            #     print("포트폴리오 없는 코드 : {}".format(sCode))
 
             # if sCode in self.portfolio_stock_dict:
             #     print("오류 나기 전 코드 : {}".format(self.portfolio_stock_dict[sCode]["스크린번호"]))
@@ -1066,7 +1066,7 @@ class EventLoop:
             #             del self.portfolio_stock_dict[sCode]
 
             # print("self.portfolio_stock_dict - real slot : {}".format(self.portfolio_stock_dict))
-            # self.logging.logger.debug("종목코드 : {}, 체결시간 : {}".format(sCode, a))
+            self.logging.logger.debug("종목코드 : {}, 체결시간 : {}".format(sCode, a))
 
             '''
             장중일 때 테스트 구간 start
@@ -1086,8 +1086,8 @@ class EventLoop:
                 # print("self.real_data_dict - real slot : {}".format(self.real_data_dict[sCode]))
                 # print("실시간 종목 갯수: {}".format(len(self.real_data_dict)))
 
-            now_date = self.today + " " + a[:2] + ":" + a[2:4] + ":00"
-            self.logging.logger.debug("체결시간 레이아웃변경 : {}".format(now_date))
+            # now_date = self.today + " " + a[:2] + ":" + a[2:4] + ":00"
+            # self.logging.logger.debug("체결시간 레이아웃변경 : {}".format(now_date))
 
             # if now_date not in self.minute_candle_dict[sCode]:
             #     self.minute_candle_dict[sCode].update({now_date: {}})  # 분봉 dict 없는 것 분키 초기화

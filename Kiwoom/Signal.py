@@ -7,6 +7,7 @@ from Kiwoom.config.log_class import Logging
 # from Kiwoom.config.MariaDB import MarketDB
 from Kiwoom.quant.Analyzer_daily import Analyzer as Analyzer_daily
 from Kiwoom.quant.Analyzer_minute import Analyzer as Analyzer_minute
+from Kiwoom.quant.StockInfo import get_current_price
 import pandas as pd
 import operator
 
@@ -21,7 +22,9 @@ class Signal:
         # self.init_dict = {"매수매도": "매수", "순매수리스트": [], "매도우선호가리스트": [], "매도호가직전대비1": [], "전환점여부": False, "체결량리스트": [], "세력체결조절여부": False,
         #                   "이평선허락": False, "신호": False}
 
-        self.init_dict = {"매수매도": "매수", "이평선허락": False, "신호": False}
+        # self.init_dict = {"매수매도": "매수", "이평선허락": False, "신호": False}
+
+        self.init_dict = {"전일가": 0}
 
         self.portfolio_stock_dict = {}
 
@@ -216,10 +219,12 @@ class Signal:
 
         self.real_stock_cnt = 0
         for code in self.portfolio_stock_dict.keys():
-            print("screen_number_real_time_setting 코드: {}, dict: {}".format(code, self.portfolio_stock_dict[code]))
+            # print("screen_number_real_time_setting 코드: {}, dict: {}".format(code, self.portfolio_stock_dict[code]))
             if "스크린번호" not in self.portfolio_stock_dict[code]:
                 screen_overwrite.append(code)
-                self.minute_candle_req(code=code)
+                self.portfolio_stock_dict[code].update({"전일가": get_current_price(code)})
+                print("screen_number_real_time_setting 코드: {}, dict: {}".format(code, self.portfolio_stock_dict[code]))
+                # self.minute_candle_req(code=code)
             else:
                 self.real_stock_cnt += 1
         print("실시간 도는 종목 수 : {}".format(self.real_stock_cnt))
@@ -303,7 +308,7 @@ class Signal:
                 if code == '096350' or code == '96040':  # 096350(대창솔루션) 모의투자 매매 불가능
                     continue
 
-            if i >= 5:
+            if i >= 25:
                 break
 
             self.portfolio_stock_dict.update({code: self.init_dict.copy()})
@@ -583,7 +588,7 @@ class Signal:
 
     # 분봉 데이터
     def minute_candle_req(self, code=None):
-        QTest.qWait(500)
+        QTest.qWait(3600)
 
         # print("minute_candle_req code : {}".format(code))
         self.event_loop.test_code = code

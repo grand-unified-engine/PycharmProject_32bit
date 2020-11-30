@@ -4,7 +4,7 @@ from PyQt5.QtCore import QTimer
 from PyQt5.QtTest import QTest
 from Kiwoom.Signal import Signal  # 클래스가 와도 되고 파일명(모듈)이 와도 된다.
 from Kiwoom.thread import MinuteCandle, RealTimeScreenNumbering
-from apscheduler.schedulers.background import BackgroundScheduler
+# from apscheduler.schedulers.background import BackgroundScheduler
 
 import time
 
