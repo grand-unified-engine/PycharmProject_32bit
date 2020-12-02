@@ -24,7 +24,8 @@ class Signal:
 
         # self.init_dict = {"매수매도": "매수", "이평선허락": False, "신호": False}
 
-        self.init_dict = {"전일가": 0}
+        # 변동성 돌파 전략 20.12.02
+        self.init_dict = {"매수매도": "매수", "매수 목표가 중간 값": 0, "매수 목표가": 0, "5ma": 0, "10ma": 0, "신호": False}
 
         self.portfolio_stock_dict = {}
 
@@ -222,8 +223,8 @@ class Signal:
             # print("screen_number_real_time_setting 코드: {}, dict: {}".format(code, self.portfolio_stock_dict[code]))
             if "스크린번호" not in self.portfolio_stock_dict[code]:
                 screen_overwrite.append(code)
-                self.portfolio_stock_dict[code].update({"전일가": get_current_price(code)})
                 print("screen_number_real_time_setting 코드: {}, dict: {}".format(code, self.portfolio_stock_dict[code]))
+                self.get_target_price(code=code)
                 # self.minute_candle_req(code=code)
             else:
                 self.real_stock_cnt += 1
@@ -300,7 +301,6 @@ class Signal:
 
         self.logging.logger.debug("copy_condition_stock : {}".format(copy_condition_stock))
 
-        i = 0
         for code in copy_condition_stock:
             # if not copy_condition_stock[code]['portfolio_stock_dict추가여부']:
             # print("조건검색 새로 들어왔따: {}".format(code))
@@ -308,13 +308,8 @@ class Signal:
                 if code == '096350' or code == '96040':  # 096350(대창솔루션) 모의투자 매매 불가능
                     continue
 
-            if i >= 25:
-                break
-
             self.portfolio_stock_dict.update({code: self.init_dict.copy()})
             self.event_loop.condition_stock[code].update({"portfolio_stock_dict추가여부": True})
-
-            i += 1
 
     '''
     * 거래량 급증 종목 기준
@@ -809,3 +804,27 @@ class Signal:
             result = self.analyzer_minute.get_sell_timing(df)
         self.logging.logger.debug("code : {}, result : {}".format(code, result))
         self.portfolio_stock_dict[code].update({"이평선허락": result})
+
+
+    def get_target_price(self, code):
+        """매수 목표가를 반환한다."""
+        try:
+            str_today = self.event_loop.today
+            ohlc = get_current_price(code)
+            if str_today == ohlc.index.strftime('%Y-%m-%d')[-1]:
+                lastdata = ohlc.iloc[-2]
+                lastday = ohlc.index.strftime('%Y-%m-%d')[-2]
+            else:
+                lastdata = ohlc.iloc[-1]
+                lastday = ohlc.index.strftime('%Y-%m-%d')[-1]
+            lastday_high = lastdata[1]
+            lastday_low = lastdata[2]
+            sub_price = (lastday_high - lastday_low) * 0.5
+            ma5 = ohlc.rolling(window=5).mean()
+            ma10 = ohlc.rolling(window=10).mean()
+
+            self.portfolio_stock_dict[code].update({"매수 목표가 중간 값": sub_price})
+            self.portfolio_stock_dict[code].update({"ma5": ma5['Close'].loc[lastday]})
+            self.portfolio_stock_dict[code].update({"ma10": ma10['Close'].loc[lastday]})
+        except Exception as ex:
+            print("`get_target_price() -> exception! " + str(ex) + "`")
