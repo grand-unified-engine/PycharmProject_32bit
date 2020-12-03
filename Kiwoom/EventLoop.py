@@ -1199,8 +1199,9 @@ class EventLoop:
                 target_price = self.portfolio_stock_dict[sCode]["매수 목표가"]
                 ma5_price = self.portfolio_stock_dict[sCode]["ma5"]
                 ma10_price = self.portfolio_stock_dict[sCode]["ma10"]
-                if b > target_price and b > ma5_price and b > ma10_price:
-                    self.portfolio_stock_dict[sCode].update({"신호": True})
+                if d < 20: #전날 종가 대비 등락률이 20%미만일 때 - 상한가 종목도 매수처리하다 오류나서 추가(매수할 때 (최우선)매도호가가 0이 되서 오류남) 20.12.03
+                    if b > target_price and b > ma5_price and b > ma10_price:
+                        self.portfolio_stock_dict[sCode].update({"신호": True})
 
             # print("self.portfolio_stock_dict : {}".format(self.portfolio_stock_dict))
 
