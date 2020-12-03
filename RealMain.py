@@ -35,8 +35,12 @@ if __name__  == "__main__":
     signal.get_condition_load()
     QTest.qWait(2000)  # 2초
 
-    screenNumbering = RealTimeScreenNumbering(signal)
-    screenNumbering.start()
+    signal.real_time_condition_stock_fuc()
+    QTest.qWait(500)  # 1초
+    signal.screen_number_real_time_setting()
+
+    # screenNumbering = RealTimeScreenNumbering(signal)
+    # screenNumbering.start()
 
     # QTest.qWait(2000)  # 2초
     # minuteCandle = MinuteCandle(signal)

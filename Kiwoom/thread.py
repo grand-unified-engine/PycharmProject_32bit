@@ -44,14 +44,14 @@ class RealTimeScreenNumbering(QThread):
             #     if "스크린번호" in self.signal.portfolio_stock_dict[code]:
             #         cnt += 1
             # print("실시간 도는 종목 수 : {}".format(cnt))
-            t = 0
-            if self.signal.real_stock_cnt <= 10:
-                t = 30
-            elif 10 < self.signal.real_stock_cnt <= 20:
-                t = 60
-            elif 20 < self.signal.real_stock_cnt <= 30:
-                t = 90
+            # t = 0
+            # if self.signal.real_stock_cnt <= 10:
+            #     t = 30
+            # elif 10 < self.signal.real_stock_cnt <= 20:
+            #     t = 60
+            # elif 20 < self.signal.real_stock_cnt <= 30:
+            #     t = 90
 
-            time.sleep(t)
+            time.sleep(60)
 
 

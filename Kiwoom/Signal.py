@@ -25,7 +25,7 @@ class Signal:
         # self.init_dict = {"매수매도": "매수", "이평선허락": False, "신호": False}
 
         # 변동성 돌파 전략 20.12.02
-        self.init_dict = {"매수매도": "매수", "매수 목표가 중간 값": 0, "매수 목표가": 0, "5ma": 0, "10ma": 0, "신호": False}
+        self.init_dict = {"매수매도": "매수", "매수 목표가 중간 값": 0, "매수 목표가": 0, "ma5": 0, "ma10": 0, "신호": False}
 
         self.portfolio_stock_dict = {}
 
@@ -141,7 +141,7 @@ class Signal:
                 screen_overwrite.append(code)
 
             # read_code에서 넣으므로 여기 매수매도 키 안 넣어도 됨
-            self.minute_candle_req(code=code)  # 시스템 시작할 때 분봉 데이터를 가져온다.
+            # self.minute_candle_req(code=code)  # 시스템 시작할 때 분봉 데이터를 가져온다.
 
             # with self.mk.conn.cursor() as curs:
             #     sql = "UPDATE portfolio_stock SET is_receive_real = True WHERE code = '{}'" \
@@ -159,7 +159,7 @@ class Signal:
             self.portfolio_stock_dict.update({code: self.init_dict})
             self.portfolio_stock_dict[code].update({"매수매도": "매도"})
 
-            self.minute_candle_req(code=code)  # 시스템 시작할 때 분봉 데이터를 가져온다.
+            # self.minute_candle_req(code=code)  # 시스템 시작할 때 분봉 데이터를 가져온다.
 
         # print("self.account_stock_dict 스크린 넘버 세팅 : {}".format(self.event_loop.account_stock_dict))
 
@@ -223,8 +223,8 @@ class Signal:
             # print("screen_number_real_time_setting 코드: {}, dict: {}".format(code, self.portfolio_stock_dict[code]))
             if "스크린번호" not in self.portfolio_stock_dict[code]:
                 screen_overwrite.append(code)
-                print("screen_number_real_time_setting 코드: {}, dict: {}".format(code, self.portfolio_stock_dict[code]))
                 self.get_target_price(code=code)
+                print("screen_number_real_time_setting 코드: {}, dict: {}".format(code, self.portfolio_stock_dict[code]))
                 # self.minute_candle_req(code=code)
             else:
                 self.real_stock_cnt += 1
