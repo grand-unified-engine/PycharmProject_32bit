@@ -1518,7 +1518,8 @@ class EventLoop:
                 self.api.set_real_remove(self.portfolio_stock_dict[sCode]['주문용스크린번호'], sCode)
                 del self.portfolio_stock_dict[sCode]
                 # del self.real_data_dict[sCode] # 분봉을 위한 실시간 데이터 담는 dict
-                del self.condition_stock[sCode] # 조건검색 dict 삭제
+                if sCode in self.condition_stock:
+                    del self.condition_stock[sCode] # 조건검색 dict 삭제
                 # 팔았을 땐 지우자. 10-25 다시 확인할 것
                 #
                 # seq = self.mk.get_buy_stock_info_max_seq(sCode, self.datetime)
