@@ -1077,7 +1077,7 @@ class EventLoop:
             #             del self.portfolio_stock_dict[sCode]
 
             # print("self.portfolio_stock_dict - real slot : {}".format(self.portfolio_stock_dict))
-            self.logging.logger.debug("종목코드 : {}, 체결시간 : {}".format(sCode, a))
+            # self.logging.logger.debug("종목코드 : {}, 체결시간 : {}".format(sCode, a))
 
             '''
             장중일 때 테스트 구간 start
@@ -1205,14 +1205,13 @@ class EventLoop:
 
             # print("self.portfolio_stock_dict : {}".format(self.portfolio_stock_dict))
 
-
             # 계좌평가잔고내역 종목 매도하기 - 로그인 전 매수한 건
             if sCode in self.account_stock_dict.keys() and sCode not in self.jango_dict.keys():
             # if 1 == 2:
                 asd = self.account_stock_dict[sCode]
                 meme_rate = (b - asd['매입가']) / asd['매입가'] * 100
 
-                if asd['매매가능수량'] > 0 and ((meme_rate > 15 or meme_rate < -5) or (self.t_sell < datetime.datetime.now() < self.t_exit)):
+                if asd['매매가능수량'] > 0 and ((meme_rate > 15 or meme_rate < -5) or (self.t_sell.strftime('%Y-%m-%d %H:%M:%S') < datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S') < self.t_exit.strftime('%Y-%m-%d %H:%M:%S'))):
                 # '''
                 # 손절매
                 # '''
@@ -1273,7 +1272,7 @@ class EventLoop:
                 jd = self.jango_dict[sCode]
                 meme_rate = (b - jd['매입단가']) / jd['매입단가'] * 100  # 수익률
 
-                if jd['주문가능수량'] > 0 and ((meme_rate > 15 or meme_rate < -5) or (self.t_sell < datetime.datetime.now() < self.t_exit)):
+                if jd['주문가능수량'] > 0 and ((meme_rate > 15 or meme_rate < -5) or (self.t_sell.strftime('%Y-%m-%d %H:%M:%S') < datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S') < self.t_exit.strftime('%Y-%m-%d %H:%M:%S'))):
                 # if jd['주문가능수량'] > 0 and meme_rate < -3:
                     '''
                     손절라인 마이너스 3

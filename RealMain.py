@@ -32,15 +32,15 @@ if __name__  == "__main__":
     # sched.add_job(signal.get_condition_load, 'cron', hour='09', minute='03', second="00", id='test')
     # sched.start()
 
-    # signal.get_condition_load()
-    # QTest.qWait(2000)  # 2초
-    #
+    signal.get_condition_load()
+    QTest.qWait(2000)  # 2초
+
     # signal.real_time_condition_stock_fuc()
     # QTest.qWait(500)  # 1초
     # signal.screen_number_real_time_setting()
 
-    # screenNumbering = RealTimeScreenNumbering(signal)
-    # screenNumbering.start()
+    screenNumbering = RealTimeScreenNumbering(signal)
+    screenNumbering.start()
 
     # QTest.qWait(2000)  # 2초
     # minuteCandle = MinuteCandle(signal)
