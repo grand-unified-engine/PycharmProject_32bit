@@ -6,7 +6,7 @@ class Api:
 
         self.ocx = QAxWidget(
             "KHOPENAPI.KHOpenAPICtrl.1")  # 키움증권 Open API+의 ProgID를 사용하여 생성된 QAxWidget을 Kiwoom 변수에 할당
-
+        # QAxWidget는 마이크로소프트사에서 제공하는 프로세스를 가지고 화면을 구성하는 데 필요한 기능들이 담겨있다.
         self.server_gubun = None # 접속서버 구분을 알려준다. 1 : 모의투자 접속, 나머지 : 실서버 접속
     ###############################################################
     # 로그인 버전처리                                              #

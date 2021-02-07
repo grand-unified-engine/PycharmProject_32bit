@@ -1,4 +1,3 @@
-import os
 from PyQt5.QtTest import QTest
 from PyQt5.QtCore import QEventLoop
 from Kiwoom.KiwoomAPI import Api, RealType
@@ -27,7 +26,9 @@ class Signal:
         # 변동성 돌파 전략 20.12.02
         self.init_dict = {"매수매도": "매수", "매수 목표가 중간 값": 0, "매수 목표가": 0, "ma5": 0, "ma10": 0, "신호": False}
 
+        ######## 내가 원하는 포트폴리오 담기
         self.portfolio_stock_dict = {}
+        ########################
 
         # self.mk = MarketDB()
         self.analyzer_daily = Analyzer_daily()
@@ -39,16 +40,20 @@ class Signal:
                                     self.analyzer_daily, self.analyzer_minute)
 
         ####### 요청 스크린 번호
-        self.screen_real_stock = "5000"  # 종목별 할당할 스크린 번호
-        self.screen_meme_stock = "6000"  # 종목별 할당할 주문용스크린 번호
+        self.screen_start_stop_real = "1000"  # 장 시작/종료 실시간 스크린 번호
+        self.screen_real_stock = "5000"  # 지정한 종목의 실시간 정보 요청시 사용
+        self.screen_meme_stock = "6000"  # 주문을 요청할 때 사용
 
-        self.temp_screen_real_stock = "7000"  # 종목별 할당할 스크린 번호
-        self.temp_screen_meme_stock = "8000"  # 종목별 할당할 주문용스크린 번호
+        self.temp_screen_real_stock = "7000"  # 지정한 종목의 실시간 정보 요청시 사용
+        self.temp_screen_meme_stock = "8000"  # 주문을 요청할 때 사용
         ########################################
 
-        self.another_job_stop = False
-        self.real_stock_cnt = 0
+        self.another_job_stop = False # ???
+        self.real_stock_cnt = 0 # ???
 
+    ###############################################################
+    # 로그인                                                       #
+    ###############################################################
     def login_commConnect(self):
         self.api.comm_connect()  # 로그인 요청 시그널
         # self.api.server_gubun = self.api.get_login_info("GetServerGubun") -> 로그인이 안된 상태에서 이거 호출하면 오류 발생함. get_account_info에서 호출
@@ -58,9 +63,9 @@ class Signal:
     # 계좌번호 가져오기                                            #
     ###############################################################
     def get_account_info(self):
-        self.event_loop.account_num = self.api.get_login_info("ACCNO").strip(';')
+        self.event_loop.account_num = self.api.get_login_info("ACCNO").strip(';') # 첫번째 계좌 [0] 붙이면 문자열 첫번째만 인식하게 됨.
         # self.logging.logger.debug("계좌번호 : %s" % self.event_loop.account_num)
-        print("계좌번호 : %s" % self.event_loop.account_num)
+        # print("계좌번호 : %s" % self.event_loop.account_num)
 
         self.api.server_gubun = self.api.get_login_info("GetServerGubun")
 
@@ -69,7 +74,7 @@ class Signal:
     ###############################################################
     def detail_account_info(self, sPrevNext="0"):
         self.api.set_input_value("계좌번호", self.event_loop.account_num)
-        self.api.set_input_value("비밀번호", "6285")
+        self.api.set_input_value("비밀번호", "8374")
         self.api.set_input_value("비밀번호입력매체구분", "00")
         self.api.set_input_value("조회구분", "1")
 
@@ -81,7 +86,7 @@ class Signal:
     ###############################################################
     def detail_account_mystock(self, sPrevNext="0"):
         self.api.set_input_value("계좌번호", self.event_loop.account_num)
-        self.api.set_input_value("비밀번호", "6285")
+        self.api.set_input_value("비밀번호", "8374")
         self.api.set_input_value("비밀번호입력매체구분", "00")
         self.api.set_input_value("조회구분", "1")
 
@@ -156,8 +161,8 @@ class Signal:
             if code not in screen_overwrite:
                 screen_overwrite.append(code)
 
-            self.portfolio_stock_dict.update({code: self.init_dict})
-            self.portfolio_stock_dict[code].update({"매수매도": "매도"})
+            # self.portfolio_stock_dict.update({code: self.init_dict})
+            # self.portfolio_stock_dict[code].update({"매수매도": "매도"})
 
             # self.minute_candle_req(code=code)  # 시스템 시작할 때 분봉 데이터를 가져온다.
 
@@ -166,14 +171,14 @@ class Signal:
         # 미체결에 있는 종목들
         for order_number in self.event_loop.not_account_stock_dict.keys():
             code = self.event_loop.not_account_stock_dict[order_number]['종목코드']
-            order_gubun = self.event_loop.not_account_stock_dict[order_number]['주문구분']
+            order_gubun = self.event_loop.not_account_stock_dict[order_number]['주문구분'] # ???
             order_gubun = order_gubun.strip().lstrip('+').lstrip('-')
 
             if code not in screen_overwrite:
                 screen_overwrite.append(code)
 
-            self.portfolio_stock_dict.update({code: self.init_dict})
-            self.portfolio_stock_dict[code].update({"매수매도": order_gubun})
+            # self.portfolio_stock_dict.update({code: self.init_dict})
+            # self.portfolio_stock_dict[code].update({"매수매도": order_gubun})
 
         # print("self.not_account_stock_dict 스크린 넘버 세팅 : {}".format(self.event_loop.not_account_stock_dict))
 
@@ -186,7 +191,7 @@ class Signal:
             temp_screen = int(self.screen_real_stock)
             meme_screen = int(self.screen_meme_stock)
 
-            if (cnt % 50) == 0:
+            if (cnt % 50) == 0: # 하나의 스크린번호에 50개씩 담는다!!
                 temp_screen += 1
                 self.screen_real_stock = str(temp_screen)
 
@@ -194,25 +199,30 @@ class Signal:
                 meme_screen += 1
                 self.screen_meme_stock = str(meme_screen)
 
-            # if code in self.portfolio_stock_dict.keys():
-            self.portfolio_stock_dict[code].update({"스크린번호": str(self.screen_real_stock)})
-            self.portfolio_stock_dict[code].update({"주문용스크린번호": str(self.screen_meme_stock)})
+            if code in self.portfolio_stock_dict.keys():
+                self.portfolio_stock_dict[code].update({"스크린번호": str(self.screen_real_stock)})
+                self.portfolio_stock_dict[code].update({"주문용스크린번호": str(self.screen_meme_stock)})
 
-            # elif code not in self.portfolio_stock_dict.keys():
-            #     self.portfolio_stock_dict.update(
-            #         {code: {"스크린번호": str(self.screen_real_stock), "주문용스크린번호": str(self.screen_meme_stock)}})
+            elif code not in self.portfolio_stock_dict.keys():
+                self.portfolio_stock_dict.update(
+                    {code: {"스크린번호": str(self.screen_real_stock), "주문용스크린번호": str(self.screen_meme_stock)}})
 
             cnt += 1
 
-        QTest.qWait(500)  # 분봉호출보다 real_data reg가 먼저 작업되어서 추가
-        for code in self.portfolio_stock_dict.keys():
-            screen_num = self.portfolio_stock_dict[code]['스크린번호']
-            # fids = self.real_type.REALTYPE['주식체결']['체결시간']
-            a = self.real_type.REALTYPE['주식호가잔량']['매도호가총잔량']
-            b = self.real_type.REALTYPE['주식체결']['체결시간']
-            fids = str(a) + ';' + str(b)
-            # fids = b
-            self.call_set_real_reg(screen_num, code, fids, "1")
+        print(self.portfolio_stock_dict)
+
+        QTest.qWait(5000)  # 5초
+
+        self.call_set_real_reg(self.screen_start_stop_real, ' ', self.real_type.REALTYPE['장시작시간']['장운영구분'], "0")
+
+        # for code in self.portfolio_stock_dict.keys():
+        #     screen_num = self.portfolio_stock_dict[code]['스크린번호']
+        #     # fids = self.real_type.REALTYPE['주식체결']['체결시간']
+        #     a = self.real_type.REALTYPE['주식호가잔량']['매도호가총잔량']
+        #     b = self.real_type.REALTYPE['주식체결']['체결시간']
+        #     fids = str(a) + ';' + str(b)
+        #     # fids = b
+        #     self.call_set_real_reg(screen_num, code, fids, "1")
 
     def screen_number_real_time_setting(self):
 
@@ -564,22 +574,19 @@ class Signal:
         self.event_loop.calculator_event_loop = QEventLoop()
         self.event_loop.calculator_event_loop.exec_()
 
-    # 일봉 데이터
-    def day_kiwoom_db(self, code=None, date=None, sPrevNext="0"):
-        QTest.qWait(300)
-
+    # 일봉 데이터 요청
+    def day_candle_req(self, code=None, date=None, sPrevNext="0"):
+        QTest.qWait(3600)
         # self.ohlcv = {'date': [], 'open': [], 'high': [], 'low': [], 'close': [], 'volume': []}
-
         self.api.set_input_value("종목코드", code)
         self.api.set_input_value("수정주가구분", "1")
 
         if date is not None:
             self.api.set_input_value("기준일자", date)
 
-        self.api.comm_rq_data("주식일봉차트조회", "opt10081", sPrevNext, self.event_loop.screen_calculation_stock)
+        self.api.comm_rq_data("주식일봉차트조회", "opt10081", sPrevNext, self.event_loop.screen_analyze_stock)
 
-        # self.event_loop.calculator_event_loop = QEventLoop()
-        self.event_loop.calculator_event_loop.exec_()
+        self.event_loop.analyze_event_loop.exec_()
 
     # 분봉 데이터
     def minute_candle_req(self, code=None):
@@ -595,7 +602,7 @@ class Signal:
 
             self.api.comm_rq_data("주식분봉차트조회", "opt10080", 0, self.event_loop.screen_calculation_stock)
 
-            self.event_loop.calculator_event_loop = QEventLoop()
+            self.event_loop.calculator_event_loop = QEventLoop() # 여러번 조회하면 여기 있으면 안된다. 2021-02-06
             self.event_loop.calculator_event_loop.exec_()
 
         except Exception as ex:
@@ -650,8 +657,7 @@ class Signal:
     ###############################################################
     # 종목 분석                                                    #
     ###############################################################
-
-    def calculator_fuc(self):
+    def analyze_fuc(self):
         ###############################################################
         '''
         알고리즘 테스트
@@ -686,9 +692,15 @@ class Signal:
         tr 테스트
         :return:
         '''
-        # code_list = self.api.get_code_list_by_market("0")
+        code_list = self.api.get_code_list_by_market("0")
         # code_list.extend(self.api.get_code_list_by_market("10"))
         # code_list.extend(self.api.get_code_list_by_market("8"))
+
+        for idx, code in enumerate(code_list):
+            self.api.disconnect_real_data(self.event_loop.screen_analyze_stock) #계산용 스크린 번호 끊기
+
+            print("%s / %s : KOSDAQ Stock Code : %s is updating... " % (idx + 1, len(code_list), code))
+            self.day_candle_req(code=code)
 
         # code_list = self.api.get_code_list_by_market("10")
         # # print("code_list : {}".format(self.analyzer.mk.codes))
@@ -710,10 +722,10 @@ class Signal:
         '''
         # sql = "SELECT a.code, a.company FROM company_info a where code > '045300'"
         # sql = "SELECT a.code, a.company FROM company_info a LEFT OUTER JOIN (select distinct code from week_price WHERE DATE = '2020-10-19') b on a.code = b.code WHERE b.code IS NULL"
-        sql = "SELECT * FROM company_info"
-        df = pd.read_sql(sql, self.mk.conn)
-        for idx in range(len(df)):
-            self.week_kiwoom_db(code=df['code'].values[idx])
+        # sql = "SELECT * FROM company_info"
+        # df = pd.read_sql(sql, self.mk.conn)
+        # for idx in range(len(df)):
+        #     self.week_kiwoom_db(code=df['code'].values[idx])
         ###############################################################
 
     def make_minute_candle_func(self, code):

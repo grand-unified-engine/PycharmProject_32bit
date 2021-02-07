@@ -2,13 +2,7 @@ import sys
 from PyQt5.QtWidgets import QApplication
 from Kiwoom.Signal import Signal  # 클래스가 와도 되고 파일명이 와도 된다.
 from Kiwoom.config.MariaDB import MarketDB
-
-import pandas as pd
-from bs4 import BeautifulSoup
-import urllib, pymysql, calendar, time, json
-from urllib.request import urlopen
-from datetime import datetime
-from threading import Timer
+from PyQt5.QtTest import QTest
 
 class DBUpdater:  
     def __init__(self):
@@ -32,11 +26,11 @@ class DBUpdater:
         # 6: 리츠
         # 9: 하이얼펀드
         # 30: K - OTC
-        # code_list = self.signal.api.get_code_list_by_market("0")
+        code_list = self.signal.api.get_code_list_by_market("8")
         # code_list.append(self.signal.api.get_code_list_by_market("10"))
         # code_list.append(self.signal.api.get_code_list_by_market("8"))
 
-        code_df = self.mk.get_company_info()
+        # code_df = self.mk.get_company_info()
         # print("code_list : {}".format(code_list))
         #
         # # code_list.remove('000075')
@@ -44,26 +38,26 @@ class DBUpdater:
         # # self.signal.corp_info_req(code="000075")
         # # print("code_list : {}".format(len(code_list)))
         #
-        for row in code_df.itertuples():
-            self.signal.corp_info_req(code=row[1])
+        # for row in code_df.itertuples():
+        #     self.signal.corp_info_req(code=row[1])
 
         # code_list = ['000087']
         #
         # for code in code_list:
         #     print("code : {}".format(code))
         #     self.signal.corp_info_req(code=code)
-
-        # for code in code_list:
-        #     code_name = self.signal.api.get_master_code_name(code)
-        #     state = self.signal.api.get_master_stock_state(code) # 종목 상태 업데이트
+        # QTest.qWait(10000)
         #
-        #     with self.conn.cursor() as curs:
-        #         sql = "REPLACE INTO company_info(code, company, stock_state) VALUES ('{}', '{}', '{}')".format(code, code_name, state)
-        #         curs.execute(sql)
-        #         self.conn.commit()
+        for code in code_list:
+            # print(self.mk.get_company_info(code=code)['code'].isnull())
+            code_name = self.signal.api.get_master_code_name(code)
+            state = self.signal.api.get_master_stock_state(code) # 종목 상태 업데이트
+            with self.mk.conn.cursor() as curs:
+                sql = "REPLACE INTO company_info(code, company, stock_state) VALUES ('{}', '{}', '{}')".format(code, code_name, state)
+                curs.execute(sql)
+                self.mk.conn.commit()
 
-        # print("code_list : {}".format(len(code_list)))
-
+        print("code_list : {}".format(len(code_list)))
 
         self.app.exec_()
                
@@ -73,3 +67,4 @@ class DBUpdater:
 
 if __name__ == '__main__':
     dbu = DBUpdater()
+
