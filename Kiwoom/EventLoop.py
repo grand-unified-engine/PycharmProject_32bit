@@ -1295,7 +1295,8 @@ class EventLoop:
                 asd = self.account_stock_dict[sCode]
                 meme_rate = (b - asd['매입가']) / asd['매입가'] * 100
 
-                if asd['매매가능수량'] > 0 and ((meme_rate > 15 or meme_rate < -5) or (self.t_sell.strftime('%Y-%m-%d %H:%M:%S') < datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S') < self.t_exit.strftime('%Y-%m-%d %H:%M:%S'))):
+                if asd['매매가능수량'] > 0 and (meme_rate > 15 or meme_rate < -5):
+                                          # or (self.t_sell.strftime('%Y-%m-%d %H:%M:%S') < datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S') < self.t_exit.strftime('%Y-%m-%d %H:%M:%S'))):
                 # '''
                 # 손절매
                 # '''
@@ -1356,7 +1357,8 @@ class EventLoop:
                 jd = self.jango_dict[sCode]
                 meme_rate = (b - jd['매입단가']) / jd['매입단가'] * 100  # 수익률
 
-                if jd['주문가능수량'] > 0 and ((meme_rate > 15 or meme_rate < -5) or (self.t_sell.strftime('%Y-%m-%d %H:%M:%S') < datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S') < self.t_exit.strftime('%Y-%m-%d %H:%M:%S'))):
+                if jd['주문가능수량'] > 0 and (meme_rate > 15 or meme_rate < -5):
+                # or (self.t_sell.strftime('%Y-%m-%d %H:%M:%S') < datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S') < self.t_exit.strftime('%Y-%m-%d %H:%M:%S'))):
                 # if jd['주문가능수량'] > 0 and meme_rate < -3:
                     '''
                     손절라인 마이너스 3
