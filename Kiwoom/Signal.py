@@ -3,7 +3,7 @@ from PyQt5.QtCore import QEventLoop
 from Kiwoom.KiwoomAPI import Api, RealType
 from Kiwoom.EventLoop import EventLoop
 from Kiwoom.config.log_class import Logging
-# from Kiwoom.config.MariaDB import MarketDB
+from Kiwoom.config.MariaDB import MarketDB
 from Kiwoom.quant.Analyzer_daily import Analyzer as Analyzer_daily
 from Kiwoom.quant.Analyzer_minute import Analyzer as Analyzer_minute
 from Kiwoom.quant.StockInfo import get_current_price
@@ -24,13 +24,16 @@ class Signal:
         # self.init_dict = {"매수매도": "매수", "이평선허락": False, "신호": False}
 
         # 변동성 돌파 전략 20.12.02
-        self.init_dict = {"매수매도": "매수", "매수 목표가 중간 값": 0, "매수 목표가": 0, "ma5": 0, "ma10": 0, "신호": False}
+        # self.init_dict = {"매수매도": "매수", "매수 목표가 중간 값": 0, "매수 목표가": 0, "ma5": 0, "ma10": 0, "신호": False}
+
+        #
+        self.init_dict = {"매수매도": "매수"}
 
         ######## 내가 원하는 포트폴리오 담기
         self.portfolio_stock_dict = {}
         ########################
 
-        # self.mk = MarketDB()
+        self.mk = MarketDB()
         self.analyzer_daily = Analyzer_daily()
         self.analyzer_minute = Analyzer_minute()
 
@@ -233,7 +236,7 @@ class Signal:
             # print("screen_number_real_time_setting 코드: {}, dict: {}".format(code, self.portfolio_stock_dict[code]))
             if "스크린번호" not in self.portfolio_stock_dict[code]:
                 screen_overwrite.append(code)
-                self.get_target_price(code=code)
+                # self.get_target_price(code=code)
                 print("screen_number_real_time_setting 코드: {}, dict: {}".format(code, self.portfolio_stock_dict[code]))
                 # self.minute_candle_req(code=code)
             else:
@@ -258,11 +261,11 @@ class Signal:
             # print("screen_number_real_time_setting 코드: {}, dict: {}".format(code, self.portfolio_stock_dict[code]))
             #
             # if code not in self.event_loop.condition_stock:
-            # with self.mk.conn.cursor() as curs:
-            #     sql = "UPDATE portfolio_stock SET is_receive_real = True WHERE code = '{}'" \
-            #         .format(code)
-            #     curs.execute(sql)
-            #     self.mk.conn.commit()
+            with self.mk.conn.cursor() as curs:
+                sql = "UPDATE portfolio_stock SET is_receive_real = True WHERE code = '{}'" \
+                    .format(code)
+                curs.execute(sql)
+                self.mk.conn.commit()
 
             # self.event_loop.real_data_dict.update({code: {}})  # 실시간 분봉 만들기 위한 dict 2020-10-26
 
@@ -272,10 +275,10 @@ class Signal:
         for code in screen_overwrite:
             screen_num = self.portfolio_stock_dict[code]['스크린번호']
             # fids = self.real_type.REALTYPE['주식체결']['체결시간']
-            a = self.real_type.REALTYPE['주식호가잔량']['매도호가총잔량']
+            # a = self.real_type.REALTYPE['주식호가잔량']['매도호가총잔량']
             b = self.real_type.REALTYPE['주식체결']['체결시간']
-            fids = str(a) + ';' + str(b)
-            # fids = b
+            # fids = str(a) + ';' + str(b)
+            fids = b
             self.call_set_real_reg(screen_num, code, fids, "1")
 
     '''
@@ -283,9 +286,9 @@ class Signal:
     '''
 
     def real_time_new_portfolio_fuc(self):
-        db = MarketDB()
-        df = db.get_portfolio()
-        del db
+        # db = MarketDB()
+        df = self.mk.get_portfolio()
+        # del db
 
         if df is not None:
             for row in df.itertuples():
@@ -295,7 +298,7 @@ class Signal:
                     if stock_code == '096350' or stock_code == '96040':  # 096350(대창솔루션) 모의투자 매매 불가능
                         continue
 
-                self.portfolio_stock_dict.update({stock_code: self.init_dict})
+                self.portfolio_stock_dict.update({stock_code: self.init_dict.copy()})
 
     '''
     조검검색에 새로 들어온 종목

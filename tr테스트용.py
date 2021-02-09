@@ -26,7 +26,7 @@ if __name__  == "__main__":
 
     # signal.analyze_fuc() # 종목 가져와서 분석하기
 
-    QTest.qWait(10000);
+    QTest.qWait(10000)
     signal.screen_number_setting() # 여기에서도 5초 딜레이 준다
     # QTest.qWait(5000) #5초
     #

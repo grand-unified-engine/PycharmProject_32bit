@@ -22,16 +22,16 @@ if __name__  == "__main__":
     QTimer.singleShot(5000, signal.not_concluded_account) # 5초 뒤에 미체결 종목들 가져오기 실행(동시성 지원. 다음 메소드를 실행하면서 이 메소드만 5초 뒤에 실행)
     #############################################
 
-    # QTest.qWait(10000);
+    QTest.qWait(5000)
     signal.screen_number_setting() # 여기에서도 5초 딜레이 준다
-    # QTest.qWait(5000) #5초
+    QTest.qWait(5000) #5초
     #
     # sched = BackgroundScheduler()
     # sched.add_job(signal.get_condition_load, 'cron', hour='09', minute='03', second="00", id='test')
     # sched.start()
 
-    signal.get_condition_load()
-    QTest.qWait(2000)  # 2초
+    # signal.get_condition_load()
+    # QTest.qWait(2000)  # 2초
 
     # signal.real_time_condition_stock_fuc()
     # QTest.qWait(500)  # 1초
