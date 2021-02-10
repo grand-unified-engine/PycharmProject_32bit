@@ -30,11 +30,11 @@ class MarketDB:
         """포트폴리오를 데이터프레임 형태로 반환
         """
         # sql = "SELECT code FROM portfolio_stock"
-        sql = "SELECT code FROM portfolio_stock where is_receive_real IS FALSE OR is_receive_real IS NULL"
+        sql = "SELECT code FROM portfolio_stock where is_receive_real = '0'"
         # sql = "SELECT * FROM portfolio_stock WHERE workdate = '{}'".format(datetime.today().strftime('%Y-%m-%d'))
         # sql = "SELECT * FROM portfolio_stock WHERE workdate = '{}'".format('2020-09-29') # 따옴표 넣어야 함
         df = pd.read_sql(sql, self.conn)
-        # print("get_portfolio sql df : {}".format(df))
+        print("get_portfolio sql df : {}".format(df))
         return df
 
     def get_vol_uprise_stock(self, code=None):

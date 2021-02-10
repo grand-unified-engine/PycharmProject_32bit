@@ -172,7 +172,7 @@ class EventLoop:
     # 조회요청 응답을 받거나 조회데이터를 수신했을때
     # sTrCode : TR이름 ex)opt10075
     def _tr_data_slot(self, sScrNo, sRQName, sTrCode, sRecordName, sPrevNext, unused1, unused2, unused3, unused4):
-        from Kiwoom.Signal import Signal
+        # from Kiwoom.Signal import Signal
         # print("OnReceiveTrData 이벤트 루프 큐 실행: ", screen_no, sRQName, sTrCode, record_name, sPrevNext)
 
         # if sRQName == "신규매수" or sRQName == "신규매도" or sRQName == "매수취소":
@@ -192,14 +192,18 @@ class EventLoop:
             deposit = self.api.get_comm_data(sTrCode, sRQName, 0, "예수금")
             self.deposit = int(deposit)
 
+            print("예수금 : {}".format(self.deposit))
+            print("실제 사용할 비율 : {}".format(self.use_money_percent))
             use_money = float(self.deposit) * self.use_money_percent # 예수금 * 실제 사용할 비율
             self.use_money = int(use_money)
             self.use_money = self.use_money / 5  # 5종목 이상 매수할 수 있게 5로 나눠준다.
 
+            print("실제 사용할 금액 : {}".format(self.use_money))
+
             output_deposit = self.api.get_comm_data(sTrCode, sRQName, 0, "출금가능금액")
             self.output_deposit = int(output_deposit)
 
-            self.logging.logger.debug("예수금 : %s" % self.output_deposit)
+            # self.logging.logger.debug("출금가능금액 : %s" % self.output_deposit)
 
             self.api.disconnect_real_data(self.screen_my_info) # 예수금 스크린 번호 연결 끊기
 
@@ -262,7 +266,14 @@ class EventLoop:
             print("계좌에 가지고 있는 종목은 %s " % rows)
 
             if sPrevNext == "2":
-                Signal.detail_account_mystock(sPrevNext=sPrevNext)
+                # Signal.detail_account_mystock(sPrevNext=sPrevNext)
+                self.api.set_input_value("계좌번호", self.account_num)
+                self.api.set_input_value("비밀번호", "8374")
+                self.api.set_input_value("비밀번호입력매체구분", "00")
+                self.api.set_input_value("조회구분", "1")
+
+                self.api.comm_rq_data("계좌평가잔고내역요청", "opw00018", sPrevNext, self.screen_my_info)
+                self.detail_account_info_event_loop.exec_()
             else:
                 self.detail_account_info_event_loop.exit()
 
@@ -471,6 +482,7 @@ class EventLoop:
         elif sRQName == "실시간미체결요청": # sTrCode : opt10075
             rows = self.api.get_repeat_cnt(sTrCode, sRQName)
 
+            print("실시간미체결요청")
             for i in range(rows):
 
                 code = self.api.get_comm_data(sTrCode, sRQName, i, "종목코드")
@@ -1452,29 +1464,29 @@ class EventLoop:
                                     # self.slack.chat.post_message("hellojarvis", "코드 : " + sCode + " 매수주문 전달 실패")
 
             # self.not_account_stock_dict 처음 시작할 때 없는데???
-            not_meme_list = list(self.not_account_stock_dict)
-            for order_num in not_meme_list:
-                code = self.not_account_stock_dict[order_num]["종목코드"]
-                meme_price = self.not_account_stock_dict[order_num]['주문가격']
-                not_quantity = self.not_account_stock_dict[order_num]['미체결수량']
-                order_gubun = self.not_account_stock_dict[order_num]['주문구분']
-
-                if order_gubun == "매수" and not_quantity > 0 and e > meme_price:
-
-                    order_success = self.api.send_order("매수취소", self.portfolio_stock_dict[sCode]["주문용스크린번호"],
-                                                        self.account_num, 3, sCode, 0, 0,
-                                                        self.real_type.SENDTYPE['거래구분']['지정가'], order_num)
-                    # 주문수량(5번째 파라미터) : 0으로 하면 미체결수량 전부를 매수취소한다는 뜻이다.
-                    # 주문가격(6번째 파라미터) : 매수취소라 주문가격은 필요없으므로 0
-                    if order_success == 0:
-                        self.logging.logger.debug("매수취소 전달 성공")
-                        # self.slack.chat.post_message("hellojarvis", "코드 : " + sCode + " 매수취소 전달 성공")
-                    else:
-                        self.logging.logger.debug("매수취소 전달 실패")
-                        # self.slack.chat.post_message("hellojarvis", "코드 : " + sCode + " 매수취소 전달 실패")
-
-                elif not_quantity == 0:
-                    del self.not_account_stock_dict[order_num]
+            # not_meme_list = list(self.not_account_stock_dict)
+            # for order_num in not_meme_list:
+            #     code = self.not_account_stock_dict[order_num]["종목코드"]
+            #     meme_price = self.not_account_stock_dict[order_num]['주문가격']
+            #     not_quantity = self.not_account_stock_dict[order_num]['미체결수량']
+            #     order_gubun = self.not_account_stock_dict[order_num]['주문구분']
+            #
+            #     if order_gubun == "매수" and not_quantity > 0 and e > meme_price:
+            #
+            #         order_success = self.api.send_order("매수취소", self.portfolio_stock_dict[sCode]["주문용스크린번호"],
+            #                                             self.account_num, 3, sCode, 0, 0,
+            #                                             self.real_type.SENDTYPE['거래구분']['지정가'], order_num)
+            #         # 주문수량(5번째 파라미터) : 0으로 하면 미체결수량 전부를 매수취소한다는 뜻이다.
+            #         # 주문가격(6번째 파라미터) : 매수취소라 주문가격은 필요없으므로 0
+            #         if order_success == 0:
+            #             self.logging.logger.debug("매수취소 전달 성공")
+            #             # self.slack.chat.post_message("hellojarvis", "코드 : " + sCode + " 매수취소 전달 성공")
+            #         else:
+            #             self.logging.logger.debug("매수취소 전달 실패")
+            #             # self.slack.chat.post_message("hellojarvis", "코드 : " + sCode + " 매수취소 전달 실패")
+            #
+            #     elif not_quantity == 0:
+            #         del self.not_account_stock_dict[order_num]
 
 
     # 주문후 체결 정보

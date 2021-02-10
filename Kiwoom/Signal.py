@@ -33,7 +33,7 @@ class Signal:
         self.portfolio_stock_dict = {}
         ########################
 
-        self.mk = MarketDB()
+        # self.mk = MarketDB()
         self.analyzer_daily = Analyzer_daily()
         self.analyzer_minute = Analyzer_minute()
 
@@ -142,8 +142,10 @@ class Signal:
 
         screen_overwrite = []
 
+        portfolio_stock_dict_copy = self.portfolio_stock_dict.copy()
+
         # 포트폴리오 테이블에 담겨있는 종목들
-        for code in self.portfolio_stock_dict.keys():
+        for code in portfolio_stock_dict_copy.keys():
 
             if code not in screen_overwrite:
                 screen_overwrite.append(code)
@@ -202,37 +204,39 @@ class Signal:
                 meme_screen += 1
                 self.screen_meme_stock = str(meme_screen)
 
-            if code in self.portfolio_stock_dict.keys():
+            if code in portfolio_stock_dict_copy.keys():
                 self.portfolio_stock_dict[code].update({"스크린번호": str(self.screen_real_stock)})
                 self.portfolio_stock_dict[code].update({"주문용스크린번호": str(self.screen_meme_stock)})
 
-            elif code not in self.portfolio_stock_dict.keys():
+            elif code not in portfolio_stock_dict_copy.keys():
                 self.portfolio_stock_dict.update(
                     {code: {"스크린번호": str(self.screen_real_stock), "주문용스크린번호": str(self.screen_meme_stock)}})
 
             cnt += 1
 
-        print(self.portfolio_stock_dict)
+        print("screen_number_setting : {}".format(self.portfolio_stock_dict))
 
-        QTest.qWait(5000)  # 5초
+        # self.call_set_real_reg(self.screen_start_stop_real, ' ', self.real_type.REALTYPE['장시작시간']['장운영구분'], "0")
 
-        self.call_set_real_reg(self.screen_start_stop_real, ' ', self.real_type.REALTYPE['장시작시간']['장운영구분'], "0")
+        for code in portfolio_stock_dict_copy.keys():
+            QTest.qWait(500)  # 1초
+            screen_num = self.portfolio_stock_dict[code]['스크린번호']
+            # fids = self.real_type.REALTYPE['주식체결']['체결시간']
+            # a = self.real_type.REALTYPE['주식호가잔량']['매도호가총잔량']
+            b = self.real_type.REALTYPE['주식체결']['체결시간']
+            # fids = str(a) + ';' + str(b)
+            fids = b
+            self.call_set_real_reg(screen_num, code, fids, "1")
 
-        # for code in self.portfolio_stock_dict.keys():
-        #     screen_num = self.portfolio_stock_dict[code]['스크린번호']
-        #     # fids = self.real_type.REALTYPE['주식체결']['체결시간']
-        #     a = self.real_type.REALTYPE['주식호가잔량']['매도호가총잔량']
-        #     b = self.real_type.REALTYPE['주식체결']['체결시간']
-        #     fids = str(a) + ';' + str(b)
-        #     # fids = b
-        #     self.call_set_real_reg(screen_num, code, fids, "1")
 
     def screen_number_real_time_setting(self):
 
         screen_overwrite = []
 
+        portfolio_stock_dict_copy = self.portfolio_stock_dict.copy()
+
         self.real_stock_cnt = 0
-        for code in self.portfolio_stock_dict.keys():
+        for code in portfolio_stock_dict_copy.keys():
             # print("screen_number_real_time_setting 코드: {}, dict: {}".format(code, self.portfolio_stock_dict[code]))
             if "스크린번호" not in self.portfolio_stock_dict[code]:
                 screen_overwrite.append(code)
@@ -245,6 +249,7 @@ class Signal:
 
         # 스크린번호 할당
         cnt = 0
+        db = MarketDB()
         for code in screen_overwrite:
             temp_screen = int(self.temp_screen_real_stock)
             meme_screen = int(self.temp_screen_meme_stock)
@@ -261,18 +266,22 @@ class Signal:
             # print("screen_number_real_time_setting 코드: {}, dict: {}".format(code, self.portfolio_stock_dict[code]))
             #
             # if code not in self.event_loop.condition_stock:
-            with self.mk.conn.cursor() as curs:
-                sql = "UPDATE portfolio_stock SET is_receive_real = True WHERE code = '{}'" \
+
+            with db.conn.cursor() as curs:
+                sql = "UPDATE portfolio_stock SET is_receive_real = '1' WHERE code = '{}'" \
                     .format(code)
                 curs.execute(sql)
-                self.mk.conn.commit()
+                db.conn.commit()
 
             # self.event_loop.real_data_dict.update({code: {}})  # 실시간 분봉 만들기 위한 dict 2020-10-26
 
             cnt += 1
+        del db
 
-        # QTest.qWait(500)  # 분봉호출보다 real_data reg가 먼저 작업되어서 추가
+        print("screen_number_real_time_setting screen_overwrite dict: {}".format(screen_overwrite))
+
         for code in screen_overwrite:
+            QTest.qWait(500)
             screen_num = self.portfolio_stock_dict[code]['스크린번호']
             # fids = self.real_type.REALTYPE['주식체결']['체결시간']
             # a = self.real_type.REALTYPE['주식호가잔량']['매도호가총잔량']
@@ -286,9 +295,9 @@ class Signal:
     '''
 
     def real_time_new_portfolio_fuc(self):
-        # db = MarketDB()
-        df = self.mk.get_portfolio()
-        # del db
+        db = MarketDB()
+        df = db.get_portfolio()
+        del db
 
         if df is not None:
             for row in df.itertuples():
