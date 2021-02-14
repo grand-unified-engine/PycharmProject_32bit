@@ -27,7 +27,7 @@ class Signal:
         # self.init_dict = {"매수매도": "매수", "매수 목표가 중간 값": 0, "매수 목표가": 0, "ma5": 0, "ma10": 0, "신호": False}
 
         #
-        self.init_dict = {"매수매도": "매수"}
+        self.init_dict = {"매수매도": "매수", "ub": 0}
 
         ######## 내가 원하는 포트폴리오 담기
         self.portfolio_stock_dict = {}
@@ -268,8 +268,8 @@ class Signal:
             # if code not in self.event_loop.condition_stock:
 
             with db.conn.cursor() as curs:
-                sql = "UPDATE portfolio_stock SET is_receive_real = '1' WHERE code = '{}'" \
-                    .format(code)
+                sql = "UPDATE portfolio_stock SET is_receive_real = '1' WHERE code = '{}' and create_date = '{}' " \
+                    .format(code, self.event_loop.today)
                 curs.execute(sql)
                 db.conn.commit()
 
@@ -308,6 +308,7 @@ class Signal:
                         continue
 
                 self.portfolio_stock_dict.update({stock_code: self.init_dict.copy()})
+                self.portfolio_stock_dict[stock_code].update({"ub": row[2]}) #볼린저 밴드 상단
 
     '''
     조검검색에 새로 들어온 종목

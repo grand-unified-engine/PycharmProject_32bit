@@ -213,11 +213,11 @@ class EventLoop:
 
             total_buy_money = self.api.get_comm_data(sTrCode, sRQName, 0, "총매입금액").lstrip("0")
             self.total_buy_money = int(total_buy_money)
-            total_profit_loss_money = self.api.get_comm_data(sTrCode, sRQName, 0, "총평가손익금액")
+            total_profit_loss_money = self.api.get_comm_data(sTrCode, sRQName, 0, "총평가손익금액").lstrip("0")
             if total_profit_loss_money[0] == "-":
                 total_profit_loss_money = "-" + total_profit_loss_money[1:].lstrip("0")
             self.total_profit_loss_money = int(total_profit_loss_money)
-            total_profit_loss_rate = self.api.get_comm_data(sTrCode, sRQName, 0, "총수익률(%)")
+            total_profit_loss_rate = self.api.get_comm_data(sTrCode, sRQName, 0, "총수익률(%)").lstrip("0")
             if total_profit_loss_rate[0] == "-":
                 total_profit_loss_rate = "-" + total_profit_loss_rate[1:].lstrip("0")
             self.total_profit_loss_rate = float(total_profit_loss_rate)
@@ -1307,7 +1307,7 @@ class EventLoop:
                 asd = self.account_stock_dict[sCode]
                 meme_rate = (b - asd['매입가']) / asd['매입가'] * 100
 
-                if asd['매매가능수량'] > 0 and (meme_rate > 15 or meme_rate < -5):
+                if asd['매매가능수량'] > 0 and (meme_rate > 6 or meme_rate < -5):
                                           # or (self.t_sell.strftime('%Y-%m-%d %H:%M:%S') < datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S') < self.t_exit.strftime('%Y-%m-%d %H:%M:%S'))):
                 # '''
                 # 손절매
@@ -1369,7 +1369,7 @@ class EventLoop:
                 jd = self.jango_dict[sCode]
                 meme_rate = (b - jd['매입단가']) / jd['매입단가'] * 100  # 수익률
 
-                if jd['주문가능수량'] > 0 and (meme_rate > 15 or meme_rate < -5):
+                if jd['주문가능수량'] > 0 and (meme_rate > 6 or meme_rate < -5):
                 # or (self.t_sell.strftime('%Y-%m-%d %H:%M:%S') < datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S') < self.t_exit.strftime('%Y-%m-%d %H:%M:%S'))):
                 # if jd['주문가능수량'] > 0 and meme_rate < -3:
                     '''
@@ -1433,6 +1433,7 @@ class EventLoop:
                             # if self.portfolio_stock_dict[sCode]["신호"]:
                                 #     print("self.portfolio_stock_dict - 매수일 때 : {}".format(self.portfolio_stock_dict))
                                 #     print("self.portfolio_stock_dict  매수일 때 개수 : {}".format(len(self.portfolio_stock_dict)))
+                            if self.portfolio_stock_dict[sCode]["ub"] * 1.04 > e: #볼린저 상단밴드(D-1)보다 아래일 때(밴드를 조금 더 올려 여유를 둔다 2021.02.14)
                                 self.logging.logger.debug("매수조건 통과 %s " % sCode)
                                 self.logging.logger.debug("(최우선)매도호가 %s " % e)
 
