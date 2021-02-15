@@ -1307,6 +1307,8 @@ class EventLoop:
                 asd = self.account_stock_dict[sCode]
                 meme_rate = (b - asd['매입가']) / asd['매입가'] * 100
 
+                print("meme_rate : {}".format(meme_rate))
+
                 if asd['매매가능수량'] > 0 and (meme_rate > 6 or meme_rate < -5):
                                           # or (self.t_sell.strftime('%Y-%m-%d %H:%M:%S') < datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S') < self.t_exit.strftime('%Y-%m-%d %H:%M:%S'))):
                 # '''
@@ -1314,28 +1316,28 @@ class EventLoop:
                 # '''
                 # if asd['매매가능수량'] > 0 and meme_rate < -3:
 
-                    if "오류예방비교수량" not in self.portfolio_stock_dict[sCode]:
-                        self.portfolio_stock_dict[sCode].update({"오류예방비교수량": 0})
+                    # if "오류예방비교수량" not in self.portfolio_stock_dict[sCode]:
+                    #     self.portfolio_stock_dict[sCode].update({"오류예방비교수량": 0})
+                    #
+                    # protection_qt = self.portfolio_stock_dict[sCode]['오류예방비교수량'] + asd['매매가능수량']
+                    #
+                    # self.portfolio_stock_dict[sCode].update({"오류예방비교수량": protection_qt})
+                    # print("account_stock_dict 매매가능수량: {}, 오류예방비교수량: {}".format(asd['매매가능수량'], protection_qt))
+                    #
+                    # if protection_qt <= asd['매매가능수량']:
 
-                    protection_qt = self.portfolio_stock_dict[sCode]['오류예방비교수량'] + asd['매매가능수량']
+                    order_success = self.api.send_order("신규매도", self.portfolio_stock_dict[sCode]["주문용스크린번호"],
+                                                        self.account_num, 2, sCode, asd['매매가능수량'], 0,
+                                                        self.real_type.SENDTYPE['거래구분']['시장가'], "")
 
-                    self.portfolio_stock_dict[sCode].update({"오류예방비교수량": protection_qt})
-                    print("account_stock_dict 매매가능수량: {}, 오류예방비교수량: {}".format(asd['매매가능수량'], protection_qt))
+                    if order_success == 0:
+                        self.logging.logger.debug("코드 : " + sCode + " 매도주문 전달 성공")
+                        # self.slack.chat.post_message("hellojarvis", "코드 : " + sCode + " 매도주문 전달 성공")
+                        del self.account_stock_dict[sCode]
 
-                    if protection_qt <= asd['매매가능수량']:
-
-                        order_success = self.api.send_order("신규매도", self.portfolio_stock_dict[sCode]["주문용스크린번호"],
-                                                            self.account_num, 2, sCode, asd['매매가능수량'], 0,
-                                                            self.real_type.SENDTYPE['거래구분']['시장가'], "")
-
-                        if order_success == 0:
-                            self.logging.logger.debug("코드 : " + sCode + " 매도주문 전달 성공")
-                            # self.slack.chat.post_message("hellojarvis", "코드 : " + sCode + " 매도주문 전달 성공")
-                            del self.account_stock_dict[sCode]
-
-                        else:
-                            self.logging.logger.debug("코드 : " + sCode + " 매도주문 전달 실패")
-                            # self.slack.chat.post_message("hellojarvis", "코드 : " + sCode + " 매도주문 전달 실패")
+                    else:
+                        self.logging.logger.debug("코드 : " + sCode + " 매도주문 전달 실패")
+                        # self.slack.chat.post_message("hellojarvis", "코드 : " + sCode + " 매도주문 전달 실패")
                 # elif self.portfolio_stock_dict[sCode]["매수매도"] == "매도":
                 #
                 #     if self.portfolio_stock_dict[sCode]["신호"]:

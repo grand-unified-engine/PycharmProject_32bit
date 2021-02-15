@@ -204,11 +204,11 @@ class Signal:
                 meme_screen += 1
                 self.screen_meme_stock = str(meme_screen)
 
-            if code in portfolio_stock_dict_copy.keys():
+            if code in self.portfolio_stock_dict.keys():
                 self.portfolio_stock_dict[code].update({"스크린번호": str(self.screen_real_stock)})
                 self.portfolio_stock_dict[code].update({"주문용스크린번호": str(self.screen_meme_stock)})
 
-            elif code not in portfolio_stock_dict_copy.keys():
+            elif code not in self.portfolio_stock_dict.keys():
                 self.portfolio_stock_dict.update(
                     {code: {"스크린번호": str(self.screen_real_stock), "주문용스크린번호": str(self.screen_meme_stock)}})
 
@@ -218,8 +218,7 @@ class Signal:
 
         # self.call_set_real_reg(self.screen_start_stop_real, ' ', self.real_type.REALTYPE['장시작시간']['장운영구분'], "0")
 
-        for code in portfolio_stock_dict_copy.keys():
-            QTest.qWait(500)  # 1초
+        for code in self.portfolio_stock_dict.keys():
             screen_num = self.portfolio_stock_dict[code]['스크린번호']
             # fids = self.real_type.REALTYPE['주식체결']['체결시간']
             # a = self.real_type.REALTYPE['주식호가잔량']['매도호가총잔량']
