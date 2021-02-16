@@ -27,7 +27,7 @@ class Signal:
         # self.init_dict = {"매수매도": "매수", "매수 목표가 중간 값": 0, "매수 목표가": 0, "ma5": 0, "ma10": 0, "신호": False}
 
         #
-        self.init_dict = {"매수매도": "매수", "실시간여부" : False, "ub": 0}
+        self.init_dict = {"매수매도": "매수", "실시간여부": False, "ub": 0}
 
         ######## 내가 원하는 포트폴리오 담기
         self.portfolio_stock_dict = {}
@@ -235,14 +235,17 @@ class Signal:
 
         portfolio_stock_dict_copy = self.portfolio_stock_dict.copy()
 
-        self.real_stock_cnt = 0
+        # print("real time portfolio_stock_dict_copy 111: {}".format(portfolio_stock_dict_copy))
+
+        # self.real_stock_cnt = 0
         for code in portfolio_stock_dict_copy.keys():
-            # print("screen_number_real_time_setting 코드: {}, dict: {}".format(code, self.portfolio_stock_dict[code]))
-            if self.portfolio_stock_dict[code]["실시간여부"]:
-                if "스크린번호" not in self.portfolio_stock_dict[code]:
-                    screen_overwrite.append(code)
-                    # self.get_target_price(code=code)
-                    print("screen_number_real_time_setting 코드: {}, dict: {}".format(code, self.portfolio_stock_dict[code]))
+
+            if "실시간여부" in portfolio_stock_dict_copy[code]:
+                if portfolio_stock_dict_copy[code]["실시간여부"]:
+                    if "스크린번호" not in portfolio_stock_dict_copy[code]:
+                        screen_overwrite.append(code)
+                        # self.get_target_price(code=code)
+                        # print("screen_number_real_time_setting 코드 222 : {}, dict: {}".format(code, portfolio_stock_dict_copy[code]))
                     # self.minute_candle_req(code=code)
         #         else:
         #             self.real_stock_cnt += 1
@@ -264,7 +267,7 @@ class Signal:
             self.portfolio_stock_dict[code].update({"스크린번호": str(self.screen_real_stock)})
             self.portfolio_stock_dict[code].update({"주문용스크린번호": str(self.screen_meme_stock)})
 
-            # print("screen_number_real_time_setting 코드: {}, dict: {}".format(code, self.portfolio_stock_dict[code]))
+            print("screen_number_real_time_setting 코드 333: {}, dict: {}".format(code, self.portfolio_stock_dict[code]))
             #
             # if code not in self.event_loop.condition_stock:
 
@@ -279,10 +282,10 @@ class Signal:
             cnt += 1
         del db
 
-        print("screen_number_real_time_setting screen_overwrite dict: {}".format(screen_overwrite))
+        # print("screen_number_real_time_setting screen_overwrite dict: {}".format(screen_overwrite))
 
         for code in screen_overwrite:
-            # QTest.qWait(500)
+            QTest.qWait(300)
             screen_num = self.portfolio_stock_dict[code]['스크린번호']
             # fids = self.real_type.REALTYPE['주식체결']['체결시간']
             # a = self.real_type.REALTYPE['주식호가잔량']['매도호가총잔량']
@@ -306,11 +309,20 @@ class Signal:
                 print("새로 들어왔따: {}".format(stock_code))
                 if self.api.server_gubun == "1":
                     if stock_code == '066430' or stock_code == '570045':  # 066430(와이오엠), 570045(TRUE 레버리지 천연가스 선물ETN) 모의투자 매매 불가능
+                        db = MarketDB()
+                        with db.conn.cursor() as curs:
+                            sql = "UPDATE portfolio_stock SET is_receive_real = '1' WHERE code = '{}' and create_date = '{}' " \
+                                .format(stock_code, self.event_loop.today)
+                            curs.execute(sql)
+                            db.conn.commit()
+                        del db
                         continue
 
                 self.portfolio_stock_dict.update({stock_code: self.init_dict.copy()})
                 self.portfolio_stock_dict[stock_code].update({"실시간여부": True}) #실시간 여부
                 self.portfolio_stock_dict[stock_code].update({"ub": row[2]}) #볼린저 밴드 상단
+
+                print("새로 들어온 포트폴리오 dict: {}".format(self.portfolio_stock_dict[stock_code]))
 
     '''
     조검검색에 새로 들어온 종목

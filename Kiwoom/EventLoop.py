@@ -1136,6 +1136,7 @@ class EventLoop:
             # l = self.api.get_comm_real_data(sCode, self.real_type.REALTYPE[sRealType]['전일거래량대비(비율)'])  # 출력 : +(-)2520
             # l = float(l)
 
+            # print("코드 : {}, 현재가 : {}, 체결시간 : {}".format(sCode, b, a))
             # if sCode not in self.portfolio_stock_dict:
             #     print("포트폴리오 없는 코드 : {}".format(sCode))
 
@@ -1615,8 +1616,10 @@ class EventLoop:
 
             self.logging.logger.debug("잔고반영: %s" % (self.jango_dict[sCode]))
             if stock_quan == 0:
-                del self.jango_dict[sCode]
-                del self.account_stock_dict[sCode]
+                if sCode in self.jango_dict.keys():
+                    del self.jango_dict[sCode]
+                if sCode in self.account_stock_dict.keys():
+                    del self.account_stock_dict[sCode]
                 # print("매도 지우기 전 스크린번호 확인 : {}".format(self.portfolio_stock_dict[sCode])) # 해당 코드 실시간 안 없어짐 2020.10.22
                 self.api.set_real_remove(self.portfolio_stock_dict[sCode]['스크린번호'], sCode)
                 self.api.set_real_remove(self.portfolio_stock_dict[sCode]['주문용스크린번호'], sCode)
