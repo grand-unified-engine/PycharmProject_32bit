@@ -482,7 +482,6 @@ class EventLoop:
         elif sRQName == "실시간미체결요청": # sTrCode : opt10075
             rows = self.api.get_repeat_cnt(sTrCode, sRQName)
 
-            print("실시간미체결요청")
             for i in range(rows):
 
                 code = self.api.get_comm_data(sTrCode, sRQName, i, "종목코드")
@@ -1392,7 +1391,7 @@ class EventLoop:
 
                     if order_success == 0:
                         self.logging.logger.debug("코드 : " + sCode + " 매도주문 전달 성공")
-                        del self.jango_dict[sCode]
+                        # del self.jango_dict[sCode]
                         # self.slack.chat.post_message("hellojarvis", "코드 : " + sCode + " 매도주문 전달 성공")
                     else:
                         self.logging.logger.debug("코드 : " + sCode + " 매도주문 전달 실패")
@@ -1466,30 +1465,27 @@ class EventLoop:
                                     self.logging.logger.debug("코드 : " + sCode + " 매수주문 전달 실패")
                                     # self.slack.chat.post_message("hellojarvis", "코드 : " + sCode + " 매수주문 전달 실패")
 
-            # self.not_account_stock_dict 처음 시작할 때 없는데???
-            # not_meme_list = list(self.not_account_stock_dict)
-            # for order_num in not_meme_list:
-            #     code = self.not_account_stock_dict[order_num]["종목코드"]
-            #     meme_price = self.not_account_stock_dict[order_num]['주문가격']
-            #     not_quantity = self.not_account_stock_dict[order_num]['미체결수량']
-            #     order_gubun = self.not_account_stock_dict[order_num]['주문구분']
-            #
-            #     if order_gubun == "매수" and not_quantity > 0 and e > meme_price:
-            #
-            #         order_success = self.api.send_order("매수취소", self.portfolio_stock_dict[sCode]["주문용스크린번호"],
-            #                                             self.account_num, 3, sCode, 0, 0,
-            #                                             self.real_type.SENDTYPE['거래구분']['지정가'], order_num)
-            #         # 주문수량(5번째 파라미터) : 0으로 하면 미체결수량 전부를 매수취소한다는 뜻이다.
-            #         # 주문가격(6번째 파라미터) : 매수취소라 주문가격은 필요없으므로 0
-            #         if order_success == 0:
-            #             self.logging.logger.debug("매수취소 전달 성공")
-            #             # self.slack.chat.post_message("hellojarvis", "코드 : " + sCode + " 매수취소 전달 성공")
-            #         else:
-            #             self.logging.logger.debug("매수취소 전달 실패")
-            #             # self.slack.chat.post_message("hellojarvis", "코드 : " + sCode + " 매수취소 전달 실패")
-            #
-            #     elif not_quantity == 0:
-            #         del self.not_account_stock_dict[order_num]
+            not_meme_list = list(self.not_account_stock_dict)
+            for order_num in not_meme_list:
+                code = self.not_account_stock_dict[order_num]["종목코드"]
+                meme_price = self.not_account_stock_dict[order_num]['주문가격']
+                not_quantity = self.not_account_stock_dict[order_num]['미체결수량']
+                order_gubun = self.not_account_stock_dict[order_num]['주문구분']
+
+                if order_gubun == "매수" and not_quantity > 0 and e > meme_price:
+
+                    order_success = self.api.send_order("매수취소", self.portfolio_stock_dict[sCode]["주문용스크린번호"],
+                                                        self.account_num, 3, sCode, 0, 0,
+                                                        self.real_type.SENDTYPE['거래구분']['지정가'], order_num)
+                    # 주문수량(5번째 파라미터) : 0으로 하면 미체결수량 전부를 매수취소한다는 뜻이다.
+                    # 주문가격(6번째 파라미터) : 매수취소라 주문가격은 필요없으므로 0
+                    if order_success == 0:
+                        self.logging.logger.debug("매수취소 전달 성공")
+                    else:
+                        self.logging.logger.debug("매수취소 전달 실패")
+
+                elif not_quantity == 0:
+                    del self.not_account_stock_dict[order_num]
 
 
     # 주문후 체결 정보
@@ -1566,7 +1562,7 @@ class EventLoop:
             self.not_account_stock_dict[order_number].update({"(최우선)매도호가": first_sell_price})
             self.not_account_stock_dict[order_number].update({"(최우선)매수호가": first_buy_price})
 
-            self.logging.logger.debug("주문체결: %s" % (self.not_account_stock_dict[order_number]))
+            self.logging.logger.debug("미체결 dict: %s" % (self.not_account_stock_dict[order_number]))
 
         elif int(sGubun) == 1:  # 잔고
 

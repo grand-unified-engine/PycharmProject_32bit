@@ -8,6 +8,7 @@ from Kiwoom.quant.Analyzer_daily import Analyzer as Analyzer_daily
 from Kiwoom.quant.Analyzer_minute import Analyzer as Analyzer_minute
 from Kiwoom.quant.StockInfo import get_current_price
 import pandas as pd
+import time
 import operator
 
 
@@ -176,8 +177,6 @@ class Signal:
         # 미체결에 있는 종목들
         for order_number in self.event_loop.not_account_stock_dict.keys():
             code = self.event_loop.not_account_stock_dict[order_number]['종목코드']
-            order_gubun = self.event_loop.not_account_stock_dict[order_number]['주문구분'] # ???
-            order_gubun = order_gubun.strip().lstrip('+').lstrip('-')
 
             if code not in screen_overwrite:
                 screen_overwrite.append(code)
@@ -190,8 +189,6 @@ class Signal:
         # 스크린번호 할당
         cnt = 0
         for code in screen_overwrite:
-
-            # self.event_loop.real_data_dict.update({code: {}})  # 실시간 분봉 만들기 위한 dict 2020-10-26
 
             temp_screen = int(self.screen_real_stock)
             meme_screen = int(self.screen_meme_stock)
@@ -217,7 +214,9 @@ class Signal:
 
         print("screen_number_setting : {}".format(self.portfolio_stock_dict))
 
-        # self.call_set_real_reg(self.screen_start_stop_real, ' ', self.real_type.REALTYPE['장시작시간']['장운영구분'], "0")
+        QTest.qWait(5000)  # 5초
+        #실시간 수신 관련 함수
+        self.call_set_real_reg(self.screen_start_stop_real, ' ', self.real_type.REALTYPE['장시작시간']['장운영구분'], "0")
 
         for code in self.portfolio_stock_dict.keys():
             screen_num = self.portfolio_stock_dict[code]['스크린번호']
@@ -239,7 +238,6 @@ class Signal:
 
         # self.real_stock_cnt = 0
         for code in portfolio_stock_dict_copy.keys():
-
             if "실시간여부" in portfolio_stock_dict_copy[code]:
                 if portfolio_stock_dict_copy[code]["실시간여부"]:
                     if "스크린번호" not in portfolio_stock_dict_copy[code]:
@@ -267,7 +265,7 @@ class Signal:
             self.portfolio_stock_dict[code].update({"스크린번호": str(self.screen_real_stock)})
             self.portfolio_stock_dict[code].update({"주문용스크린번호": str(self.screen_meme_stock)})
 
-            print("screen_number_real_time_setting 코드 333: {}, dict: {}".format(code, self.portfolio_stock_dict[code]))
+            # print("screen_number_real_time_setting 코드 333: {}, dict: {}".format(code, self.portfolio_stock_dict[code]))
             #
             # if code not in self.event_loop.condition_stock:
 
@@ -306,7 +304,6 @@ class Signal:
         if df is not None:
             for row in df.itertuples():
                 stock_code = row[1]
-                print("새로 들어왔따: {}".format(stock_code))
                 if self.api.server_gubun == "1":
                     if stock_code == '066430' or stock_code == '570045':  # 066430(와이오엠), 570045(TRUE 레버리지 천연가스 선물ETN) 모의투자 매매 불가능
                         db = MarketDB()
@@ -322,7 +319,7 @@ class Signal:
                 self.portfolio_stock_dict[stock_code].update({"실시간여부": True}) #실시간 여부
                 self.portfolio_stock_dict[stock_code].update({"ub": row[2]}) #볼린저 밴드 상단
 
-                print("새로 들어온 포트폴리오 dict: {}".format(self.portfolio_stock_dict[stock_code]))
+                self.logging.logger.debug("새로 들어온 종목 dict: {}, 시간: {}".format(self.portfolio_stock_dict[stock_code], time.strftime('%H%M%S')))
 
     '''
     조검검색에 새로 들어온 종목
