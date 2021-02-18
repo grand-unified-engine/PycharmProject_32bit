@@ -305,7 +305,7 @@ class Signal:
             for row in df.itertuples():
                 stock_code = row[1]
                 if self.api.server_gubun == "1":
-                    if stock_code == '066430' or stock_code == '570045':  # 066430(와이오엠), 570045(TRUE 레버리지 천연가스 선물ETN) 모의투자 매매 불가능
+                    if stock_code == '066430' or stock_code == '570045' or stock_code == '036630':  # 066430(와이오엠), 570045(TRUE 레버리지 천연가스 선물ETN) 모의투자 매매 불가능
                         db = MarketDB()
                         with db.conn.cursor() as curs:
                             sql = "UPDATE portfolio_stock SET is_receive_real = '1' WHERE code = '{}' and create_date = '{}' " \

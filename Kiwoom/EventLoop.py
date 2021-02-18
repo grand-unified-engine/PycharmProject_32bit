@@ -192,13 +192,13 @@ class EventLoop:
             deposit = self.api.get_comm_data(sTrCode, sRQName, 0, "예수금")
             self.deposit = int(deposit)
 
-            print("예수금 : {}".format(self.deposit))
-            print("실제 사용할 비율 : {}".format(self.use_money_percent))
+            # print("예수금 : {}".format(self.deposit))
+            # print("실제 사용할 비율 : {}".format(self.use_money_percent))
             use_money = float(self.deposit) * self.use_money_percent # 예수금 * 실제 사용할 비율
             self.use_money = int(use_money)
-            self.use_money = self.use_money / 5  # 5종목 이상 매수할 수 있게 5로 나눠준다.
+            self.use_money = self.use_money / 5  # 5종목 이상 매수할 수 있게 5로 나눠준다. 이 뜻이 아닌데?
 
-            print("실제 사용할 금액 : {}".format(self.use_money))
+            # print("실제 사용할 금액 : {}".format(self.use_money))
 
             output_deposit = self.api.get_comm_data(sTrCode, sRQName, 0, "출금가능금액")
             self.output_deposit = int(output_deposit)
@@ -1135,7 +1135,7 @@ class EventLoop:
             # l = self.api.get_comm_real_data(sCode, self.real_type.REALTYPE[sRealType]['전일거래량대비(비율)'])  # 출력 : +(-)2520
             # l = float(l)
 
-            print("코드 : {}, 현재가 : {}, 체결시간 : {}".format(sCode, b, a))
+            # print("코드 : {}, 현재가 : {}, 체결시간 : {}".format(sCode, b, a))
             # if sCode not in self.portfolio_stock_dict:
             #     print("포트폴리오 없는 코드 : {}".format(sCode))
 
@@ -1306,12 +1306,13 @@ class EventLoop:
             # if 1 == 2:
                 asd = self.account_stock_dict[sCode]
 
-                self.logging.logger.debug("종목코드: {}, asd : {}, 현재가 : {}".format(sCode, asd, b))
+                # self.logging.logger.debug("종목코드: {}, asd : {}, 현재가 : {}".format(sCode, asd, b))
 
                 meme_rate = (b - asd['매입가']) / asd['매입가'] * 100
 
-                self.logging.logger.debug("수익률 : {}, 주문용스크린번호: {}, 계좌번호: {}".format(meme_rate, self.portfolio_stock_dict[sCode]["주문용스크린번호"], self.account_num))
+                # self.logging.logger.debug("수익률 : {}, 주문용스크린번호: {}, 계좌번호: {}".format(meme_rate, self.portfolio_stock_dict[sCode]["주문용스크린번호"], self.account_num))
 
+                # print("종목코드 : {}, 수익률: {}, 시간: {}".format(sCode, meme_rate, datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')))
                 if asd['매매가능수량'] > 0 and (meme_rate > 6 or meme_rate < -5):
                                           # or (self.t_sell.strftime('%Y-%m-%d %H:%M:%S') < datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S') < self.t_exit.strftime('%Y-%m-%d %H:%M:%S'))):
                 # '''
@@ -1432,6 +1433,13 @@ class EventLoop:
             elif sCode not in self.jango_dict:
             # elif 1 == 2:
             #     if len(self.portfolio_stock_dict) <= 10:
+
+                if sCode in self.portfolio_stock_dict:
+                    self.logging.logger.debug("매수종목코드 : {}, 포트폴리오 : {}, 현재가: {}, 시간: {}".format(sCode, self.portfolio_stock_dict[sCode], e,
+                                                      datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')))
+                else:
+                    self.logging.logger.debug("매수 포트폴리오 dict이 없다!!!")
+
                 if e > 0: # 상한가 아닐 경우만
                     if sCode in self.portfolio_stock_dict: # 포트폴리오에 있을 때
                         if "매수매도" in self.portfolio_stock_dict[sCode]:
