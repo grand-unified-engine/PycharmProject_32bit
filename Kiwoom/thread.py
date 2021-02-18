@@ -29,7 +29,7 @@ class RealTimeScreenNumbering(QThread):
         while True:
             # print("RealTimeScreenNumbering self.signal.another_job_stop : {}".format(self.signal.another_job_stop))
             # if not self.signal.another_job_stop:
-            self.signal.real_time_new_portfolio_fuc() # 포트폴리오 딕셔너리에 넣음
+            self.signal.real_time_recommand_fuc() # real_time_recommand_dict에 넣음
             # self.signal.real_time_condition_stock_fuc()
             QTest.qWait(1000)  # 1초
             self.signal.screen_number_real_time_setting()

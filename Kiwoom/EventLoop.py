@@ -10,15 +10,13 @@ import sys
 import numpy as np
 
 class EventLoop:
-    def __init__(self, api, real_type, logging, portfolio_stock_dict, analyzer_daily, analyzer_minute):
+    def __init__(self, api, real_type, logging, portfolio_stock_dict):
 
         self.api = api
         self.real_type = real_type
         self.logging = logging
 
         self.portfolio_stock_dict = portfolio_stock_dict
-        self.analyzer_daily = analyzer_daily
-        self.analyzer_minute = analyzer_minute
 
         self.today = datetime.datetime.today().strftime('%Y-%m-%d')
 
@@ -196,7 +194,7 @@ class EventLoop:
             # print("실제 사용할 비율 : {}".format(self.use_money_percent))
             use_money = float(self.deposit) * self.use_money_percent # 예수금 * 실제 사용할 비율
             self.use_money = int(use_money)
-            self.use_money = self.use_money / 5  # 5종목 이상 매수할 수 있게 5로 나눠준다. 이 뜻이 아닌데?
+            self.use_money = self.use_money / 4  # 5종목 이상 매수할 수 있게 5로 나눠준다. 이 뜻이 아닌데?
 
             # print("실제 사용할 금액 : {}".format(self.use_money))
 
@@ -1303,10 +1301,7 @@ class EventLoop:
 
             # 계좌평가잔고내역 종목 매도하기 - 로그인 전 매수한 건
             if sCode in self.account_stock_dict.keys() and sCode not in self.jango_dict.keys():
-            # if 1 == 2:
                 asd = self.account_stock_dict[sCode]
-
-                # self.logging.logger.debug("종목코드: {}, asd : {}, 현재가 : {}".format(sCode, asd, b))
 
                 meme_rate = (b - asd['매입가']) / asd['매입가'] * 100
 
@@ -1315,20 +1310,6 @@ class EventLoop:
                 # print("종목코드 : {}, 수익률: {}, 시간: {}".format(sCode, meme_rate, datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')))
                 if asd['매매가능수량'] > 0 and (meme_rate > 6 or meme_rate < -5):
                                           # or (self.t_sell.strftime('%Y-%m-%d %H:%M:%S') < datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S') < self.t_exit.strftime('%Y-%m-%d %H:%M:%S'))):
-                # '''
-                # 손절매
-                # '''
-                # if asd['매매가능수량'] > 0 and meme_rate < -3:
-
-                    # if "오류예방비교수량" not in self.portfolio_stock_dict[sCode]:
-                    #     self.portfolio_stock_dict[sCode].update({"오류예방비교수량": 0})
-                    #
-                    # protection_qt = self.portfolio_stock_dict[sCode]['오류예방비교수량'] + asd['매매가능수량']
-                    #
-                    # self.portfolio_stock_dict[sCode].update({"오류예방비교수량": protection_qt})
-                    # print("account_stock_dict 매매가능수량: {}, 오류예방비교수량: {}".format(asd['매매가능수량'], protection_qt))
-                    #
-                    # if protection_qt <= asd['매매가능수량']:
 
                     order_success = self.api.send_order("신규매도", self.portfolio_stock_dict[sCode]["주문용스크린번호"],
                                                         self.account_num, 2, sCode, asd['매매가능수량'], 0,
@@ -1342,32 +1323,6 @@ class EventLoop:
                     else:
                         self.logging.logger.debug("코드 : " + sCode + " 매도주문 전달 실패")
                         # self.slack.chat.post_message("hellojarvis", "코드 : " + sCode + " 매도주문 전달 실패")
-                # elif self.portfolio_stock_dict[sCode]["매수매도"] == "매도":
-                #
-                #     if self.portfolio_stock_dict[sCode]["신호"]:
-                #         if asd['매매가능수량'] > 0:
-                #
-                #             if "오류예방비교수량" not in self.portfolio_stock_dict[sCode]:
-                #                 self.portfolio_stock_dict[sCode].update({"오류예방비교수량": 0})
-                #
-                #             protection_qt = self.portfolio_stock_dict[sCode]['오류예방비교수량'] + asd['매매가능수량']
-                #
-                #             self.portfolio_stock_dict[sCode].update({"오류예방비교수량": protection_qt})
-                #             print("account_stock_dict 매매가능수량: {}, 오류예방비교수량: {}".format(asd['매매가능수량'], protection_qt))
-                #
-                #             if protection_qt <= asd['매매가능수량']:
-                #
-                #                 order_success = self.api.send_order("신규매도", self.portfolio_stock_dict[sCode]["주문용스크린번호"],
-                #                                                     self.account_num, 2, sCode, asd['매매가능수량'], 0,
-                #                                                     self.real_type.SENDTYPE['거래구분']['시장가'], "")
-                #
-                #                 if order_success == 0:
-                #                     self.logging.logger.debug("코드 : " + sCode + " 매도주문 전달 성공")
-                #                     # self.slack.chat.post_message("hellojarvis", "코드 : " + sCode + " 매도주문 전달 성공")
-                #                     del self.account_stock_dict[sCode]
-                #                 else:
-                #                     self.logging.logger.debug("코드 : " + sCode + " 매도주문 전달 실패")
-                #                     # self.slack.chat.post_message("hellojarvis", "코드 : " + sCode + " 매도주문 전달 실패")
 
             #  프로그램 run 한 후 주문한 종목 팔기
             elif sCode in self.jango_dict.keys():
@@ -1377,19 +1332,6 @@ class EventLoop:
 
                 if jd['주문가능수량'] > 0 and (meme_rate > 6 or meme_rate < -5):
                 # or (self.t_sell.strftime('%Y-%m-%d %H:%M:%S') < datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S') < self.t_exit.strftime('%Y-%m-%d %H:%M:%S'))):
-                # if jd['주문가능수량'] > 0 and meme_rate < -3:
-                    '''
-                    손절라인 마이너스 3
-                    '''
-                    # if "오류예방비교수량" not in self.portfolio_stock_dict[sCode]:
-                    #     self.portfolio_stock_dict[sCode].update({"오류예방비교수량": 0})
-                    #
-                    # protection_qt = self.portfolio_stock_dict[sCode]['오류예방비교수량'] + jd['주문가능수량']
-                    #
-                    # self.portfolio_stock_dict[sCode].update({"오류예방비교수량": protection_qt})  # 주문 요청한 금액
-                    # print("jango_dict 주문가능수량: {}, 오류예방비교수량: {}".format(jd['주문가능수량'], protection_qt))
-                    #
-                    # if protection_qt <= jd['주문가능수량']:  # 한 종목당 총 요청한 금액이 50만원 넘지 않게
 
                     order_success = self.api.send_order("신규매도", self.portfolio_stock_dict[sCode]["주문용스크린번호"],
                                                         self.account_num, 2, sCode, jd['주문가능수량'], 0,
@@ -1397,42 +1339,13 @@ class EventLoop:
 
                     if order_success == 0:
                         self.logging.logger.debug("코드 : " + sCode + " 매도주문 전달 성공")
-                        # del self.jango_dict[sCode]
                         # self.slack.chat.post_message("hellojarvis", "코드 : " + sCode + " 매도주문 전달 성공")
                     else:
                         self.logging.logger.debug("코드 : " + sCode + " 매도주문 전달 실패")
                         # self.slack.chat.post_message("hellojarvis", "코드 : " + sCode + " 매도주문 전달 실패")
-                # elif self.portfolio_stock_dict[sCode]["매수매도"] == "매도":
-                #
-                #     if self.portfolio_stock_dict[sCode]["신호"]:
-                #         if jd['주문가능수량'] > 0:
-                #
-                #             if "오류예방비교수량" not in self.portfolio_stock_dict[sCode]:
-                #                 self.portfolio_stock_dict[sCode].update({"오류예방비교수량": 0})
-                #
-                #             protection_qt = self.portfolio_stock_dict[sCode]['오류예방비교수량'] + jd['주문가능수량']
-                #
-                #             self.portfolio_stock_dict[sCode].update({"오류예방비교수량": protection_qt})  # 주문 요청한 금액
-                #             print("jango_dict 주문가능수량: {}, 오류예방비교수량: {}".format(jd['주문가능수량'], protection_qt))
-                #
-                #             if protection_qt <= jd['주문가능수량']:  # 한 종목당 총 요청한 금액이 50만원 넘지 않게
-                #
-                #                 order_success = self.api.send_order("신규매도", self.portfolio_stock_dict[sCode]["주문용스크린번호"],
-                #                                                     self.account_num, 2, sCode, jd['주문가능수량'], 0,
-                #                                                     self.real_type.SENDTYPE['거래구분']['시장가'], "")
-                #
-                #                 if order_success == 0:
-                #                     self.logging.logger.debug("코드 : " + sCode + " 매도주문 전달 성공")
-                #                     # self.slack.chat.post_message("hellojarvis", "코드 : " + sCode + " 매도주문 전달 성공")
-                #                 else:
-                #                     self.logging.logger.debug("코드 : " + sCode + " 매도주문 전달 실패")
-                #                     # self.slack.chat.post_message("hellojarvis", "코드 : " + sCode + " 매도주문 전달 실패")
-
             # 여기는 매수
             # elif d > 2.0 and sCode not in self.jango_dict:
             elif sCode not in self.jango_dict:
-            # elif 1 == 2:
-            #     if len(self.portfolio_stock_dict) <= 10:
 
                 if sCode in self.portfolio_stock_dict:
                     self.logging.logger.debug("매수종목코드 : {}, 포트폴리오 : {}, 현재가: {}, 시간: {}".format(sCode, self.portfolio_stock_dict[sCode], e,
@@ -1440,44 +1353,31 @@ class EventLoop:
                 else:
                     self.logging.logger.debug("매수 포트폴리오 dict이 없다!!!")
 
-                if e > 0: # 상한가 아닐 경우만
+                if e > 0: # (최우선)매도호가가 0이면 안됨(ex. 상한가)
                     if sCode in self.portfolio_stock_dict: # 포트폴리오에 있을 때
-                        if "매수매도" in self.portfolio_stock_dict[sCode]:
-                            if self.portfolio_stock_dict[sCode]["매수매도"] == "매수":
-                                # self.logging.logger.debug("종목코드 : {}, 매수신호 : {}".format(sCode, self.portfolio_stock_dict[sCode]["신호"]))
-                                # if self.portfolio_stock_dict[sCode]["신호"]:
-                                    #     print("self.portfolio_stock_dict - 매수일 때 : {}".format(self.portfolio_stock_dict))
-                                    #     print("self.portfolio_stock_dict  매수일 때 개수 : {}".format(len(self.portfolio_stock_dict)))
-                                if self.portfolio_stock_dict[sCode]["ub"] * 1.04 > e: #볼린저 상단밴드(D-1)보다 아래일 때(밴드를 조금 더 올려 여유를 둔다 2021.02.14)
-                                    self.logging.logger.debug("매수조건 통과 %s " % sCode)
-                                    self.logging.logger.debug("(최우선)매도호가 %s " % e)
+                        # self.logging.logger.debug("종목코드 : {}, 매수신호 : {}".format(sCode, self.portfolio_stock_dict[sCode]["신호"]))
+                        # if self.portfolio_stock_dict[sCode]["신호"]:
+                            #     print("self.portfolio_stock_dict - 매수일 때 : {}".format(self.portfolio_stock_dict))
+                            #     print("self.portfolio_stock_dict  매수일 때 개수 : {}".format(len(self.portfolio_stock_dict)))
+                        if self.portfolio_stock_dict[sCode]["ub"] * 1.04 > e: #볼린저 상단밴드(D-1)보다 아래일 때(밴드를 조금 더 올려 여유를 둔다 2021.02.14)
+                            self.logging.logger.debug("매수조건 통과 %s " % sCode)
+                            self.logging.logger.debug("(최우선)매도호가 %s " % e)
 
-                                    # self.use_money 500만원이 됨
-                                    result = (self.use_money * 0.1) / e
-                                    quantity = int(result)
+                            # self.use_money 500만원이 됨
+                            result = (self.use_money * 0.1) / e
+                            quantity = int(result)
 
-                                    # if "주문금액" not in self.portfolio_stock_dict[sCode]:
-                                    #     self.portfolio_stock_dict[sCode].update({"주문금액": 0})
-                                    #
-                                    # this_stock_order_price = self.portfolio_stock_dict[sCode]['주문금액'] + (e * quantity)
-                                    #
-                                    # self.portfolio_stock_dict[sCode].update({"주문금액": this_stock_order_price}) # 주문 요청한 금액
-                                    # print("매수가능 금액: {}, 주문금액 합: {}".format(self.use_money * 0.1, this_stock_order_price))
-                                    #
-                                    # if this_stock_order_price <= (self.use_money * 0.1): # 한 종목당 총 요청한 금액이 50만원 넘지 않게
-
-                                    order_success = self.api.send_order("신규매수", self.portfolio_stock_dict[sCode]["주문용스크린번호"],
-                                                                        self.account_num, 1, sCode, quantity, e,
-                                                                        self.real_type.SENDTYPE['거래구분']['지정가'], "")
-                                    # 주문유형(4번째 파라미터) 1:신규매수, 2:신규매도 3:매수취소, 4:매도취소, 5:매수정정, 6:매도정정
-                                    # 마지막 파라미터 : 신규주문시에는 빈값, 이후에 주문 취소 및 정정주문에서는 주문번호가 필요
-                                    if order_success == 0:
-                                        self.logging.logger.debug("코드 : " + sCode + " 매수주문 전달 성공")
-                                        self.portfolio_stock_dict[sCode].update({"매수매도": "매도"})
-                                        # self.slack.chat.post_message("hellojarvis", "코드 : " + sCode + " 매수주문 전달 성공")
-                                    else:
-                                        self.logging.logger.debug("코드 : " + sCode + " 매수주문 전달 실패")
-                                        # self.slack.chat.post_message("hellojarvis", "코드 : " + sCode + " 매수주문 전달 실패")
+                            order_success = self.api.send_order("신규매수", self.portfolio_stock_dict[sCode]["주문용스크린번호"],
+                                                                self.account_num, 1, sCode, quantity, e,
+                                                                self.real_type.SENDTYPE['거래구분']['지정가'], "")
+                            # 주문유형(4번째 파라미터) 1:신규매수, 2:신규매도 3:매수취소, 4:매도취소, 5:매수정정, 6:매도정정
+                            # 마지막 파라미터 : 신규주문시에는 빈값, 이후에 주문 취소 및 정정주문에서는 주문번호가 필요
+                            if order_success == 0:
+                                self.logging.logger.debug("코드 : " + sCode + " 매수주문 전달 성공")
+                                # self.slack.chat.post_message("hellojarvis", "코드 : " + sCode + " 매수주문 전달 성공")
+                            else:
+                                self.logging.logger.debug("코드 : " + sCode + " 매수주문 전달 실패")
+                                # self.slack.chat.post_message("hellojarvis", "코드 : " + sCode + " 매수주문 전달 실패")
 
             not_meme_list = list(self.not_account_stock_dict)
             for order_num in not_meme_list:
@@ -1576,7 +1476,7 @@ class EventLoop:
             self.not_account_stock_dict[order_number].update({"(최우선)매도호가": first_sell_price})
             self.not_account_stock_dict[order_number].update({"(최우선)매수호가": first_buy_price})
 
-            self.logging.logger.debug("미체결 dict: %s" % (self.not_account_stock_dict[order_number]))
+            self.logging.logger.debug("접수, 확인, 체결 : %s" % (self.not_account_stock_dict[order_number]))
 
         elif int(sGubun) == 1:  # 잔고
 
@@ -1626,14 +1526,11 @@ class EventLoop:
 
             self.logging.logger.debug("잔고반영: %s" % (self.jango_dict[sCode]))
             if stock_quan == 0:
-                if sCode in self.jango_dict.keys():
-                    del self.jango_dict[sCode]
-                if sCode in self.account_stock_dict.keys():
-                    del self.account_stock_dict[sCode]
+                del self.jango_dict[sCode]
                 # print("매도 지우기 전 스크린번호 확인 : {}".format(self.portfolio_stock_dict[sCode])) # 해당 코드 실시간 안 없어짐 2020.10.22
-                self.api.set_real_remove(self.portfolio_stock_dict[sCode]['스크린번호'], sCode)
-                self.api.set_real_remove(self.portfolio_stock_dict[sCode]['주문용스크린번호'], sCode)
-                del self.portfolio_stock_dict[sCode]
+                # self.api.set_real_remove(self.portfolio_stock_dict[sCode]['스크린번호'], sCode)
+                # self.api.set_real_remove(self.portfolio_stock_dict[sCode]['주문용스크린번호'], sCode)
+                # del self.portfolio_stock_dict[sCode]
                 # del self.real_data_dict[sCode] # 분봉을 위한 실시간 데이터 담는 dict
                 # if sCode in self.condition_stock:
                 #     del self.condition_stock[sCode] # 조건검색 dict 삭제
@@ -1646,15 +1543,6 @@ class EventLoop:
                 #         .format(sCode, self.datetime, seq)
                 #     curs.execute(sql)
                 #     self.mk.conn.commit()
-            else:
-                # 매수일 때
-                self.portfolio_stock_dict[sCode].update({"매수매도": "매도"})
-                # self.portfolio_stock_dict[sCode].update({"순매수리스트": []})
-                # self.portfolio_stock_dict[sCode].update({"전환점여부": False})
-                # self.portfolio_stock_dict[sCode].update({"체결량리스트": []})
-                # self.portfolio_stock_dict[sCode].update({"세력체결조절여부": False})
-                # self.portfolio_stock_dict[sCode].update({"신호": False})
-                # self.portfolio_stock_dict[sCode].update({"이평선허락": False})
 
 
     #송수신 메세지 get
