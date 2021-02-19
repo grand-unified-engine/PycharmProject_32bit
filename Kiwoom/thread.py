@@ -31,7 +31,7 @@ class RealTimeScreenNumbering(QThread):
             # if not self.signal.another_job_stop:
             self.signal.real_time_recommand_fuc() # real_time_recommand_dict에 넣음
             # self.signal.real_time_condition_stock_fuc()
-            QTest.qWait(1000)  # 1초
+            QTest.qWait(2000)  # 1초
             self.signal.screen_number_real_time_setting()
             # QTest.qWait(8000)  # 8초
             # df_copy = self.signal.portfolio_stock_dict.copy()  # 반복문 오류를 피하기 위해

@@ -36,8 +36,8 @@ class Signal:
         ########################
 
         # self.mk = MarketDB()
-        self.analyzer_daily = Analyzer_daily()
-        self.analyzer_minute = Analyzer_minute()
+        # self.analyzer_daily = Analyzer_daily()
+        # self.analyzer_minute = Analyzer_minute()
 
         # self.read_code()
 
@@ -203,9 +203,14 @@ class Signal:
         screen_overwrite = []
 
         # 실시간 추천 종목
-        for code in self.real_time_recommand_dict.keys():
+        for code, value in self.real_time_recommand_dict.items():
             if code not in screen_overwrite:
-                screen_overwrite.append(code)
+                if code not in self.portfolio_stock_dict.keys():
+                    self.portfolio_stock_dict.update({code: {"ub": value["ub"]}})
+                    screen_overwrite.append(code)
+                    self.logging.logger.debug("스크린 넘버 세팅 새로 들어온 종목: {}, real_time_recommand_dict: {}".format(code,
+                                                                                                   self.portfolio_stock_dict[
+                                                                                                       code]))
 
         # 스크린번호 할당
         cnt = 0
@@ -221,7 +226,8 @@ class Signal:
                 meme_screen += 1
                 self.temp_screen_meme_stock = str(meme_screen)
 
-            self.portfolio_stock_dict.update({code: {"스크린번호": str(self.temp_screen_real_stock), "주문용스크린번호": str(self.temp_screen_meme_stock)}})
+            self.portfolio_stock_dict[code].update({"스크린번호": str(self.temp_screen_real_stock), "주문용스크린번호": str(self.temp_screen_meme_stock)})
+            # self.portfolio_stock_dict.update({code: {"스크린번호": str(self.temp_screen_real_stock), "주문용스크린번호": str(self.temp_screen_meme_stock)}})
 
             with db.conn.cursor() as curs:
                 sql = "UPDATE portfolio_stock SET is_receive_real = '1' WHERE code = '{}' and create_date = '{}' " \
@@ -258,7 +264,7 @@ class Signal:
                 if stock_code not in self.portfolio_stock_dict.keys(): #이미 시스템에서 해당 종목코드가 돌고 있으면 제외
                     if self.api.server_gubun == "1":
                         # is_receive_real = 0이면 자꾸 들어오니까 강제로 1로 바꿈 (나중에 테이블 수정하기!!!) 2021-02-18
-                        if stock_code == '066430' or stock_code == '570045' or stock_code == '036630':  # 066430(와이오엠), 570045(TRUE 레버리지 천연가스 선물ETN) 모의투자 매매 불가능
+                        if stock_code == '066430' or stock_code == '570045' or stock_code == '036630' or stock_code == '093230':  # 066430(와이오엠), 570045(TRUE 레버리지 천연가스 선물ETN) 모의투자 매매 불가능
                             with db.conn.cursor() as curs:
                                 sql = "UPDATE portfolio_stock SET is_receive_real = '1' WHERE code = '{}' and create_date = '{}' " \
                                     .format(stock_code, self.event_loop.today)
