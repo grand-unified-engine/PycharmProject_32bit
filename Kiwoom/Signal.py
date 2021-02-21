@@ -206,7 +206,7 @@ class Signal:
         for code, value in self.real_time_recommand_dict.items():
             if code not in screen_overwrite:
                 if code not in self.portfolio_stock_dict.keys():
-                    self.portfolio_stock_dict.update({code: {"ub": value["ub"]}})
+                    self.portfolio_stock_dict.update({code: {"매수매도": "매수", "ub": value["ub"]}})
                     screen_overwrite.append(code)
                     self.logging.logger.debug("스크린 넘버 세팅 새로 들어온 종목: {}, real_time_recommand_dict: {}".format(code,
                                                                                                    self.portfolio_stock_dict[

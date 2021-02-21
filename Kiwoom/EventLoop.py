@@ -1360,26 +1360,28 @@ class EventLoop:
                         # if self.portfolio_stock_dict[sCode]["신호"]:
                             #     print("self.portfolio_stock_dict - 매수일 때 : {}".format(self.portfolio_stock_dict))
                             #     print("self.portfolio_stock_dict  매수일 때 개수 : {}".format(len(self.portfolio_stock_dict)))
-                        if "ub" in self.portfolio_stock_dict[sCode]:
-                            if self.portfolio_stock_dict[sCode]["ub"] * 1.04 > e: #볼린저 상단밴드(D-1)보다 아래일 때(밴드를 조금 더 올려 여유를 둔다 2021.02.14)
-                                self.logging.logger.debug("매수조건 통과 %s " % sCode)
-                                self.logging.logger.debug("(최우선)매도호가 %s " % e)
+                        if "ub" in self.portfolio_stock_dict[sCode]: # 원래 갖고 있던 종목에는 ub가 없으므로 나중에 수정
+                            if self.portfolio_stock_dict[sCode]["매수매도"] == "매수":
+                                if self.portfolio_stock_dict[sCode]["ub"] * 1.04 > e: #볼린저 상단밴드(D-1)보다 아래일 때(밴드를 조금 더 올려 여유를 둔다 2021.02.14)
+                                    self.logging.logger.debug("매수조건 통과 %s " % sCode)
+                                    self.logging.logger.debug("(최우선)매도호가 %s " % e)
 
-                                # self.use_money 500만원이 됨
-                                result = (self.use_money * 0.1) / e
-                                quantity = int(result)
+                                    # self.use_money 500만원이 됨
+                                    result = (self.use_money * 0.1) / e
+                                    quantity = int(result)
 
-                                order_success = self.api.send_order("신규매수", self.portfolio_stock_dict[sCode]["주문용스크린번호"],
-                                                                    self.account_num, 1, sCode, quantity, e,
-                                                                    self.real_type.SENDTYPE['거래구분']['지정가'], "")
-                                # 주문유형(4번째 파라미터) 1:신규매수, 2:신규매도 3:매수취소, 4:매도취소, 5:매수정정, 6:매도정정
-                                # 마지막 파라미터 : 신규주문시에는 빈값, 이후에 주문 취소 및 정정주문에서는 주문번호가 필요
-                                if order_success == 0:
-                                    self.logging.logger.debug("코드 : " + sCode + " 매수주문 전달 성공")
-                                    # self.slack.chat.post_message("hellojarvis", "코드 : " + sCode + " 매수주문 전달 성공")
-                                else:
-                                    self.logging.logger.debug("코드 : " + sCode + " 매수주문 전달 실패")
-                                    # self.slack.chat.post_message("hellojarvis", "코드 : " + sCode + " 매수주문 전달 실패")
+                                    order_success = self.api.send_order("신규매수", self.portfolio_stock_dict[sCode]["주문용스크린번호"],
+                                                                        self.account_num, 1, sCode, quantity, e,
+                                                                        self.real_type.SENDTYPE['거래구분']['지정가'], "")
+                                    # 주문유형(4번째 파라미터) 1:신규매수, 2:신규매도 3:매수취소, 4:매도취소, 5:매수정정, 6:매도정정
+                                    # 마지막 파라미터 : 신규주문시에는 빈값, 이후에 주문 취소 및 정정주문에서는 주문번호가 필요
+                                    if order_success == 0:
+                                        self.logging.logger.debug("코드 : " + sCode + " 매수주문 전달 성공")
+                                        self.portfolio_stock_dict[sCode].update({"매수매도": "매도"})
+                                        # self.slack.chat.post_message("hellojarvis", "코드 : " + sCode + " 매수주문 전달 성공")
+                                    else:
+                                        self.logging.logger.debug("코드 : " + sCode + " 매수주문 전달 실패")
+                                        # self.slack.chat.post_message("hellojarvis", "코드 : " + sCode + " 매수주문 전달 실패")
 
             not_meme_list = list(self.not_account_stock_dict)
             for order_num in not_meme_list:
