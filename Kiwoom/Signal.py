@@ -204,13 +204,14 @@ class Signal:
 
         # 실시간 추천 종목
         for code, value in self.real_time_recommand_dict.items():
-            if code not in screen_overwrite:
-                if code not in self.portfolio_stock_dict.keys():
-                    self.portfolio_stock_dict.update({code: {"매수매도": "매수", "ub": value["ub"]}})
-                    screen_overwrite.append(code)
-                    self.logging.logger.debug("스크린 넘버 세팅 새로 들어온 종목: {}, real_time_recommand_dict: {}".format(code,
-                                                                                                   self.portfolio_stock_dict[
-                                                                                                       code]))
+            if value["numbering"] is False:
+                if code not in screen_overwrite:
+                    if code not in self.portfolio_stock_dict.keys():
+                        self.portfolio_stock_dict.update({code: {"매수매도": "매수", "ub": value["ub"]}})
+                        screen_overwrite.append(code)
+                        self.logging.logger.debug("스크린 넘버 세팅 새로 들어온 종목: {}, portfolio_stock_dict: {}".format(code,
+                                                                                                       self.portfolio_stock_dict[
+                                                                                                           code]))
 
         # 스크린번호 할당
         cnt = 0
@@ -241,13 +242,15 @@ class Signal:
         # print("screen_number_real_time_setting screen_overwrite dict: {}".format(screen_overwrite))
 
         for code in screen_overwrite:
-            # QTest.qWait(300)
+            QTest.qWait(3000)
+            self.real_time_recommand_dict[code].update({"numbering": True})
             screen_num = self.portfolio_stock_dict[code]['스크린번호']
             # fids = self.real_type.REALTYPE['주식체결']['체결시간']
             # a = self.real_type.REALTYPE['주식호가잔량']['매도호가총잔량']
             b = self.real_type.REALTYPE['주식체결']['체결시간']
             # fids = str(a) + ';' + str(b)
             fids = b
+            self.logging.logger.debug("실시간 가자~ 스크린번호: {}, fids: {}, 코드: {}".format(screen_num, fids, code))
             self.call_set_real_reg(screen_num, code, fids, "1")
 
     '''
@@ -273,12 +276,12 @@ class Signal:
                             continue
                         else: # 매매 불가능 코드 외 추가
                             self.real_time_recommand_dict.update(
-                                {stock_code: {"ub": row[2], "time": time.strftime('%H%M%S')}})
+                                {stock_code: {"ub": row[2], "time": time.strftime('%H%M%S'), "numbering": False}})
                             self.logging.logger.debug("새로 들어온 종목: {}, real_time_recommand_dict: {}".format(stock_code,
                                                                                                            self.real_time_recommand_dict[
                                                                                                                stock_code]))
                     else: # 실서버일 때
-                        self.real_time_recommand_dict.update({stock_code: {"ub": row[2], "time": time.strftime('%H%M%S')}})
+                        self.real_time_recommand_dict.update({stock_code: {"ub": row[2], "time": time.strftime('%H%M%S'), "numbering": False}})
                         self.logging.logger.debug("새로 들어온 종목: {}, real_time_recommand_dict: {}".format(stock_code, self.real_time_recommand_dict[stock_code]))
         del db
 
