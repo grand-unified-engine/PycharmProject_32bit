@@ -80,9 +80,9 @@ class EventLoop:
         self.req_cnt = 0 # 당일전일 체결내역 카운트용
         self.today_open = 0 # 테스트용. 실제로 매입가 가져올 수 있으므로 필요없게 되면 삭제할 것.
 
-        self.convergence_dict = {} #수렴 여부 딕셔너리. 거래량 급증 실시간에서 사용
-
-        self.vol_uprise_stock_dict = {}  # 거래량 급증 종목 딕셔너리
+        # self.convergence_dict = {} #수렴 여부 딕셔너리. 거래량 급증 실시간에서 사용
+        #
+        # self.vol_uprise_stock_dict = {}  # 거래량 급증 종목 딕셔너리
 
         self.event_slots()  # 슬롯을 받을 이벤트 등록
         self.real_event_slots()  # 슬롯을 받을 이벤트 등록(실시간)

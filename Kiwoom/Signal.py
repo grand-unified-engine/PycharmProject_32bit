@@ -4,12 +4,12 @@ from Kiwoom.KiwoomAPI import Api, RealType
 from Kiwoom.EventLoop import EventLoop
 from Kiwoom.config.log_class import Logging
 from Kiwoom.config.MariaDB import MarketDB
-from Kiwoom.quant.Analyzer_daily import Analyzer as Analyzer_daily
-from Kiwoom.quant.Analyzer_minute import Analyzer as Analyzer_minute
+# from Kiwoom.quant.Analyzer_daily import Analyzer as Analyzer_daily
+# from Kiwoom.quant.Analyzer_minute import Analyzer as Analyzer_minute
 from Kiwoom.quant.StockInfo import get_current_price
 import pandas as pd
 import time
-import operator
+# import operator
 
 
 class Signal:
@@ -186,13 +186,14 @@ class Signal:
         print("screen_number_setting : {}".format(self.portfolio_stock_dict))
 
         #실시간 수신 관련 함수
-        self.call_set_real_reg(self.screen_start_stop_real, ' ', self.real_type.REALTYPE['장시작시간']['장운영구분'], "0")
+        # self.call_set_real_reg(self.screen_start_stop_real, ' ', self.real_type.REALTYPE['장시작시간']['장운영구분'], "0")
 
         for code in self.portfolio_stock_dict.keys():
+            # QTest.qWait(300) #여기에 이거 있어도 끝나기 전 다음 실행되는거 같은데??
             screen_num = self.portfolio_stock_dict[code]['스크린번호']
             # fids = self.real_type.REALTYPE['주식체결']['체결시간']
             # a = self.real_type.REALTYPE['주식호가잔량']['매도호가총잔량']
-            b = self.real_type.REALTYPE['주식체결']['체결시간']
+            b = self.real_type.REALTYPE['주식체결']['현재가']
             # fids = str(a) + ';' + str(b)
             fids = b
             self.call_set_real_reg(screen_num, code, fids, "1")
@@ -242,12 +243,11 @@ class Signal:
         # print("screen_number_real_time_setting screen_overwrite dict: {}".format(screen_overwrite))
 
         for code in screen_overwrite:
-            QTest.qWait(3000)
             self.real_time_recommand_dict[code].update({"numbering": True})
             screen_num = self.portfolio_stock_dict[code]['스크린번호']
             # fids = self.real_type.REALTYPE['주식체결']['체결시간']
             # a = self.real_type.REALTYPE['주식호가잔량']['매도호가총잔량']
-            b = self.real_type.REALTYPE['주식체결']['체결시간']
+            b = self.real_type.REALTYPE['주식체결']['현재가']
             # fids = str(a) + ';' + str(b)
             fids = b
             self.logging.logger.debug("실시간 가자~ 스크린번호: {}, fids: {}, 코드: {}".format(screen_num, fids, code))
@@ -284,30 +284,6 @@ class Signal:
                         self.real_time_recommand_dict.update({stock_code: {"ub": row[2], "time": time.strftime('%H%M%S'), "numbering": False}})
                         self.logging.logger.debug("새로 들어온 종목: {}, real_time_recommand_dict: {}".format(stock_code, self.real_time_recommand_dict[stock_code]))
         del db
-
-    '''
-    조검검색에 새로 들어온 종목
-    '''
-
-    def real_time_condition_stock_fuc(self):
-        copy_condition_stock = self.event_loop.condition_stock.copy()
-        for code in self.event_loop.condition_stock:
-            # print("code : {}".format(code))
-            for key, value in self.event_loop.condition_stock[code].items():
-                if value is True:
-                    del copy_condition_stock[code]
-
-        self.logging.logger.debug("copy_condition_stock : {}".format(copy_condition_stock))
-
-        for code in copy_condition_stock:
-            # if not copy_condition_stock[code]['portfolio_stock_dict추가여부']:
-            # print("조건검색 새로 들어왔따: {}".format(code))
-            if self.api.server_gubun == "1":
-                if code == '096350' or code == '96040':  # 096350(대창솔루션) 모의투자 매매 불가능
-                    continue
-
-            self.portfolio_stock_dict.update({code: self.init_dict.copy()})
-            self.event_loop.condition_stock[code].update({"portfolio_stock_dict추가여부": True})
 
     '''
     * 거래량 급증 종목 기준
