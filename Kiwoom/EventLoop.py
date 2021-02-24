@@ -1349,10 +1349,10 @@ class EventLoop:
 
                 # 포트폴리오 로직 수정 후 아래 지워야 함
                 # if sCode in self.portfolio_stock_dict.keys():
-                #     self.logging.logger.debug("매수종목코드 : {}, 포트폴리오 : {}, 현재가: {}, 시간: {}".format(sCode, self.portfolio_stock_dict[sCode], e,
+                #     print("매수종목코드 : {}, 포트폴리오 : {}, 현재가: {}, 시간: {}".format(sCode, self.portfolio_stock_dict[sCode], e,
                 #                                       datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')))
                 # else:
-                #     self.logging.logger.debug("매수 포트폴리오 dict이 없다!!!")
+                #     print("매수 포트폴리오 dict이 없다!!!")
 
                 if e > 0: # (최우선)매도호가가 0이면 안됨(ex. 상한가)
                     if sCode in self.portfolio_stock_dict.keys(): # 포트폴리오에 있을 때

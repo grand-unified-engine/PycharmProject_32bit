@@ -160,8 +160,9 @@ class Api:
         ex) 장운영구분은 "0"으로 초기화, 이후에 추가할 종목들은 모두 "1"
         """
 
-        self.ocx.dynamicCall("SetRealReg(QString, QString, QString, QString)",
+        ret = self.ocx.dynamicCall("SetRealReg(QString, QString, QString, QString)",
                          screenno, codelist, fidlist, opttype)
+        return ret
 
     def set_real_remove(self, scrno=None, delcode=None): # 스크린 번호와 종목코드를 인자로 전달하면 스크린번호로 그룹화된 지정 종목의 연결만 끊는다.
         self.ocx.dynamicCall("SetRealRemove(QString, QString)", scrno, delcode)

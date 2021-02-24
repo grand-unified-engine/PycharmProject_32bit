@@ -113,7 +113,8 @@ class Signal:
     # 메서드 정의: 실시간 시세를 등록하는 함수                      #
     ###############################################################
     def call_set_real_reg(self, screenNo, codelist, fidlist, optType):
-        self.api.set_real_reg(screenNo, codelist, fidlist, optType)
+        ret = self.api.set_real_reg(screenNo, codelist, fidlist, optType)
+        return ret
 
     ###############################################################
     # 메서드 정의: 사용자 조건검색 목록을 서버에 요청                     #
@@ -216,7 +217,6 @@ class Signal:
 
         # 스크린번호 할당
         cnt = 0
-        db = MarketDB()
         for code in screen_overwrite:
             temp_screen = int(self.temp_screen_real_stock)
             meme_screen = int(self.temp_screen_meme_stock)
@@ -230,28 +230,37 @@ class Signal:
 
             self.portfolio_stock_dict[code].update({"스크린번호": str(self.temp_screen_real_stock), "주문용스크린번호": str(self.temp_screen_meme_stock)})
             # self.portfolio_stock_dict.update({code: {"스크린번호": str(self.temp_screen_real_stock), "주문용스크린번호": str(self.temp_screen_meme_stock)}})
-
-            with db.conn.cursor() as curs:
-                sql = "UPDATE portfolio_stock SET is_receive_real = '1' WHERE code = '{}' and create_date = '{}' " \
-                    .format(code, self.event_loop.today)
-                curs.execute(sql)
-                db.conn.commit()
-
             cnt += 1
-        del db
 
         # print("screen_number_real_time_setting screen_overwrite dict: {}".format(screen_overwrite))
-
+        db = MarketDB()
+        screen_num = ''
+        code_list = ''
+        fids = ''
         for code in screen_overwrite:
+            # QTest.qWait(5000)
             self.real_time_recommand_dict[code].update({"numbering": True})
+            print("code: {}, real_time_recommand_dict : {}".format(code, self.real_time_recommand_dict[code]))
             screen_num = self.portfolio_stock_dict[code]['스크린번호']
             # fids = self.real_type.REALTYPE['주식체결']['체결시간']
             # a = self.real_type.REALTYPE['주식호가잔량']['매도호가총잔량']
             b = self.real_type.REALTYPE['주식체결']['현재가']
             # fids = str(a) + ';' + str(b)
             fids = b
-            self.logging.logger.debug("실시간 가자~ 스크린번호: {}, fids: {}, 코드: {}".format(screen_num, fids, code))
-            self.call_set_real_reg(screen_num, code, fids, "1")
+            code_list = code_list + ';' + code
+            # self.logging.logger.debug("실시간 가자~ 스크린번호: {}, fids: {}, 코드: {}".format(screen_num, fids, code))
+            with db.conn.cursor() as curs:
+                sql = "UPDATE portfolio_stock SET is_receive_real = '1' WHERE code = '{}' and create_date = '{}' " \
+                    .format(code, self.event_loop.today)
+                curs.execute(sql)
+                db.conn.commit()
+
+        if code_list != '':
+            QTest.qWait(3000)
+            ret = self.call_set_real_reg(screen_num, code_list[1:], fids, "1")
+            self.logging.logger.debug("실시간 등록 코드: {}, 실시간 등록 리턴값: {}".format(code_list, ret))
+
+        del db
 
     '''
     포트폴리오 테이블에 새로 들어온 종목
