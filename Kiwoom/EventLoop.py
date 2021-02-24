@@ -30,6 +30,8 @@ class EventLoop:
         self.detail_account_info_event_loop = QEventLoop() # 예수금 요청 이벤트 루프. sPrevNext가 2로 호출될 수 있으므로 시그널 메소드에서 인스턴스하면 안 되고 전역에서 인스턴스해야 한다.
         self.analyze_event_loop = QEventLoop() # 분석용 signal.calculator_fuc에서 사용
         self.for_signal_event_loop = None # 시그널에서 호출해서 반복없이 event slot에서 받을 때 시그널 함수에서 QEventLoop() 시작을 할 때 여기서 None
+
+        self.calculator_event_loop = QEventLoop()  # tr 테스트용
         #############################################
 
         ########
@@ -567,17 +569,13 @@ class EventLoop:
 
         elif sRQName == "주식분봉차트조회": # opt10080 : 주식분봉차트조회요청 (single, multi)
 
-            # self.logging.logger.debug('{}'.format(ErrorCode.errors(unused2)[1]))
             print("주식분봉차트조회 slot, test_code : {}".format(self.test_code))
             # print("self.test_code : {}".format(self.test_code))
 
             ex_data = self.api.get_comm_data_ex(sTrCode, sRQName)
-            # print("ex_data : {}".format(ex_data))
+            print("ex_data : {}".format(ex_data))
 
-            self._opt10080(ex_data)
-
-            # self.api.set_real_remove(self.screen_calculation_stock, self.test_code)
-            # self.api.disconnect_real_data(self.screen_calculation_stock)
+            # self._opt10080_test(ex_data)
 
             self.calculator_event_loop.exit()
 
@@ -1725,7 +1723,7 @@ class EventLoop:
 
         book = book[(book['trade'] == 'buy') | (book['trade'] == 'sell')]
 
-        book = book[book.index.strftime('%Y-%m-%d %H:%M') >= '2020-11-24 09:00:00']
+        book = book[book.index.strftime('%Y-%m-%d %H:%M') >= '2021-02-24 15:30:00']
 
         print(book.tail(300))
 

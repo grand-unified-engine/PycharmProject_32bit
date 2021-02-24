@@ -50,6 +50,8 @@ class Signal:
 
         self.temp_screen_real_stock = "7000"  # 지정한 종목의 실시간 정보 요청시 사용
         self.temp_screen_meme_stock = "8000"  # 주문을 요청할 때 사용
+
+        self.tr_test_screen_no = "9000"
         ########################################
 
         self.another_job_stop = False # ???
@@ -562,7 +564,7 @@ class Signal:
 
     # 분봉 데이터
     def minute_candle_req(self, code=None):
-        QTest.qWait(3600)
+        # QTest.qWait(3600)
 
         # print("minute_candle_req code : {}".format(code))
         self.event_loop.test_code = code
@@ -572,9 +574,8 @@ class Signal:
             self.api.set_input_value("틱범위", '1')
             self.api.set_input_value("수정주가구분", "1")
 
-            self.api.comm_rq_data("주식분봉차트조회", "opt10080", 0, self.event_loop.screen_calculation_stock)
+            self.api.comm_rq_data("주식분봉차트조회", "opt10080", 0, self.tr_test_screen_no)
 
-            self.event_loop.calculator_event_loop = QEventLoop() # 여러번 조회하면 여기 있으면 안된다. 2021-02-06
             self.event_loop.calculator_event_loop.exec_()
 
         except Exception as ex:
