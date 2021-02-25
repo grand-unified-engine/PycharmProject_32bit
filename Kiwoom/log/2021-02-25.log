@@ -6450,3 +6450,6 @@
 [2021-02-25 14:59:50,817] I EventLoop.py | Kiwoom-_receive_real_data_slot-1402 I DEBUG    > 매수취소 전달 실패
 [2021-02-25 14:59:53,856] I EventLoop.py | Kiwoom-_receive_real_data_slot-1402 I DEBUG    > 매수취소 전달 실패
 [2021-02-25 14:59:55,599] I EventLoop.py | Kiwoom-_receive_real_data_slot-1402 I DEBUG    > 매수취소 전달 실패
+[2021-02-25 22:42:59,154] I EventLoop.py | Kiwoom-_event_connect_slot-0112 I DEBUG    > 정상처리
+[2021-02-25 22:45:17,150] I EventLoop.py | Kiwoom-_event_connect_slot-0112 I DEBUG    > 정상처리
+[2021-02-25 22:49:57,926] I EventLoop.py | Kiwoom-_event_connect_slot-0112 I DEBUG    > 정상처리
