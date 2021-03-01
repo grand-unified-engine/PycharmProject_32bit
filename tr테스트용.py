@@ -36,6 +36,11 @@ if __name__  == "__main__":
 
     # signal.get_condition_load()
 
+    # signal.real_time_condition_stock_fuc()
+    # QTest.qWait(500)  # 1초
+    # signal.screen_number_real_time_setting()
+
+
     # sched.add_job(signal.gathering_money_fuc, 'cron', second=30, start_date=signal.event_loop.today + ' 09:02:00',
     #               end_date=signal.event_loop.today + ' 15:30:00', args=(['2']))
     # sched.add_job(signal.get_condition_load, 'interval', seconds=10)
@@ -53,8 +58,21 @@ if __name__  == "__main__":
 
     # signal.portfolio_sche_fuc()
 
+    # sched.add_job(signal.gathering_money_fuc, 'cron', second=30, start_date=signal.event_loop.today + ' 09:02:00',
+    #               end_date=signal.event_loop.today + ' 15:30:00', args=(['2']))
+
+    # sched.add_job(signal.get_condition_load, 'interval', seconds=10)
+    # sched.start()
+
     app.exec_()
 
+    # count = 0
+    # while True:  # 이걸 안 하면 sched가 끝나버린다고 함
+    #     print("Running main process...............")
+    #     time.sleep(1)
+    #     count += 1
+    #     if count == 10:
+    #         sched.remove_job("test")
 
 
 
