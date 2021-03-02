@@ -7,7 +7,7 @@ from Kiwoom.KiwoomAPI import ErrorCode
 # from slacker import Slacker
 # from Kiwoom.config.MariaDB import MarketDB
 import sys
-import numpy as np
+# import numpy as np
 
 class EventLoop:
     def __init__(self, api, real_type, logging, portfolio_stock_dict):
@@ -71,11 +71,11 @@ class EventLoop:
         self.bought_list = []
         self.target_buy_cnt = 5
         self.buy_percent = 0.19
-        self.t_now = datetime.datetime.now()
-        self.t_9 = self.t_now.replace(hour=9, minute=0, second=0, microsecond=0)
-        self.t_start = self.t_now.replace(hour=9, minute=5, second=0, microsecond=0)
-        self.t_sell = self.t_now.replace(hour=15, minute=15, second=0, microsecond=0)
-        self.t_exit = self.t_now.replace(hour=15, minute=20, second=0, microsecond=0)
+        # self.t_now = datetime.datetime.now()
+        # self.t_9 = self.t_now.replace(hour=9, minute=0, second=0, microsecond=0)
+        # self.t_start = self.t_now.replace(hour=9, minute=5, second=0, microsecond=0)
+        # self.t_sell = self.t_now.replace(hour=15, minute=15, second=0, microsecond=0)
+        # self.t_exit = self.t_now.replace(hour=15, minute=20, second=0, microsecond=0)
         #######################################################
 
         self.test_code = None # 시그널 재호출용
