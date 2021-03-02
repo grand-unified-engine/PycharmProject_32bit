@@ -1,7 +1,9 @@
+import pandas as pd
+
 class Analyzer():
     def __init__(self):
 
-        self.minute_candle = None
+        self.minute_candle = pd.DataFrame()
 
     '''
     전고점, 전저점 가져오기

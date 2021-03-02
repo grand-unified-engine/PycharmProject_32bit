@@ -1305,22 +1305,23 @@ class EventLoop:
 
                 # self.logging.logger.debug("수익률 : {}, 주문용스크린번호: {}, 계좌번호: {}".format(meme_rate, self.portfolio_stock_dict[sCode]["주문용스크린번호"], self.account_num))
                 # print("계좌평가잔고내역 종목코드 : {}, 매매가능수량: {}, 수익률: {}, 시간: {}".format(sCode, asd['매매가능수량'], meme_rate, datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')))
-                if "average" in self.portfolio_stock_dict[sCode] and "MA10" in self.portfolio_stock_dict[sCode]:
-                    if asd['매매가능수량'] > 0 and ((meme_rate > 1 and b < round(self.portfolio_stock_dict[sCode]["average"]) and b < round(self.portfolio_stock_dict[sCode]["MA10"])) or (meme_rate < -5)):
-                                              # or (self.t_sell.strftime('%Y-%m-%d %H:%M:%S') < datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S') < self.t_exit.strftime('%Y-%m-%d %H:%M:%S'))):
+                if sCode in self.portfolio_stock_dict.keys():
+                    if "average" in self.portfolio_stock_dict[sCode] and "MA10" in self.portfolio_stock_dict[sCode]:
+                        if asd['매매가능수량'] > 0 and ((meme_rate > 1 and b < self.portfolio_stock_dict[sCode]["average"] and b < self.portfolio_stock_dict[sCode]["MA10"]) or (meme_rate < -5)):
+                                                  # or (self.t_sell.strftime('%Y-%m-%d %H:%M:%S') < datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S') < self.t_exit.strftime('%Y-%m-%d %H:%M:%S'))):
 
-                        order_success = self.api.send_order("신규매도", self.portfolio_stock_dict[sCode]["주문용스크린번호"],
-                                                            self.account_num, 2, sCode, asd['매매가능수량'], 0,
-                                                            self.real_type.SENDTYPE['거래구분']['시장가'], "")
+                            order_success = self.api.send_order("신규매도", self.portfolio_stock_dict[sCode]["주문용스크린번호"],
+                                                                self.account_num, 2, sCode, asd['매매가능수량'], 0,
+                                                                self.real_type.SENDTYPE['거래구분']['시장가'], "")
 
-                        if order_success == 0:
-                            self.logging.logger.debug("코드 : " + sCode + " 매도주문 전달 성공(계좌에 있던 거)")
-                            # self.slack.chat.post_message("hellojarvis", "코드 : " + sCode + " 매도주문 전달 성공")
-                            del self.account_stock_dict[sCode]
+                            if order_success == 0:
+                                self.logging.logger.debug("코드 : " + sCode + " 매도주문 전달 성공(계좌에 있던 거)")
+                                # self.slack.chat.post_message("hellojarvis", "코드 : " + sCode + " 매도주문 전달 성공")
+                                del self.account_stock_dict[sCode]
 
-                        else:
-                            self.logging.logger.debug("코드 : " + sCode + " 매도주문 전달 실패")
-                            # self.slack.chat.post_message("hellojarvis", "코드 : " + sCode + " 매도주문 전달 실패")
+                            else:
+                                self.logging.logger.debug("코드 : " + sCode + " 매도주문 전달 실패")
+                                # self.slack.chat.post_message("hellojarvis", "코드 : " + sCode + " 매도주문 전달 실패")
 
             #  프로그램 run 한 후 주문한 종목 팔기
             elif sCode in self.jango_dict.keys():
@@ -1328,21 +1329,22 @@ class EventLoop:
                 jd = self.jango_dict[sCode]
                 meme_rate = (b - jd['매입단가']) / jd['매입단가'] * 100  # 수익률 (b : 현재가)
 
-                if "average" in self.portfolio_stock_dict[sCode] and "MA10" in self.portfolio_stock_dict[sCode]:
-                    # 종가가 이전 3분평균보다 낮아질 때 + 종가가 10선보다 낮아졌을 때
-                    if jd['주문가능수량'] > 0 and ((meme_rate > 1 and b < round(self.portfolio_stock_dict[sCode]["average"]) and b < round(self.portfolio_stock_dict[sCode]["MA10"])) or (meme_rate < -5)):
-                    # or (self.t_sell.strftime('%Y-%m-%d %H:%M:%S') < datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S') < self.t_exit.strftime('%Y-%m-%d %H:%M:%S'))):
+                if sCode in self.portfolio_stock_dict.keys():
+                    if "average" in self.portfolio_stock_dict[sCode] and "MA10" in self.portfolio_stock_dict[sCode]:
+                        # 종가가 이전 3분평균보다 낮아질 때 + 종가가 10선보다 낮아졌을 때
+                        if jd['주문가능수량'] > 0 and ((meme_rate > 1 and b < self.portfolio_stock_dict[sCode]["average"] and b < self.portfolio_stock_dict[sCode]["MA10"]) or (meme_rate < -5)):
+                        # or (self.t_sell.strftime('%Y-%m-%d %H:%M:%S') < datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S') < self.t_exit.strftime('%Y-%m-%d %H:%M:%S'))):
 
-                        order_success = self.api.send_order("신규매도", self.portfolio_stock_dict[sCode]["주문용스크린번호"],
-                                                            self.account_num, 2, sCode, jd['주문가능수량'], 0,
-                                                            self.real_type.SENDTYPE['거래구분']['시장가'], "")
+                            order_success = self.api.send_order("신규매도", self.portfolio_stock_dict[sCode]["주문용스크린번호"],
+                                                                self.account_num, 2, sCode, jd['주문가능수량'], 0,
+                                                                self.real_type.SENDTYPE['거래구분']['시장가'], "")
 
-                        if order_success == 0:
-                            self.logging.logger.debug("코드 : " + sCode + " 매도주문 전달 성공(프로그램 오픈 후)")
-                            # self.slack.chat.post_message("hellojarvis", "코드 : " + sCode + " 매도주문 전달 성공")
-                        else:
-                            self.logging.logger.debug("코드 : " + sCode + " 매도주문 전달 실패")
-                            # self.slack.chat.post_message("hellojarvis", "코드 : " + sCode + " 매도주문 전달 실패")
+                            if order_success == 0:
+                                self.logging.logger.debug("코드 : " + sCode + " 매도주문 전달 성공(프로그램 오픈 후)")
+                                # self.slack.chat.post_message("hellojarvis", "코드 : " + sCode + " 매도주문 전달 성공")
+                            else:
+                                self.logging.logger.debug("코드 : " + sCode + " 매도주문 전달 실패")
+                                # self.slack.chat.post_message("hellojarvis", "코드 : " + sCode + " 매도주문 전달 실패")
             # 여기는 매수
             # elif d > 2.0 and sCode not in self.jango_dict:
             elif sCode not in self.jango_dict:

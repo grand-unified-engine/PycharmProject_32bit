@@ -14,14 +14,14 @@ class MinuteAlgorithm():
                    'Accept': 'text/html,application/xhtml+xml,application/xml;' \
                              'q=0.9,image/webp,*/*;q=0.8'}
 
-        self.df = pd.DataFrame()
+        self.df = None
         self.minute_df = self.m_analy.minute_candle
         today = date.today()
         # today = date.today() - timedelta(days=1)
-        yesterday = today - timedelta(days=4)
+        # yesterday = today - timedelta(days=4)
 
-        self.minute_candle(code, "".join(str(yesterday).split("-")) + '153000')
-        self.minute_df = self.minute_df.append(self.df)
+        # self.minute_candle(code, "".join(str(yesterday).split("-")) + '153000')
+        # self.minute_df = self.minute_df.append(self.df)
         self.minute_candle(code, "".join(str(today).split("-")) + '153000')
         self.minute_df = self.minute_df.append(self.df)
         # 1: 체결시각, 2:체결가, 3:전일비, 4:매도, 5:매수, 6:거래량, 7:변동량
@@ -40,12 +40,12 @@ class MinuteAlgorithm():
 
         # self.shoulder()
 
-    def shoulder(self): # 어깨에 판다
-        self.result_dict.update({"shoulder": False})
-        start = 2
-        end = 5
-        max_high, min_close = self.minAnaly.get_max_min_close(start=start, end=end)  # 고점일 때는 High값으로(저항선을 의미)
-        print("전고점: {}, 전저점: {}, 종가(D-1): {}".format(max_high, min_close, self.D1_close))
+    # def shoulder(self): # 어깨에 판다
+    #     self.result_dict.update({"shoulder": False})
+    #     start = 2
+    #     end = 5
+    #     max_high, min_close = self.minAnaly.get_max_min_close(start=start, end=end)  # 고점일 때는 High값으로(저항선을 의미)
+    #     print("전고점: {}, 전저점: {}, 종가(D-1): {}".format(max_high, min_close, self.D1_close))
 
         # buytiming_ma20 = 0
         # for row in self.minute_df.itertuples():

@@ -13,9 +13,9 @@ class MinuteCandle(QThread):
             df_copy = self.signal.portfolio_stock_dict.copy()  # 반복문 오류를 피하기 위해
             for code in df_copy:
                 m_algo = MinuteAlgorithm(code)
-                self.signal.portfolio_stock_dict[code].update({"average": m_algo.minute_df['average'][-2]}) # D-1값
-                self.signal.portfolio_stock_dict[code].update({"MA10": m_algo.minute_df['MA10'][-2]}) # D-1값
-                QTest.qWait(1000)
+                QTest.qWait(4000)
+                self.signal.portfolio_stock_dict[code].update({"average": round(m_algo.minute_df['average'].iloc[-2])})  # D-1값
+                self.signal.portfolio_stock_dict[code].update({"MA10": round(m_algo.minute_df['MA10'].iloc[-2])}) # D-1값
             time.sleep(90)
 
 
