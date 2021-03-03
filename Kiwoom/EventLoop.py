@@ -123,7 +123,9 @@ class EventLoop:
 
         condition_name_list = condition_name_list.split(";")[:-1]
 
-        condition_name_list = [x for x in condition_name_list if x.split("^")[1] == "자비스전달종목"]
+        condition_name_list = [x for x in condition_name_list if x.split("^")[1] == "종목탐색기 기초"]
+
+        print("필터한 condition_name_list: {}".format(condition_name_list))
 
         self.api.send_condition("0156", condition_name_list[0].split("^")[1], condition_name_list[0].split("^")[0], 1)  # 조회요청 + 실시간 조회
 
@@ -143,13 +145,13 @@ class EventLoop:
         # self.logging.logger.debug("화면번호: %s, 종목코드 리스트: %s, 조건식 이름: %s, 조건식 인덱스: %s, 연속조회: %s" % (sScrNo, strCodeList, strConditionName, index, nNext))
 
         code_list = strCodeList.split(";")[:-1]
-        self.logging.logger.debug("코드 종목 \n %s" % code_list)
-        # self.logging.logger.debug("코드 개수 \n %s" % len(code_list))
+        print("코드 종목 : {}".format(code_list))
+        print("코드 개수 : {}}".format(len(code_list)))
 
-        for code in code_list:
-            if code not in self.portfolio_stock_dict:
-                self.condition_stock.update({code: {}})
-                self.condition_stock[code].update({"portfolio_stock_dict추가여부": False})
+        # for code in code_list:
+        #     if code not in self.portfolio_stock_dict:
+        #         self.condition_stock.update({code: {}})
+        #         self.condition_stock[code].update({"portfolio_stock_dict추가여부": False})
 
 
     # 조건식 실시간으로 받기

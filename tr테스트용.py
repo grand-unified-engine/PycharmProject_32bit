@@ -34,7 +34,7 @@ if __name__  == "__main__":
     # sched.add_job(signal.get_condition_load, 'cron', hour='09', minute='02', second="59", id='test')
     # sched.start()
 
-    # signal.get_condition_load()
+    signal.get_condition_load()
 
     # signal.real_time_condition_stock_fuc()
     # QTest.qWait(500)  # 1초
@@ -47,7 +47,7 @@ if __name__  == "__main__":
     # sched.start()
 
     # signal.event_loop.sign_volume_req(code="289080")
-    signal.minute_candle_req(code="064240")
+    # signal.minute_candle_req(code="064240")
     # signal.day_kiwoom_db(code="114450")
 
     # signal.volume_uprise_req("1", "500", "1") # 거래량 급증 요청

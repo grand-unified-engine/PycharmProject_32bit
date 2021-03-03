@@ -18,7 +18,7 @@ class MinuteCandle(QThread):
                         '%Y-%m-%d %H:%M:%S'):  # 9시12분전까지만 portfolio_stock_dict에 D-1값 저장하므로
                     QTest.qWait(5000)
                 else:
-                    QTest.qWait(3000)
+                    QTest.qWait(4000)
                 self.signal.portfolio_stock_dict[code].update({"average": round(m_algo.minute_df['average'].iloc[-2])})  # D-1값
                 self.signal.portfolio_stock_dict[code].update({"MA10": round(m_algo.minute_df['MA10'].iloc[-2])}) # D-1값
             time.sleep(90)
