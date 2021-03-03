@@ -165,3 +165,6 @@
 [2021-03-03 13:26:29,261] I EventLoop.py | Kiwoom-_chejan_slot-1532 I DEBUG    > 잔고반영: {'현재가': 1440, '종목코드': '035620', '종목명': '바른손이앤에이', '보유수량': 0, '주문가능수량': 0, '매입단가': 0, '총매입가': 0, '매도매수구분': '매도', '(최우선)매도호가': 1445, '(최우선)매수호가': 1440}
 [2021-03-03 17:22:01,976] I EventLoop.py | Kiwoom-_event_connect_slot-0112 I DEBUG    > 정상처리
 [2021-03-03 17:23:37,442] I EventLoop.py | Kiwoom-_event_connect_slot-0112 I DEBUG    > 정상처리
+[2021-03-03 20:23:13,306] I EventLoop.py | Kiwoom-_event_connect_slot-0112 I DEBUG    > 정상처리
+[2021-03-03 20:29:34,600] I EventLoop.py | Kiwoom-_event_connect_slot-0112 I DEBUG    > 정상처리
+[2021-03-03 20:45:54,579] I EventLoop.py | Kiwoom-_event_connect_slot-0112 I DEBUG    > 정상처리

@@ -14,8 +14,8 @@ class MinuteCandle(QThread):
             for code in df_copy:
                 m_algo = MinuteAlgorithm(code)
 
-                if m_algo.datetime.now().strftime('%Y-%m-%d %H:%M:%S') < m_algo.t_9_12.strftime(
-                        '%Y-%m-%d %H:%M:%S'):  # 9시12분전까지만 portfolio_stock_dict에 D-1값 저장하므로
+                if m_algo.datetime.now().strftime('%Y-%m-%d %H:%M:%S') < m_algo.t_9_22.strftime(
+                        '%Y-%m-%d %H:%M:%S'):  # 9시22분전까지만 portfolio_stock_dict에 D-1값 저장하므로
                     QTest.qWait(5000)
                 else:
                     QTest.qWait(4000)
