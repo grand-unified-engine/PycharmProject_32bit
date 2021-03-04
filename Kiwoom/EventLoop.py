@@ -148,6 +148,7 @@ class EventLoop:
         for code in code_list:
             if code not in self.portfolio_stock_dict:
                 self.condition_stock.update({code: {}})
+        print("코드 개수 2 : {}".format(len(self.condition_stock)))
 
     # 조건식 실시간으로 받기
     def _condition_real_slot(self, strCode, strType, strConditionName, strConditionIndex):

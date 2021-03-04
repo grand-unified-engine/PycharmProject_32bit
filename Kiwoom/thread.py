@@ -49,9 +49,12 @@ class BuyMinuteCandle(QThread):
         self.signal = signal
 
     def run(self):
-        while True:
-            df_copy = self.signal.portfolio_stock_dict.copy()  # 반복문 오류를 피하기 위해
-            for code in df_copy:
+        i = 0
+        max = len(self.signal.condition_stock)
+        while i == 0:
+
+            for code in self.signal.condition_stock.keys():
+                QTest.qWait(1000)
                 m_algo = MinuteAlgorithm(code)
 
                 if m_algo.datetime.now().strftime('%Y-%m-%d %H:%M:%S') < m_algo.t_9_22.strftime(
@@ -59,8 +62,15 @@ class BuyMinuteCandle(QThread):
                     QTest.qWait(6000)
                 else:
                     QTest.qWait(5000)
-                self.signal.portfolio_stock_dict[code].update({"average": round(m_algo.minute_df['average'].iloc[-2])})  # D-1값
-                self.signal.portfolio_stock_dict[code].update({"MA20": round(m_algo.minute_df['MA20'].iloc[-2])}) # D-1값
-                self.signal.portfolio_stock_dict[code].update({"max10": round(m_algo.minute_df['max10'].iloc[-2])})  # D-1값
-                self.signal.portfolio_stock_dict[code].update({"min10": round(m_algo.minute_df['min10'].iloc[-2])}) # D-1값
-            time.sleep(90)
+
+                if m_algo.minute_df['체결가'].iloc[-1] / (m_algo.minute_df['체결가'].iloc[-1] - m_algo.minute_df['전일비'].iloc[-1]) > 17:
+                    continue
+                else:
+                    self.signal.real_time_recommand_dict.update(
+                        {code: {"time": time.strftime('%H%M%S'), "numbering": False}})
+                    self.logging.logger.debug("새로 들어온 종목: {}, real_time_recommand_dict: {}".format(code,
+                                                                                                   self.real_time_recommand_dict[
+                                                                                                       code]))
+                i += 1
+                if i == max:
+                    i = 0

@@ -202,6 +202,62 @@ class Signal:
             self.call_set_real_reg(screen_num, code, fids, "1")
 
 
+
+    def screen_number_real_time_setting2(self):
+
+        screen_overwrite = []
+
+        # 실시간 추천 종목
+        for code, value in self.real_time_recommand_dict.items():
+            if value["numbering"] is False:
+                if code not in screen_overwrite:
+                    if code not in self.portfolio_stock_dict.keys():
+                        self.portfolio_stock_dict.update({code: {"매수매도": "매수"}})
+                        screen_overwrite.append(code)
+                        self.logging.logger.debug("스크린 넘버 세팅 새로 들어온 종목: {}, portfolio_stock_dict: {}".format(code,
+                                                                                                       self.portfolio_stock_dict[
+                                                                                                           code]))
+
+        # 스크린번호 할당
+        cnt = 0
+        for code in screen_overwrite:
+            temp_screen = int(self.temp_screen_real_stock)
+            meme_screen = int(self.temp_screen_meme_stock)
+
+            if (cnt % 50) == 0:
+                temp_screen += 1
+                self.temp_screen_real_stock = str(temp_screen)
+            if (cnt % 50) == 0:
+                meme_screen += 1
+                self.temp_screen_meme_stock = str(meme_screen)
+
+            self.portfolio_stock_dict[code].update({"스크린번호": str(self.temp_screen_real_stock), "주문용스크린번호": str(self.temp_screen_meme_stock)})
+            # self.portfolio_stock_dict.update({code: {"스크린번호": str(self.temp_screen_real_stock), "주문용스크린번호": str(self.temp_screen_meme_stock)}})
+            cnt += 1
+
+        # print("screen_number_real_time_setting screen_overwrite dict: {}".format(screen_overwrite))
+        screen_num = ''
+        code_list = ''
+        fids = ''
+        for code in screen_overwrite:
+            # QTest.qWait(5000)
+            self.real_time_recommand_dict[code].update({"numbering": True})
+            print("code: {}, real_time_recommand_dict : {}".format(code, self.real_time_recommand_dict[code]))
+            screen_num = self.portfolio_stock_dict[code]['스크린번호']
+            # fids = self.real_type.REALTYPE['주식체결']['체결시간']
+            # a = self.real_type.REALTYPE['주식호가잔량']['매도호가총잔량']
+            b = self.real_type.REALTYPE['주식체결']['현재가']
+            # fids = str(a) + ';' + str(b)
+            fids = b
+            code_list = code_list + ';' + code
+
+        if code_list != '':
+            QTest.qWait(1000)
+            ret = self.call_set_real_reg(screen_num, code_list[1:], fids, "1")
+            self.logging.logger.debug("실시간 등록 코드: {}, 실시간 등록 리턴값: {}".format(code_list, ret))
+
+
+
     def screen_number_real_time_setting(self):
 
         screen_overwrite = []

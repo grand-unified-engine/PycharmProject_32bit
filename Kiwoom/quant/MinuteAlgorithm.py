@@ -54,6 +54,9 @@ class MinuteAlgorithm():
             s = str(pgrr.a['href']).split('=')
             last_page = s[-1]
 
+            if int(last_page) >= 3:
+                last_page = 3
+
             for page in range(1, int(last_page)+1):
                 pg_url = '{}&page={}'.format(url, page)
                 res2 = self.session.get(pg_url, headers=self.headers)

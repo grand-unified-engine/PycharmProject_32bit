@@ -223,3 +223,5 @@
 [2021-03-04 15:29:49,820] I EventLoop.py | Kiwoom-_receive_real_data_slot-0962 I DEBUG    > 장 종료, 동시호가로 넘어감
 [2021-03-04 15:29:59,729] I EventLoop.py | Kiwoom-_receive_real_data_slot-0965 I DEBUG    > 3시30분 장 종료
 [2021-03-04 16:45:24,331] I EventLoop.py | Kiwoom-_event_connect_slot-0112 I DEBUG    > 정상처리
+[2021-03-04 21:41:04,983] I EventLoop.py | Kiwoom-_event_connect_slot-0112 I DEBUG    > 정상처리
+[2021-03-04 22:52:04,404] I EventLoop.py | Kiwoom-_event_connect_slot-0112 I DEBUG    > 정상처리
