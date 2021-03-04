@@ -7,6 +7,8 @@ from Kiwoom.KiwoomAPI import ErrorCode
 # from slacker import Slacker
 # from Kiwoom.config.MariaDB import MarketDB
 import sys
+
+
 # import numpy as np
 
 class EventLoop:
@@ -26,45 +28,44 @@ class EventLoop:
         # self.mk = MarketDB()
 
         ########## event loop를 실행하기 위한 변수 모음
-        self.login_event_loop = QEventLoop() # 로그인을 요청하고 안전하게 완료될 때까지 기다리게 만들기 위한 이벤트 루프 변수
-        self.detail_account_info_event_loop = QEventLoop() # 예수금 요청 이벤트 루프. sPrevNext가 2로 호출될 수 있으므로 시그널 메소드에서 인스턴스하면 안 되고 전역에서 인스턴스해야 한다.
-        self.analyze_event_loop = QEventLoop() # 분석용 signal.calculator_fuc에서 사용
-        self.for_signal_event_loop = None # 시그널에서 호출해서 반복없이 event slot에서 받을 때 시그널 함수에서 QEventLoop() 시작을 할 때 여기서 None
+        self.login_event_loop = QEventLoop()  # 로그인을 요청하고 안전하게 완료될 때까지 기다리게 만들기 위한 이벤트 루프 변수
+        self.detail_account_info_event_loop = QEventLoop()  # 예수금 요청 이벤트 루프. sPrevNext가 2로 호출될 수 있으므로 시그널 메소드에서 인스턴스하면 안 되고 전역에서 인스턴스해야 한다.
+        self.analyze_event_loop = QEventLoop()  # 분석용 signal.calculator_fuc에서 사용
+        self.for_signal_event_loop = None  # 시그널에서 호출해서 반복없이 event slot에서 받을 때 시그널 함수에서 QEventLoop() 시작을 할 때 여기서 None
 
         self.calculator_event_loop = QEventLoop()  # tr 테스트용
         #############################################
 
         ########
-        self.jango_dict = {} # 실시간 잔고에 반영된 종목
+        self.jango_dict = {}  # 실시간 잔고에 반영된 종목
         ########################
 
         ########## 계좌 관련된 변수
-        self.account_num = None #계좌번호 담아줄 변수
-        self.deposit = 0 #예수금
-        self.use_money = 0 #실제 투자에 사용할 금액
-        self.use_money_percent = 1 # 0.5 #예수금에서 실제 사용할 비율
-        self.output_deposit = 0 #출력가능 금액
-        self.total_profit_loss_money = 0 #총평가손익금액
-        self.total_profit_loss_rate = 0.0 #총수익률(%)
-        self.account_stock_dict = {} # 계좌평가잔고내역에서 조회된 것. 시그널을 보냈을 때 넣어줌.
-        self.not_account_stock_dict = {} # 미체결종목
+        self.account_num = None  # 계좌번호 담아줄 변수
+        self.deposit = 0  # 예수금
+        self.use_money = 0  # 실제 투자에 사용할 금액
+        self.use_money_percent = 1  # 0.5 #예수금에서 실제 사용할 비율
+        self.output_deposit = 0  # 출력가능 금액
+        self.total_profit_loss_money = 0  # 총평가손익금액
+        self.total_profit_loss_rate = 0.0  # 총수익률(%)
+        self.account_stock_dict = {}  # 계좌평가잔고내역에서 조회된 것. 시그널을 보냈을 때 넣어줌.
+        self.not_account_stock_dict = {}  # 미체결종목
         #######################################################
 
         ########## 요청 스크린 번호
-        self.screen_my_info = "2000" #계좌 관련 스크린 번호 -- 이건 eventloop에서 사용하므로 여기 있어야 함.
+        self.screen_my_info = "2000"  # 계좌 관련 스크린 번호 -- 이건 eventloop에서 사용하므로 여기 있어야 함.
         self.screen_analyze_stock = "4000"  # 분석용 스크린 번호 . 여기 있어야 함. signal.analyze_fuc에서 사용
-        self.screen_signal_event = "3000" # ???
+        self.screen_signal_event = "3000"  # ???
         #######################################################
 
         ########## 종목 분석 용
-        self.analyze_data = [] #종목 분석 데이터
+        self.analyze_data = []  # 종목 분석 데이터
 
-
-        self.day_candle = None # 일봉 차트 담기
-        self.real_data_dict = {} # 분봉 차트를 만들기 위한 딕셔너리
-        self.minute_candle_dict = {} # 종목별 분봉담기 2020-10-25
-        self.gathering_money_stock = [] # 스케줄러로 종목 담기
-        self.condition_stock = {} # 조건검색 2020-10-25
+        self.day_candle = None  # 일봉 차트 담기
+        self.real_data_dict = {}  # 분봉 차트를 만들기 위한 딕셔너리
+        self.minute_candle_dict = {}  # 종목별 분봉담기 2020-10-25
+        self.gathering_money_stock = []  # 스케줄러로 종목 담기
+        self.condition_stock = {}  # 조검검색 1차 필터링 종목 2021-03-04
         #######################################################
 
         ########## 변동성 돌파 전략 20.12.02
@@ -78,9 +79,9 @@ class EventLoop:
         # self.t_exit = self.t_now.replace(hour=15, minute=20, second=0, microsecond=0)
         #######################################################
 
-        self.test_code = None # 시그널 재호출용
-        self.req_cnt = 0 # 당일전일 체결내역 카운트용
-        self.today_open = 0 # 테스트용. 실제로 매입가 가져올 수 있으므로 필요없게 되면 삭제할 것.
+        self.test_code = None  # 시그널 재호출용
+        self.req_cnt = 0  # 당일전일 체결내역 카운트용
+        self.today_open = 0  # 테스트용. 실제로 매입가 가져올 수 있으므로 필요없게 되면 삭제할 것.
 
         # self.convergence_dict = {} #수렴 여부 딕셔너리. 거래량 급증 실시간에서 사용
         #
@@ -89,23 +90,22 @@ class EventLoop:
         self.event_slots()  # 슬롯을 받을 이벤트 등록
         self.real_event_slots()  # 슬롯을 받을 이벤트 등록(실시간)
 
-        # self.condition_event_slot() # 슬롯을 받을 이벤트 등록(조건검색)
-
+        self.condition_event_slot() # 슬롯을 받을 이벤트 등록(조건검색)
 
     def event_slots(self):
-        self.api.ocx.OnEventConnect.connect(self._event_connect_slot) # 키움 서버 접속 관련 이벤트가 발생할 경우 _connect_slot 함수 호출
-        self.api.ocx.OnReceiveTrData.connect(self._tr_data_slot) # 조회요청 응답을 받거나 조회데이터를 수신했을때 호출
+        self.api.ocx.OnEventConnect.connect(self._event_connect_slot)  # 키움 서버 접속 관련 이벤트가 발생할 경우 _connect_slot 함수 호출
+        self.api.ocx.OnReceiveTrData.connect(self._tr_data_slot)  # 조회요청 응답을 받거나 조회데이터를 수신했을때 호출
         self.api.ocx.OnReceiveMsg.connect(self._msg_slot)
 
     def real_event_slots(self):
         self.api.ocx.OnReceiveRealData.connect(self._receive_real_data_slot)  # 실시간 이벤트 연결
-        self.api.ocx.OnReceiveChejanData.connect(self._chejan_slot) # 주문이 들어간 후 결과 데이터를 반환받는다.
+        self.api.ocx.OnReceiveChejanData.connect(self._chejan_slot)  # 주문이 들어간 후 결과 데이터를 반환받는다.
 
-    #조건검색식 이벤트 모음
+    # 조건검색식 이벤트 모음
     def condition_event_slot(self):
         self.api.ocx.OnReceiveConditionVer.connect(self._condition_ver_slot)
         self.api.ocx.OnReceiveTrCondition.connect(self._condition_tr_slot)
-        self.api.ocx.OnReceiveRealCondition.connect(self._condition_real_slot)
+        # self.api.ocx.OnReceiveRealCondition.connect(self._condition_real_slot)
 
     # 로그인 slot
     def _event_connect_slot(self, err_code):
@@ -113,7 +113,6 @@ class EventLoop:
         # self.logging.logger.debug(f'{errors(err_code)[1]}')
         # 로그인 처리가 완료됐으면 이벤트 루프를 종료한다.
         self.login_event_loop.exit()
-
 
     # 어떤 조건식이 있는지 확인
     def _condition_ver_slot(self, lRet, sMsg):
@@ -125,7 +124,8 @@ class EventLoop:
 
         condition_name_list = [x for x in condition_name_list if x.split("^")[1] == "종목탐색기 기초"]
 
-        self.api.send_condition("0156", condition_name_list[0].split("^")[1], condition_name_list[0].split("^")[0], 1)  # 조회요청 + 실시간 조회
+        self.api.send_condition("0156", condition_name_list[0].split("^")[1], condition_name_list[0].split("^")[0],
+                                0)  # 조회요청 + 실시간 조회
 
         # for unit_condition in condition_name_list:
         #     index = unit_condition.split("^")[0]
@@ -137,7 +137,6 @@ class EventLoop:
         #     ok = self.api.send_condition("0156", condition_name, index, 0) #조회요청 + 실시간 조회
         #     self.logging.logger.debug("조회 성공여부 %s " % ok)
 
-
     # 나의 조건식에 해당하는 종목코드 받기
     def _condition_tr_slot(self, sScrNo, strCodeList, strConditionName, index, nNext):
         # self.logging.logger.debug("화면번호: %s, 종목코드 리스트: %s, 조건식 이름: %s, 조건식 인덱스: %s, 연속조회: %s" % (sScrNo, strCodeList, strConditionName, index, nNext))
@@ -146,11 +145,9 @@ class EventLoop:
         print("코드 종목 : {}".format(code_list))
         print("코드 개수 : {}".format(len(code_list)))
 
-        # for code in code_list:
-        #     if code not in self.portfolio_stock_dict:
-        #         self.condition_stock.update({code: {}})
-        #         self.condition_stock[code].update({"portfolio_stock_dict추가여부": False})
-
+        for code in code_list:
+            if code not in self.portfolio_stock_dict:
+                self.condition_stock.update({code: {}})
 
     # 조건식 실시간으로 받기
     def _condition_real_slot(self, strCode, strType, strConditionName, strConditionIndex):
@@ -169,6 +166,7 @@ class EventLoop:
     조회요청 응답을 받거나 조회데이터를 수신했을때
     slot 안에서 tr 다시 요청하면 처리 되지 않는다!!!
     '''
+
     # 조회요청 응답을 받거나 조회데이터를 수신했을때
     # sTrCode : TR이름 ex)opt10075
     def _tr_data_slot(self, sScrNo, sRQName, sTrCode, sRecordName, sPrevNext, unused1, unused2, unused3, unused4):
@@ -188,13 +186,13 @@ class EventLoop:
         # except AttributeError:
         #     pass
         # print("sRQName : {}".format(sRQName))
-        if sRQName == "예수금상세현황요청": # opw00001 : 예수금상세현황요청 (single, multi)
+        if sRQName == "예수금상세현황요청":  # opw00001 : 예수금상세현황요청 (single, multi)
             deposit = self.api.get_comm_data(sTrCode, sRQName, 0, "예수금")
             self.deposit = int(deposit)
 
             # print("예수금 : {}".format(self.deposit))
             # print("실제 사용할 비율 : {}".format(self.use_money_percent))
-            use_money = float(self.deposit) * self.use_money_percent # 예수금 * 실제 사용할 비율
+            use_money = float(self.deposit) * self.use_money_percent  # 예수금 * 실제 사용할 비율
             self.use_money = int(use_money)
             self.use_money = self.use_money / 4  # 5종목 이상 매수할 수 있게 5로 나눠준다. 이 뜻이 아닌데?
 
@@ -205,7 +203,7 @@ class EventLoop:
 
             # self.logging.logger.debug("출금가능금액 : %s" % self.output_deposit)
 
-            self.api.disconnect_real_data(self.screen_my_info) # 예수금 스크린 번호 연결 끊기
+            self.api.disconnect_real_data(self.screen_my_info)  # 예수금 스크린 번호 연결 끊기
 
             self.detail_account_info_event_loop.exit()
 
@@ -222,19 +220,23 @@ class EventLoop:
                 total_profit_loss_rate = "-" + total_profit_loss_rate[1:].lstrip("0")
             self.total_profit_loss_rate = float(total_profit_loss_rate)
 
-            self.logging.logger.debug("계좌평가잔고내역요청 싱글데이터 : 총매입금액 {}, 총평가손익금액 {}, 총수익률(%) {}".format(total_buy_money, total_profit_loss_money, total_profit_loss_rate))
+            self.logging.logger.debug(
+                "계좌평가잔고내역요청 싱글데이터 : 총매입금액 {}, 총평가손익금액 {}, 총수익률(%) {}".format(total_buy_money, total_profit_loss_money,
+                                                                             total_profit_loss_rate))
 
-            rows = self.api.get_repeat_cnt(sTrCode, sRQName) # 시그널 보냈을 때 반환된 데이터 갯수
+            rows = self.api.get_repeat_cnt(sTrCode, sRQName)  # 시그널 보냈을 때 반환된 데이터 갯수
             for i in range(rows):
-                code = self.api.get_comm_data(sTrCode, sRQName, i, "종목번호") # 출력 : A039423 // 알파벳 A는 장내주식, J는 ELW종목, Q는 ETN종목
+                code = self.api.get_comm_data(sTrCode, sRQName, i,
+                                              "종목번호")  # 출력 : A039423 // 알파벳 A는 장내주식, J는 ELW종목, Q는 ETN종목
                 code = code.strip()[1:]
-                code_nm = self.api.get_comm_data(sTrCode, sRQName, i, "종목명").rstrip() # 출럭 : 한국기업평가
-                stock_quantity = self.api.get_comm_data(sTrCode, sRQName, i, "보유수량").lstrip("0")  # 보유수량 : 000000000000010
+                code_nm = self.api.get_comm_data(sTrCode, sRQName, i, "종목명").rstrip()  # 출럭 : 한국기업평가
+                stock_quantity = self.api.get_comm_data(sTrCode, sRQName, i, "보유수량").lstrip(
+                    "0")  # 보유수량 : 000000000000010
                 buy_price = self.api.get_comm_data(sTrCode, sRQName, i, "매입가").lstrip("0")  # 매입가 : 000000000054100
                 learn_rate = self.api.get_comm_data(sTrCode, sRQName, i, "수익률(%)").lstrip("0")  # 수익률 : -000000001.94
                 if learn_rate[0] == "-":
                     learn_rate = "-" + learn_rate[1:].lstrip("0")
-                current_price = self.api.get_comm_data(sTrCode, sRQName, i, "현재가").lstrip("0") # 현재가 : 000000003450
+                current_price = self.api.get_comm_data(sTrCode, sRQName, i, "현재가").lstrip("0")  # 현재가 : 000000003450
                 total_chegual_price = self.api.get_comm_data(sTrCode, sRQName, i, "매입금액").lstrip("0")
                 possible_quantity = self.api.get_comm_data(sTrCode, sRQName, i, "매매가능수량").lstrip("0")
 
@@ -260,7 +262,7 @@ class EventLoop:
                 self.account_stock_dict[code].update({"수익률(%)": learn_rate})
                 self.account_stock_dict[code].update({"현재가": current_price})
                 self.account_stock_dict[code].update({"매입금액": total_chegual_price})
-                self.account_stock_dict[code].update({'매매가능수량' : possible_quantity})
+                self.account_stock_dict[code].update({'매매가능수량': possible_quantity})
 
             # self.logging.logger.debug("sPreNext : %s" % next)
             print("계좌에 가지고 있는 종목은 %s " % rows)
@@ -344,7 +346,8 @@ class EventLoop:
                     # 오늘자 주가가 120일 이평선에 걸쳐있는지 확인
                     bottom_stock_price = False
                     check_price = None
-                    if int(self.analyze_data[0][7]) <= moving_average_price and moving_average_price <= int(self.analyze_data[0][6]):
+                    if int(self.analyze_data[0][7]) <= moving_average_price and moving_average_price <= int(
+                            self.analyze_data[0][6]):
                         print("오늘의 주가가 120 이평선에 걸쳐있는지 확인")
                         bottom_stock_price = True
                         check_price = int(self.analyze_data[0][6])
@@ -352,17 +355,17 @@ class EventLoop:
                     # 과거 일봉 데이터를 조회하면서 120일 이동평균선보다 주가가 계속 밑에 존재하는지 확인
                     prev_price = None
                     if bottom_stock_price == True:
-                        moving_average_price_prev = 0 # 120일 이평선의 가격
-                        price_top_moving = False # 아래 조건문이 모두 통과하면 True
+                        moving_average_price_prev = 0  # 120일 이평선의 가격
+                        price_top_moving = False  # 아래 조건문이 모두 통과하면 True
                         idx = 1
 
                         while True:
-                            if len(self.analyze_data[idx:]) < 120: # 120일 치가 있는지 계속 확인
+                            if len(self.analyze_data[idx:]) < 120:  # 120일 치가 있는지 계속 확인
                                 print("120일 치가 없음")
                                 break
 
                             total_price = 0
-                            for value in self.analyze_data[idx:120+idx]:
+                            for value in self.analyze_data[idx:120 + idx]:
                                 total_price += int(value[1])
                             moving_average_price_prev = total_price / 120
 
@@ -371,7 +374,8 @@ class EventLoop:
                                 price_top_moving = False
                                 break
 
-                            elif int(self.analyze_data[idx][7]) > moving_average_price_prev and idx > 20: # 120일 이평선 위에 있는 구간 존재
+                            elif int(self.analyze_data[idx][
+                                         7]) > moving_average_price_prev and idx > 20:  # 120일 이평선 위에 있는 구간 존재
                                 print("120일치 이평선 위에 있는 구간 확인됨")
                                 price_top_moving = True
                                 prev_price = int(self.analyze_data[idx][7])
@@ -391,8 +395,9 @@ class EventLoop:
 
                     code_nm = self.api.get_master_code_name(code)
 
-                    f = open("files/condition_stock.txt", "a", encoding="utf8") # a는 기존 파일에 이어서 쓰는 옵션, w는 이전 데이터를 모두 지우고 새로 쓰는 옵션
-                    f.write("%s\t%s\t%s\n" % (code, code_nm, str(self.analyze_data[0][1]))) # \t는 TAB, \n은 엔터
+                    f = open("files/condition_stock.txt", "a",
+                             encoding="utf8")  # a는 기존 파일에 이어서 쓰는 옵션, w는 이전 데이터를 모두 지우고 새로 쓰는 옵션
+                    f.write("%s\t%s\t%s\n" % (code, code_nm, str(self.analyze_data[0][1])))  # \t는 TAB, \n은 엔터
                     f.close()
 
                 elif pass_success == False:
@@ -416,7 +421,8 @@ class EventLoop:
             tr_total_cnt = self.api.get_comm_data(sTrCode, sRQName, 0, "상장주식")
             tr_total_cnt = int(tr_total_cnt)
 
-            real_tr_stock_cnt = self.api.get_comm_data(sTrCode, sRQName, 0, "유통주식") # 리턴값이 string이므로 1000을 곱하면 1000번 출력된다.
+            real_tr_stock_cnt = self.api.get_comm_data(sTrCode, sRQName, 0,
+                                                       "유통주식")  # 리턴값이 string이므로 1000을 곱하면 1000번 출력된다.
             real_tr_stock_cnt = real_tr_stock_cnt.strip()
             # real_tr_stock_cnt.zfill(20)
 
@@ -427,20 +433,18 @@ class EventLoop:
             if real_tr_stock_cnt != '':
                 ''' 회사정보 테이블에 유통주식 수 업데이트'''
                 with self.mk.conn.cursor() as curs:
-                    sql = "UPDATE company_info set real_tr_stock_cnt = {} where code = '{}' "\
+                    sql = "UPDATE company_info set real_tr_stock_cnt = {} where code = '{}' " \
                         .format(int(real_tr_stock_cnt) * 1000, code)
                     print(sql)
                     curs.execute(sql)
                     self.mk.conn.commit()
             else:
                 with self.mk.conn.cursor() as curs:
-                    sql = "UPDATE company_info set real_tr_stock_cnt = {} where code = '{}' "\
+                    sql = "UPDATE company_info set real_tr_stock_cnt = {} where code = '{}' " \
                         .format(tr_total_cnt * 1000, code)
                     print(sql)
                     curs.execute(sql)
                     self.mk.conn.commit()
-
-
 
             print("code 111: {}".format(code))
             # if real_tr_stock_cnt == None: # 유통주식수 값이 없는게 있다니;;;
@@ -450,8 +454,6 @@ class EventLoop:
             # # real_tr_stock_cnt = int(real_tr_stock_cnt.lstrip("0"))
             # print("real_tr_stock_cnt 222: {}".format(real_tr_stock_cnt))
             # print(len(real_tr_stock_cnt))
-
-
 
             # if real_tr_stock_cnt.strip(' ') == '':
             #     print("true")
@@ -479,7 +481,7 @@ class EventLoop:
             '''
             self.for_signal_event_loop.exit()
 
-        elif sRQName == "실시간미체결요청": # sTrCode : opt10075
+        elif sRQName == "실시간미체결요청":  # sTrCode : opt10075
             rows = self.api.get_repeat_cnt(sTrCode, sRQName)
 
             for i in range(rows):
@@ -490,7 +492,7 @@ class EventLoop:
                 order_status = self.api.get_comm_data(sTrCode, sRQName, i, "주문상태")  # 접수,확인,체결
                 order_quantity = self.api.get_comm_data(sTrCode, sRQName, i, "주문수량")
                 order_price = self.api.get_comm_data(sTrCode, sRQName, i, "주문가격")
-                order_gubun = self.api.get_comm_data(sTrCode, sRQName, i, "주문구분") # -매도, +매수, -매도정정, +매수정정
+                order_gubun = self.api.get_comm_data(sTrCode, sRQName, i, "주문구분")  # -매도, +매수, -매도정정, +매수정정
                 not_quantity = self.api.get_comm_data(sTrCode, sRQName, i, "미체결수량")
                 ok_quantity = self.api.get_comm_data(sTrCode, sRQName, i, "체결량")
 
@@ -524,16 +526,17 @@ class EventLoop:
             self.detail_account_info_event_loop.exit()
 
 
-        elif sRQName == "주식주봉차트조회": # opt10082 : 주식주봉차트조회요청
+        elif sRQName == "주식주봉차트조회":  # opt10082 : 주식주봉차트조회요청
 
             ex_data = self.api.get_comm_data_ex(sTrCode, "주식주봉차트조회")
 
             # print("ex_data : {}".format(len(ex_data)))
 
             print("self.test_code : {}".format(self.test_code))
-            i = ex_data[0] # 이번주꺼
+            i = ex_data[0]  # 이번주꺼
             with self.mk.conn.cursor() as curs:
-                sql = "REPLACE INTO week_price VALUES ('{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}')".format(self.test_code, i[3], i[4], i[5], i[6], i[0], i[1], i[2])
+                sql = "REPLACE INTO week_price VALUES ('{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}')".format(
+                    self.test_code, i[3], i[4], i[5], i[6], i[0], i[1], i[2])
                 curs.execute(sql)
                 self.mk.conn.commit()
             #
@@ -567,7 +570,7 @@ class EventLoop:
             self.calculator_event_loop.exit()
 
 
-        elif sRQName == "주식분봉차트조회": # opt10080 : 주식분봉차트조회요청 (single, multi)
+        elif sRQName == "주식분봉차트조회":  # opt10080 : 주식분봉차트조회요청 (single, multi)
 
             print("주식분봉차트조회 slot, test_code : {}".format(self.test_code))
             # print("self.test_code : {}".format(self.test_code))
@@ -579,7 +582,7 @@ class EventLoop:
 
             self.calculator_event_loop.exit()
 
-        elif sRQName == "호가잔량상위요청": # OPT10020 : 호가잔량상위요청
+        elif sRQName == "호가잔량상위요청":  # OPT10020 : 호가잔량상위요청
 
             # 여기 있으면 실시간 안 넘어감 OK
             self.api.disconnect_real_data(self.screen_calculation_stock)
@@ -592,42 +595,41 @@ class EventLoop:
 
             # print("self.volume_uprise : {}".format(self.volume_uprise))
 
-                # colName = ['종목코드', '종목명', '현재가', '등락기호', '전일대비', '등락률', '전일', '당일', '급증량', '급증률']
-                #
-                # df = pd.DataFrame(ex_data, columns=colName)
-                #
-                # df.index = df['종목코드'] <-- 이거 해결방법 찾아야 함
-                #
-                # df = df[['현재가', '전일대비', '등락률', '전일', '당일', '급증량', '급증률']]
-                #
-                # df[['현재가', '전일대비', '등락률', '전일', '당일', '급증량', '급증률']] = df[
-                #     ['현재가', '전일대비', '등락률', '전일', '당일', '급증량', '급증률']].astype(int)
-                #
-                # df = df.drop(df[df['등락률'] < 0].index)  # 096350(대창솔루션) 모의투자 매매 불가능
-                #
-                # print("df : {}".format(df))
+            # colName = ['종목코드', '종목명', '현재가', '등락기호', '전일대비', '등락률', '전일', '당일', '급증량', '급증률']
+            #
+            # df = pd.DataFrame(ex_data, columns=colName)
+            #
+            # df.index = df['종목코드'] <-- 이거 해결방법 찾아야 함
+            #
+            # df = df[['현재가', '전일대비', '등락률', '전일', '당일', '급증량', '급증률']]
+            #
+            # df[['현재가', '전일대비', '등락률', '전일', '당일', '급증량', '급증률']] = df[
+            #     ['현재가', '전일대비', '등락률', '전일', '당일', '급증량', '급증률']].astype(int)
+            #
+            # df = df.drop(df[df['등락률'] < 0].index)  # 096350(대창솔루션) 모의투자 매매 불가능
+            #
+            # print("df : {}".format(df))
 
+            # with self.mk.conn.cursor() as curs:
+            #     sql = "DELETE FROM vol_uprise_stock" # 다 지워버려. 다시 등록한 종목 실시간 등록하므로
+            #     curs.execute(sql)
+            #     self.mk.conn.commit()
 
-                # with self.mk.conn.cursor() as curs:
-                #     sql = "DELETE FROM vol_uprise_stock" # 다 지워버려. 다시 등록한 종목 실시간 등록하므로
-                #     curs.execute(sql)
-                #     self.mk.conn.commit()
-
-                # for data in top_data:
-                #
-                #     seq = self.mk.get_buy_stock_info_max_seq(data, datetime.today().strftime('%Y-%m-%d'))
-                #
-                #     df = self.mk.get_buy_stock_info(data, datetime.today().strftime('%Y-%m-%d'), seq, '매수')
-                #
-                #     with self.mk.conn.cursor() as curs:
-                #         if len(df) == 0: # 매수하지 않은 종목
-                #             sql = "REPLACE INTO vol_uprise_stock VALUES ('{}')".format(data)
-                #             curs.execute(sql)
-                #             self.mk.conn.commit()
+            # for data in top_data:
+            #
+            #     seq = self.mk.get_buy_stock_info_max_seq(data, datetime.today().strftime('%Y-%m-%d'))
+            #
+            #     df = self.mk.get_buy_stock_info(data, datetime.today().strftime('%Y-%m-%d'), seq, '매수')
+            #
+            #     with self.mk.conn.cursor() as curs:
+            #         if len(df) == 0: # 매수하지 않은 종목
+            #             sql = "REPLACE INTO vol_uprise_stock VALUES ('{}')".format(data)
+            #             curs.execute(sql)
+            #             self.mk.conn.commit()
 
             self.for_signal_event_loop.exit()
 
-        elif sRQName == "거래량급증요청": # OPT10023 : 거래량급증요청
+        elif sRQName == "거래량급증요청":  # OPT10023 : 거래량급증요청
 
             # 여기 있으면 실시간 안 넘어감 OK
             # self.api.set_real_remove("2222", "ALL")  # opt10023 : 거래량급증요청 호출해서 등록된 거 삭제
@@ -641,49 +643,47 @@ class EventLoop:
 
             # print("self.volume_uprise : {}".format(self.volume_uprise))
 
-                # colName = ['종목코드', '종목명', '현재가', '등락기호', '전일대비', '등락률', '전일', '당일', '급증량', '급증률']
-                #
-                # df = pd.DataFrame(ex_data, columns=colName)
-                #
-                # df.index = df['종목코드'] <-- 이거 해결방법 찾아야 함
-                #
-                # df = df[['현재가', '전일대비', '등락률', '전일', '당일', '급증량', '급증률']]
-                #
-                # df[['현재가', '전일대비', '등락률', '전일', '당일', '급증량', '급증률']] = df[
-                #     ['현재가', '전일대비', '등락률', '전일', '당일', '급증량', '급증률']].astype(int)
-                #
-                # df = df.drop(df[df['등락률'] < 0].index)  # 096350(대창솔루션) 모의투자 매매 불가능
-                #
-                # print("df : {}".format(df))
+            # colName = ['종목코드', '종목명', '현재가', '등락기호', '전일대비', '등락률', '전일', '당일', '급증량', '급증률']
+            #
+            # df = pd.DataFrame(ex_data, columns=colName)
+            #
+            # df.index = df['종목코드'] <-- 이거 해결방법 찾아야 함
+            #
+            # df = df[['현재가', '전일대비', '등락률', '전일', '당일', '급증량', '급증률']]
+            #
+            # df[['현재가', '전일대비', '등락률', '전일', '당일', '급증량', '급증률']] = df[
+            #     ['현재가', '전일대비', '등락률', '전일', '당일', '급증량', '급증률']].astype(int)
+            #
+            # df = df.drop(df[df['등락률'] < 0].index)  # 096350(대창솔루션) 모의투자 매매 불가능
+            #
+            # print("df : {}".format(df))
 
+            # with self.mk.conn.cursor() as curs:
+            #     sql = "DELETE FROM vol_uprise_stock" # 다 지워버려. 다시 등록한 종목 실시간 등록하므로
+            #     curs.execute(sql)
+            #     self.mk.conn.commit()
 
-                # with self.mk.conn.cursor() as curs:
-                #     sql = "DELETE FROM vol_uprise_stock" # 다 지워버려. 다시 등록한 종목 실시간 등록하므로
-                #     curs.execute(sql)
-                #     self.mk.conn.commit()
-
-                # for data in top_data:
-                #
-                #     seq = self.mk.get_buy_stock_info_max_seq(data, datetime.today().strftime('%Y-%m-%d'))
-                #
-                #     df = self.mk.get_buy_stock_info(data, datetime.today().strftime('%Y-%m-%d'), seq, '매수')
-                #
-                #     with self.mk.conn.cursor() as curs:
-                #         if len(df) == 0: # 매수하지 않은 종목
-                #             sql = "REPLACE INTO vol_uprise_stock VALUES ('{}')".format(data)
-                #             curs.execute(sql)
-                #             self.mk.conn.commit()
+            # for data in top_data:
+            #
+            #     seq = self.mk.get_buy_stock_info_max_seq(data, datetime.today().strftime('%Y-%m-%d'))
+            #
+            #     df = self.mk.get_buy_stock_info(data, datetime.today().strftime('%Y-%m-%d'), seq, '매수')
+            #
+            #     with self.mk.conn.cursor() as curs:
+            #         if len(df) == 0: # 매수하지 않은 종목
+            #             sql = "REPLACE INTO vol_uprise_stock VALUES ('{}')".format(data)
+            #             curs.execute(sql)
+            #             self.mk.conn.commit()
 
             self.for_signal_event_loop.exit()
 
 
 
-        elif sRQName == "전일대비등락률상위요청": # opt10027 : 전일대비등락률상위요청
+        elif sRQName == "전일대비등락률상위요청":  # opt10027 : 전일대비등락률상위요청
 
             ex_data = self.api.get_comm_data_ex(sTrCode, "전일대비등락률상위요청")
 
             # print("ex_data : {}".format(ex_data))
-
 
             colName = ['종목분류', '종목코드', '종목명', '현재가', '전일대비기호', '전일대비',
                        '등락률', '매도잔량', '매수잔량', '현재거래량', '체결강도', '횟수']
@@ -767,8 +767,9 @@ class EventLoop:
 
                 for idx, sign_list in enumerate(self.calcul_data):
                     # if int(sign_list[7]) < -500:
-                        print("시간 : {}, 현재가 : {}, 전일대비 : {}, 대비율 : {}, 우선매도호가단위: {}, 우선매수호가단위: {}, 체결거래량 : {}"\
-                              .format(sign_list[1], sign_list[2], sign_list[3],sign_list[4],sign_list[5],sign_list[6],sign_list[7]))
+                    print("시간 : {}, 현재가 : {}, 전일대비 : {}, 대비율 : {}, 우선매도호가단위: {}, 우선매수호가단위: {}, 체결거래량 : {}" \
+                          .format(sign_list[1], sign_list[2], sign_list[3], sign_list[4], sign_list[5], sign_list[6],
+                                  sign_list[7]))
                 # print(sign_list)
                 #         # print("시간 : {}, 현재가 : {}, 거래량 : {}, 체결강도 : {}".format(sign_list[1], sign_list[2], sign_list[3], sign_list[4]))
                 #         # if int(sign_list[2]) >= self.today_open * 1.095:
@@ -777,7 +778,7 @@ class EventLoop:
                 self.calcul_data.clear()
                 self.calculator_event_loop.exit()
 
-        elif sRQName == "신고저가요청": # OPT10016 : 신고저가요청
+        elif sRQName == "신고저가요청":  # OPT10016 : 신고저가요청
 
             # 여기 있으면 실시간 안 넘어감 OK
             # self.api.set_real_remove("2222", "ALL")  # opt10023 : 거래량급증요청 호출해서 등록된 거 삭제
@@ -795,9 +796,8 @@ class EventLoop:
 
             self.calculator_event_loop.exit()
 
-
     # 당일전일 체결내역
-    def sign_volume_req(self, code=None, sPrevNext="0"): #
+    def sign_volume_req(self, code=None, sPrevNext="0"):  #
         QTest.qWait(300)
 
         # print("self.req_cnt %s" % self.req_cnt)
@@ -863,7 +863,6 @@ class EventLoop:
             #     minute_candle_dict[minute].update({"volume": volume})
             #     minute_candle_dict[minute].update({"close": close})
 
-
             # print("minute_candle_dict : {}".format(minute_candle_dict))
             # print("minute_candle_dict length: {}".format(len(minute_candle_dict)))
 
@@ -923,7 +922,6 @@ class EventLoop:
             #         if df.index[-1] == row[0][:-2]:
             #             print("날짜 : {}, 종가: {}, 거래량: {}, ma20: {}, ma20_dpc {}, ma3v 3: {}, ma3v_dpc {}, ".format(row[0], row[1], row[2], row[3], row[4], row[5], row[6]))
 
-
             # print("df2_sec : {}".format(df2_sec))
 
             self.calculator_event_loop.exit()
@@ -939,16 +937,15 @@ class EventLoop:
             # self.calculator_event_loop = QEventLoop()
             self.calculator_event_loop.exec_()
 
-
-
-
     '''
     실시간 slot
     '''
+
     def _receive_real_data_slot(self, sCode, sRealType, sRealData):
         # from Kiwoom.Signal import Signal
         if sRealType == "장시작시간":
-            fid = self.real_type.REALTYPE[sRealType]['장운영구분']  # (0:장시작전, 2:장종료전(20분), 3:장시작, 4,8:장종료(30분), 9:장마감(시간외종료), a:시간외종가매매 시작, b:시간외종가매매 종료)
+            fid = self.real_type.REALTYPE[sRealType][
+                '장운영구분']  # (0:장시작전, 2:장종료전(20분), 3:장시작, 4,8:장종료(30분), 9:장마감(시간외종료), a:시간외종가매매 시작, b:시간외종가매매 종료)
             value = self.api.get_comm_real_data(sCode, fid)
 
             if value == '0':
@@ -971,7 +968,7 @@ class EventLoop:
                     self.api.set_real_remove(self.portfolio_stock_dict[code]['스크린번호'], code)
 
                 sys.exit()
-        elif sRealType == "주식호가잔량": # 초단위
+        elif sRealType == "주식호가잔량":  # 초단위
             hoga_time = self.api.get_comm_real_data(sCode, self.real_type.REALTYPE[sRealType]['호가시간'])  # 출력 HHMMSS
 
             a = self.api.get_comm_real_data(sCode, self.real_type.REALTYPE[sRealType]['매도호가총잔량'])
@@ -1001,7 +998,6 @@ class EventLoop:
             i = self.api.get_comm_real_data(sCode, self.real_type.REALTYPE[sRealType]['매수호가직전대비1'])
             i = int(i)
 
-
             # if sCode in self.portfolio_stock_dict:
             #     if self.portfolio_stock_dict[sCode]["매수매도"] == "매도":
             #         # c_list = self.portfolio_stock_dict[sCode]["순매수리스트"]
@@ -1028,65 +1024,65 @@ class EventLoop:
             #             d_list.pop(0)
             #         d_list.append(d)
 
-                    # if len(c_list) == 10:
-                    #     if len([z for z in c_list if z > 0]) == 0: # 연속 10개 총매수가 더 많다가 (계속 상승하다가)
-                    #         if c > 0: # 총매수수량이 많아지면 추세전환으로 봄
-                    #             self.logging.logger.debug("종목코드 : {}, 총매수량 증가 시간 : {}".format(sCode, hoga_time))
-                    #             self.portfolio_stock_dict[sCode].update({"전환점여부": True})
-                    #     # if c < 0:
-                    #     #     if c_list[-1] - 100000 > c: # 예) 전꺼 -3,879, 지금 들어온 c : -117,305
-                    #     #         self.portfolio_stock_dict[sCode].update({"전환점여부": True})
-                    #     c_list.pop(0)
-                    # c_list.append(c)
+            # if len(c_list) == 10:
+            #     if len([z for z in c_list if z > 0]) == 0: # 연속 10개 총매수가 더 많다가 (계속 상승하다가)
+            #         if c > 0: # 총매수수량이 많아지면 추세전환으로 봄
+            #             self.logging.logger.debug("종목코드 : {}, 총매수량 증가 시간 : {}".format(sCode, hoga_time))
+            #             self.portfolio_stock_dict[sCode].update({"전환점여부": True})
+            #     # if c < 0:
+            #     #     if c_list[-1] - 100000 > c: # 예) 전꺼 -3,879, 지금 들어온 c : -117,305
+            #     #         self.portfolio_stock_dict[sCode].update({"전환점여부": True})
+            #     c_list.pop(0)
+            # c_list.append(c)
 
-                # if self.portfolio_stock_dict[sCode]["매수매도"] == "매수":
-                #     # c_list = self.portfolio_stock_dict[sCode]["순매수리스트"]
-                #     d_list = self.portfolio_stock_dict[sCode]["매도우선호가리스트"]
-                #     f_list = self.portfolio_stock_dict[sCode]["매도호가직전대비1"]
-                #
-                #     if len(d_list) == 2:
-                #         if 1000 < d <= 4000: # 매도호가1
-                #             if d >= d_list[-1] + 20: # 매도호가가 20원 오를 때
-                #                 if c < 0: # 순매수가 -이면
-                #                     if f < 0: # 매도호가직전대비1이 -이면
-                #                         self.logging.logger.debug(
-                #                             "매수 종목코드 : {}, 매도호가 : {}, 시간 : {}".format(sCode, d, hoga_time))
-                #                         self.portfolio_stock_dict[sCode].update({"전환점여부": True})
-                #         elif 4000 < d <= 10000:
-                #             if d >= d_list[-1] + 100: # 매도호가가 100원 오를 때
-                #                 if c > 0: # 순매수가 +이면
-                #                     self.logging.logger.debug(
-                #                         "매수 종목코드 : {}, 매도호가 : {}, 시간 : {}".format(sCode, d, hoga_time))
-                #                     self.portfolio_stock_dict[sCode].update({"전환점여부": True})
-                #         elif 10000 < d <= 50000:
-                #             if d >= d_list[-1] + 200: # 매도호가가 200원 오를 때
-                #                 if c > 0: # 순매수가 +이면
-                #                     self.logging.logger.debug(
-                #                         "매수 종목코드 : {}, 매도호가 : {}, 시간 : {}".format(sCode, d, hoga_time))
-                #                     self.portfolio_stock_dict[sCode].update({"전환점여부": True})
-                #         d_list.pop(0)
-                #         f_list.pop(0)
-                #     d_list.append(d)
-                #     f_list.append(f)
+            # if self.portfolio_stock_dict[sCode]["매수매도"] == "매수":
+            #     # c_list = self.portfolio_stock_dict[sCode]["순매수리스트"]
+            #     d_list = self.portfolio_stock_dict[sCode]["매도우선호가리스트"]
+            #     f_list = self.portfolio_stock_dict[sCode]["매도호가직전대비1"]
+            #
+            #     if len(d_list) == 2:
+            #         if 1000 < d <= 4000: # 매도호가1
+            #             if d >= d_list[-1] + 20: # 매도호가가 20원 오를 때
+            #                 if c < 0: # 순매수가 -이면
+            #                     if f < 0: # 매도호가직전대비1이 -이면
+            #                         self.logging.logger.debug(
+            #                             "매수 종목코드 : {}, 매도호가 : {}, 시간 : {}".format(sCode, d, hoga_time))
+            #                         self.portfolio_stock_dict[sCode].update({"전환점여부": True})
+            #         elif 4000 < d <= 10000:
+            #             if d >= d_list[-1] + 100: # 매도호가가 100원 오를 때
+            #                 if c > 0: # 순매수가 +이면
+            #                     self.logging.logger.debug(
+            #                         "매수 종목코드 : {}, 매도호가 : {}, 시간 : {}".format(sCode, d, hoga_time))
+            #                     self.portfolio_stock_dict[sCode].update({"전환점여부": True})
+            #         elif 10000 < d <= 50000:
+            #             if d >= d_list[-1] + 200: # 매도호가가 200원 오를 때
+            #                 if c > 0: # 순매수가 +이면
+            #                     self.logging.logger.debug(
+            #                         "매수 종목코드 : {}, 매도호가 : {}, 시간 : {}".format(sCode, d, hoga_time))
+            #                     self.portfolio_stock_dict[sCode].update({"전환점여부": True})
+            #         d_list.pop(0)
+            #         f_list.pop(0)
+            #     d_list.append(d)
+            #     f_list.append(f)
 
-                    # if len(c_list) == 10:
-                    #     if len([z for z in c_list if z < 0]) == 0: # 연속 10개 총매수가 더 많다가 (계속 하락하다가)
-                    #         if c < 0: # 총매도량이 많아지면 추세전환으로 봄
-                    #             self.logging.logger.debug("매수 종목코드 : {}, 총매도량 증가 시간 1 : {}".format(sCode, hoga_time))
-                    #             self.portfolio_stock_dict[sCode].update({"전환점여부": True})
-                    #
-                    #     if c < 0:
-                    #         if c_list[-1] - 100000 > c: # 예) 전꺼 -3,879, 지금 들어온 c : -117,305
-                    #             self.logging.logger.debug("매수 종목코드 : {}, 총매도량 증가 시간 2: {}".format(sCode, hoga_time))
-                    #             self.portfolio_stock_dict[sCode].update({"전환점여부": True})
-                    #     c_list.pop(0)
-                    # c_list.append(c)
-
-
+            # if len(c_list) == 10:
+            #     if len([z for z in c_list if z < 0]) == 0: # 연속 10개 총매수가 더 많다가 (계속 하락하다가)
+            #         if c < 0: # 총매도량이 많아지면 추세전환으로 봄
+            #             self.logging.logger.debug("매수 종목코드 : {}, 총매도량 증가 시간 1 : {}".format(sCode, hoga_time))
+            #             self.portfolio_stock_dict[sCode].update({"전환점여부": True})
+            #
+            #     if c < 0:
+            #         if c_list[-1] - 100000 > c: # 예) 전꺼 -3,879, 지금 들어온 c : -117,305
+            #             self.logging.logger.debug("매수 종목코드 : {}, 총매도량 증가 시간 2: {}".format(sCode, hoga_time))
+            #             self.portfolio_stock_dict[sCode].update({"전환점여부": True})
+            #     c_list.pop(0)
+            # c_list.append(c)
 
 
 
-        elif sRealType == "주식체결": #틱단위
+
+
+        elif sRealType == "주식체결":  # 틱단위
             # self.api.set_real_remove("0168", "ALL") # opt10023 : 거래량급증요청 호출해서 등록된 거 삭제
             # self.api.set_real_remove(self.screen_calculation_stock, sCode)  # 주식분봉차트조회 opt10080 호출해서 등록된 거 삭제
 
@@ -1110,9 +1106,9 @@ class EventLoop:
                                             self.real_type.REALTYPE[sRealType]['(최우선)매수호가'])  # 출력 : +(-)2520 매수 1호가
             f = abs(int(f))
 
-            g = self.api.get_comm_real_data(sCode, self.real_type.REALTYPE[sRealType]['거래량'])  # 출력 : +240124  매수일때, -2034 매도일 때, 체결거래량
+            g = self.api.get_comm_real_data(sCode, self.real_type.REALTYPE[sRealType][
+                '거래량'])  # 출력 : +240124  매수일때, -2034 매도일 때, 체결거래량
             g = int(g)
-
 
             h = self.api.get_comm_real_data(sCode,
                                             self.real_type.REALTYPE[sRealType]['누적거래량'])  # 출력 : 240124 당일 거래된 총 거래량
@@ -1186,8 +1182,8 @@ class EventLoop:
             #         self.real_data_dict[sCode][a].update({"volume": []})
             #     self.real_data_dict[sCode][a]["volume"].append(abs(g))
 
-                # print("self.real_data_dict - real slot : {}".format(self.real_data_dict[sCode]))
-                # print("실시간 종목 갯수: {}".format(len(self.real_data_dict)))
+            # print("self.real_data_dict - real slot : {}".format(self.real_data_dict[sCode]))
+            # print("실시간 종목 갯수: {}".format(len(self.real_data_dict)))
 
             # now_date = self.today + " " + a[:2] + ":" + a[2:4] + ":00"
             # self.logging.logger.debug("체결시간 레이아웃변경 : {}".format(now_date))
@@ -1223,7 +1219,6 @@ class EventLoop:
             #
             # self.minute_candle_dict[sCode][now_date].update({"close": b})
 
-
             # if self.portfolio_stock_dict[sCode]["매수매도"] == "매수":
             #     if self.portfolio_stock_dict[sCode]["이평선허락"]:
             #         if b < i * 0.91:
@@ -1237,7 +1232,6 @@ class EventLoop:
             #         self.portfolio_stock_dict[sCode].update({"신호": True})
             #     else:
             #         self.portfolio_stock_dict[sCode].update({"신호": False})
-
 
             # if self.portfolio_stock_dict[sCode]["매수매도"] == "매도":
             #     self.portfolio_stock_dict[sCode].update({"신호": False})
@@ -1307,37 +1301,45 @@ class EventLoop:
                 # print("계좌평가잔고내역 종목코드 : {}, 매매가능수량: {}, 수익률: {}, 시간: {}".format(sCode, asd['매매가능수량'], meme_rate, datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')))
                 if sCode in self.portfolio_stock_dict.keys():
                     if "MA20" in self.portfolio_stock_dict[sCode] and "average" in self.portfolio_stock_dict[sCode] \
-                        and "max10" in self.portfolio_stock_dict[sCode] and "min10" in self.portfolio_stock_dict[sCode]:
+                            and "max10" in self.portfolio_stock_dict[sCode] and "min10" in self.portfolio_stock_dict[sCode]:
+
                         if asd['매매가능수량'] > 0:
                             if meme_rate > 1:
                                 if b < self.portfolio_stock_dict[sCode]["MA20"] and b < self.portfolio_stock_dict[sCode]["average"]:
-                                                  # or (self.t_sell.strftime('%Y-%m-%d %H:%M:%S') < datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S') < self.t_exit.strftime('%Y-%m-%d %H:%M:%S'))):
-                                    if ((self.portfolio_stock_dict[sCode]["max10"] - self.portfolio_stock_dict[sCode]["min10"]) / self.portfolio_stock_dict[sCode]["max10"]) > 0.03:
-                                        order_success = self.api.send_order("신규매도", self.portfolio_stock_dict[sCode]["주문용스크린번호"],
-                                                                            self.account_num, 2, sCode, asd['매매가능수량'], 0,
-                                                                            self.real_type.SENDTYPE['거래구분']['시장가'], "")
+                                    # or (self.t_sell.strftime('%Y-%m-%d %H:%M:%S') < datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S') < self.t_exit.strftime('%Y-%m-%d %H:%M:%S'))):
+                                    if self.portfolio_stock_dict[sCode]["max10"] - self.portfolio_stock_dict[sCode][
+                                        "min10"] > 0:
+                                        if ((self.portfolio_stock_dict[sCode]["max10"] - self.portfolio_stock_dict[sCode][
+                                            "min10"]) / self.portfolio_stock_dict[sCode]["max10"]) > 0.03:
+                                            order_success = self.api.send_order("신규매도", self.portfolio_stock_dict[sCode][
+                                                "주문용스크린번호"],
+                                                                                self.account_num, 2, sCode, asd['매매가능수량'],
+                                                                                0,
+                                                                                self.real_type.SENDTYPE['거래구분']['시장가'], "")
 
-                                        if order_success == 0:
-                                            self.logging.logger.debug("코드 : " + sCode + " 매도주문 전달 성공(계좌에 있던 거)")
-                                            # self.slack.chat.post_message("hellojarvis", "코드 : " + sCode + " 매도주문 전달 성공")
-                                            del self.account_stock_dict[sCode]
+                                            if order_success == 0:
+                                                self.logging.logger.debug("코드 : " + sCode + " 매도주문 전달 성공(계좌에 있던 거)")
+                                                # self.slack.chat.post_message("hellojarvis", "코드 : " + sCode + " 매도주문 전달 성공")
+                                                del self.account_stock_dict[sCode]
 
-                                        else:
-                                            self.logging.logger.debug("코드 : " + sCode + " 매도주문 전달 실패")
-                                            # self.slack.chat.post_message("hellojarvis", "코드 : " + sCode + " 매도주문 전달 실패")
-                            elif meme_rate < -5: #손절매
-                                order_success = self.api.send_order("신규매도", self.portfolio_stock_dict[sCode]["주문용스크린번호"],
-                                                                    self.account_num, 2, sCode, asd['매매가능수량'], 0,
-                                                                    self.real_type.SENDTYPE['거래구분']['시장가'], "")
+                                            else:
+                                                self.logging.logger.debug("코드 : " + sCode + " 매도주문 전달 실패")
+                                                # self.slack.chat.post_message("hellojarvis", "코드 : " + sCode + " 매도주문 전달 실패")
 
-                                if order_success == 0:
-                                    self.logging.logger.debug("코드 : " + sCode + " 매도주문 전달 성공(계좌에 있던 거)")
-                                    # self.slack.chat.post_message("hellojarvis", "코드 : " + sCode + " 매도주문 전달 성공")
-                                    del self.account_stock_dict[sCode]
+                    if asd['매매가능수량'] > 0 and meme_rate < -5:  # 손절매
+                        order_success = self.api.send_order("신규매도",
+                                                            self.portfolio_stock_dict[sCode]["주문용스크린번호"],
+                                                            self.account_num, 2, sCode, asd['매매가능수량'], 0,
+                                                            self.real_type.SENDTYPE['거래구분']['시장가'], "")
 
-                                else:
-                                    self.logging.logger.debug("코드 : " + sCode + " 매도주문 전달 실패")
-                                    # self.slack.chat.post_message("hellojarvis", "코드 : " + sCode + " 매도주문 전달 실패")
+                        if order_success == 0:
+                            self.logging.logger.debug("코드 : " + sCode + " 매도주문 전달 성공(계좌에 있던 거)")
+                            # self.slack.chat.post_message("hellojarvis", "코드 : " + sCode + " 매도주문 전달 성공")
+                            del self.account_stock_dict[sCode]
+
+                        else:
+                            self.logging.logger.debug("코드 : " + sCode + " 매도주문 전달 실패")
+                            # self.slack.chat.post_message("hellojarvis", "코드 : " + sCode + " 매도주문 전달 실패")
 
 
             #  프로그램 run 한 후 주문한 종목 팔기
@@ -1348,35 +1350,40 @@ class EventLoop:
 
                 if sCode in self.portfolio_stock_dict.keys():
                     if "MA20" in self.portfolio_stock_dict[sCode] and "average" in self.portfolio_stock_dict[sCode] \
-                        and "max10" in self.portfolio_stock_dict[sCode] and "min10" in self.portfolio_stock_dict[sCode]:
+                            and "max10" in self.portfolio_stock_dict[sCode] and "min10" in self.portfolio_stock_dict[sCode]:
 
                         if jd['주문가능수량'] > 0:
-                        # or (self.t_sell.strftime('%Y-%m-%d %H:%M:%S') < datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S') < self.t_exit.strftime('%Y-%m-%d %H:%M:%S'))):
+                            # or (self.t_sell.strftime('%Y-%m-%d %H:%M:%S') < datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S') < self.t_exit.strftime('%Y-%m-%d %H:%M:%S'))):
                             if meme_rate > 1:
                                 if b < self.portfolio_stock_dict[sCode]["MA20"] and b < self.portfolio_stock_dict[sCode]["average"]:
-                                                  # or (self.t_sell.strftime('%Y-%m-%d %H:%M:%S') < datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S') < self.t_exit.strftime('%Y-%m-%d %H:%M:%S'))):
-                                    if ((self.portfolio_stock_dict[sCode]["max10"] - self.portfolio_stock_dict[sCode]["min10"]) / self.portfolio_stock_dict[sCode]["max10"]) > 0.03:
-                                        order_success = self.api.send_order("신규매도", self.portfolio_stock_dict[sCode]["주문용스크린번호"],
-                                                                            self.account_num, 2, sCode, jd['주문가능수량'], 0,
-                                                                            self.real_type.SENDTYPE['거래구분']['시장가'], "")
+                                    # or (self.t_sell.strftime('%Y-%m-%d %H:%M:%S') < datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S') < self.t_exit.strftime('%Y-%m-%d %H:%M:%S'))):
+                                    if self.portfolio_stock_dict[sCode]["max10"] - self.portfolio_stock_dict[sCode][
+                                        "min10"] > 0:
+                                        if ((self.portfolio_stock_dict[sCode]["max10"] - self.portfolio_stock_dict[sCode]["min10"]) / self.portfolio_stock_dict[sCode]["max10"]) > 0.03:
+                                            order_success = self.api.send_order("신규매도", self.portfolio_stock_dict[sCode][
+                                                "주문용스크린번호"],
+                                                                                self.account_num, 2, sCode, jd['주문가능수량'], 0,
+                                                                                self.real_type.SENDTYPE['거래구분']['시장가'], "")
 
-                                        if order_success == 0:
-                                            self.logging.logger.debug("코드 : " + sCode + " 매도주문 전달 성공(프로그램 오픈 후)")
-                                            # self.slack.chat.post_message("hellojarvis", "코드 : " + sCode + " 매도주문 전달 성공")
-                                        else:
-                                            self.logging.logger.debug("코드 : " + sCode + " 매도주문 전달 실패")
-                                            # self.slack.chat.post_message("hellojarvis", "코드 : " + sCode + " 매도주문 전달 실패")
-                            elif meme_rate < -5:  # 손절매
-                                order_success = self.api.send_order("신규매도", self.portfolio_stock_dict[sCode]["주문용스크린번호"],
-                                                                    self.account_num, 2, sCode, jd['주문가능수량'], 0,
-                                                                    self.real_type.SENDTYPE['거래구분']['시장가'], "")
+                                            if order_success == 0:
+                                                self.logging.logger.debug("코드 : " + sCode + " 매도주문 전달 성공(프로그램 오픈 후)")
+                                                # self.slack.chat.post_message("hellojarvis", "코드 : " + sCode + " 매도주문 전달 성공")
+                                            else:
+                                                self.logging.logger.debug("코드 : " + sCode + " 매도주문 전달 실패")
+                                                # self.slack.chat.post_message("hellojarvis", "코드 : " + sCode + " 매도주문 전달 실패")
 
-                                if order_success == 0:
-                                    self.logging.logger.debug("코드 : " + sCode + " 매도주문 전달 성공(프로그램 오픈 후)")
-                                    # self.slack.chat.post_message("hellojarvis", "코드 : " + sCode + " 매도주문 전달 성공")
-                                else:
-                                    self.logging.logger.debug("코드 : " + sCode + " 매도주문 전달 실패")
-                                    # self.slack.chat.post_message("hellojarvis", "코드 : " + sCode + " 매도주문 전달 실패")
+                    if jd['주문가능수량'] > 0 and meme_rate < -5:  # 손절매
+                        order_success = self.api.send_order("신규매도",
+                                                            self.portfolio_stock_dict[sCode]["주문용스크린번호"],
+                                                            self.account_num, 2, sCode, jd['주문가능수량'], 0,
+                                                            self.real_type.SENDTYPE['거래구분']['시장가'], "")
+
+                        if order_success == 0:
+                            self.logging.logger.debug("코드 : " + sCode + " 매도주문 전달 성공(프로그램 오픈 후)")
+                            # self.slack.chat.post_message("hellojarvis", "코드 : " + sCode + " 매도주문 전달 성공")
+                        else:
+                            self.logging.logger.debug("코드 : " + sCode + " 매도주문 전달 실패")
+                            # self.slack.chat.post_message("hellojarvis", "코드 : " + sCode + " 매도주문 전달 실패")
             # 여기는 매수
             # elif d > 2.0 and sCode not in self.jango_dict:
             elif sCode not in self.jango_dict:
@@ -1388,13 +1395,13 @@ class EventLoop:
                 # else:
                 #     print("매수 포트폴리오 dict이 없다!!!")
 
-                if e > 0: # (최우선)매도호가가 0이면 안됨(ex. 상한가)
-                    if sCode in self.portfolio_stock_dict.keys(): # 포트폴리오에 있을 때
+                if e > 0:  # (최우선)매도호가가 0이면 안됨(ex. 상한가)
+                    if sCode in self.portfolio_stock_dict.keys():  # 포트폴리오에 있을 때
                         # self.logging.logger.debug("종목코드 : {}, 매수신호 : {}".format(sCode, self.portfolio_stock_dict[sCode]["신호"]))
                         # if self.portfolio_stock_dict[sCode]["신호"]:
-                            #     print("self.portfolio_stock_dict - 매수일 때 : {}".format(self.portfolio_stock_dict))
-                            #     print("self.portfolio_stock_dict  매수일 때 개수 : {}".format(len(self.portfolio_stock_dict)))
-                        if "매수매도" in self.portfolio_stock_dict[sCode]: # 원래 갖고 있던 종목에는 매수매도가 없으므로 나중에 수정 더 좋은걸로
+                        #     print("self.portfolio_stock_dict - 매수일 때 : {}".format(self.portfolio_stock_dict))
+                        #     print("self.portfolio_stock_dict  매수일 때 개수 : {}".format(len(self.portfolio_stock_dict)))
+                        if "매수매도" in self.portfolio_stock_dict[sCode]:  # 원래 갖고 있던 종목에는 매수매도가 없으므로 나중에 수정 더 좋은걸로
                             if self.portfolio_stock_dict[sCode]["매수매도"] == "매수":
                                 self.logging.logger.debug("매수조건 통과 %s " % sCode)
                                 self.logging.logger.debug("(최우선)매도호가 %s " % e)
@@ -1403,7 +1410,8 @@ class EventLoop:
                                 result = (self.use_money * 0.1) / e
                                 quantity = int(result)
 
-                                order_success = self.api.send_order("신규매수", self.portfolio_stock_dict[sCode]["주문용스크린번호"],
+                                order_success = self.api.send_order("신규매수",
+                                                                    self.portfolio_stock_dict[sCode]["주문용스크린번호"],
                                                                     self.account_num, 1, sCode, quantity, e,
                                                                     self.real_type.SENDTYPE['거래구분']['지정가'], "")
                                 # 주문유형(4번째 파라미터) 1:신규매수, 2:신규매도 3:매수취소, 4:매도취소, 5:매수정정, 6:매도정정
@@ -1437,7 +1445,6 @@ class EventLoop:
 
                 elif not_quantity == 0:
                     del self.not_account_stock_dict[order_num]
-
 
     # 주문후 체결 정보
     def _chejan_slot(self, sGubun, nItemCnt, sFidList):
@@ -1581,15 +1588,12 @@ class EventLoop:
                 #     curs.execute(sql)
                 #     self.mk.conn.commit()
 
-
-    #송수신 메세지 get
+    # 송수신 메세지 get
     def _msg_slot(self, sScrNo, sRQName, sTrCode, msg):
-        self.logging.logger.debug("스크린: %s, 요청이름: %s, tr코드: %s, 시간: %s --- %s" %(sScrNo, sRQName, sTrCode, datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'), msg))
+        self.logging.logger.debug("스크린: %s, 요청이름: %s, tr코드: %s, 시간: %s --- %s" % (
+            sScrNo, sRQName, sTrCode, datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'), msg))
 
-
-
-
-    def _opt10080(self, ex_data): #분봉 호출
+    def _opt10080(self, ex_data):  # 분봉 호출
 
         ex_data.sort(key=lambda x: x[2])
         # [['+2345', '1305', '20201028101300', '+2345', '+2345', '+2340', '', '', '', '', '', '', ''],
@@ -1602,7 +1606,7 @@ class EventLoop:
                                                                                                         8:10] + ":" + \
                            data_list[2][10:12] + ":" + "00"
 
-            #colName = ['close', 'volume', 'date', 'open', 'high', 'low',
+            # colName = ['close', 'volume', 'date', 'open', 'high', 'low',
             #            '수정주가구분', '수정비율', '대업종구분', '소업종구분', '종목정보', '수정주가이벤트', '전일종가']
 
             if convert_date not in final_dic.keys():
@@ -1621,11 +1625,11 @@ class EventLoop:
         # print("final_dic : {}".format(final_dic))
 
         self.minute_candle_dict.update({self.test_code: final_dic})
-        self.portfolio_stock_dict[self.test_code].update({'최종작업시간': datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')[-8:].replace(":", "")})
+        self.portfolio_stock_dict[self.test_code].update(
+            {'최종작업시간': datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')[-8:].replace(":", "")})
 
         # print("self.minute_candle_dict 분봉 : {}".format(self.minute_candle_dict[self.test_code]))
-        
-        
+
     def _opt10080_test(self, ex_data):  # 분봉 테스트
         colName = ['close', 'volumn', 'date', 'open', 'high', 'low',
                    '수정주가구분', '수정비율', '대업종구분', '소업종구분', '종목정보', '수정주가이벤트', '전일종가']
@@ -1660,7 +1664,8 @@ class EventLoop:
         # final_df['MA5_dpc'] = final_df['MA5'].pct_change(5)
 
         final_df['MA240'] = final_df['close'].rolling(window=240).mean()
-        final_df['bandwidth5-20'] = ((final_df['MA5'] - final_df['MA20']) / ((final_df['MA5'] + final_df['MA20']) / 2)) * 100
+        final_df['bandwidth5-20'] = ((final_df['MA5'] - final_df['MA20']) / (
+                (final_df['MA5'] + final_df['MA20']) / 2)) * 100
         final_df['stddev'] = final_df['close'].rolling(window=20).std()
         final_df['upper'] = final_df['MA20'] + (final_df['stddev'] * 2)
         final_df['lower'] = final_df['MA20'] - (final_df['stddev'] * 2)
@@ -1688,7 +1693,7 @@ class EventLoop:
                 '''
                 if 1 < final_df.loc[pre_val, 'bandwidth'] <= 2.5:  # 밴드폭이 1~2 사이
                     if final_df.loc[pre_val, 'MA5'] < final_df.loc[i, 'MA5']:
-                        if final_df.loc[i, 'close'] > final_df.loc[i, 'open']: # 현재 양봉
+                        if final_df.loc[i, 'close'] > final_df.loc[i, 'open']:  # 현재 양봉
                             if final_df.loc[i, 'close'] > final_df.loc[i, 'upper'] > final_df.loc[
                                 i, 'open']:  # 볼린저 밴드 상향선 돌파
                                 if final_df.loc[i, 'volumn'] > final_df.loc[pre_val, 'volumn'] * 2.9:  # 거래량 급증
@@ -1724,12 +1729,14 @@ class EventLoop:
                     if max_volume > final_df.loc[i, 'volumn'] * 2:
                         if final_df.loc[i, 'close'] < final_df.loc[i, 'open']:  # 현재 음봉
                             if final_df.loc[i, 'bandwidth'] > 7.8:
-                                if final_df.loc[pre_val, 'close'] > final_df.loc[pre_val, 'open']: # 1분전 양봉
-                                    if final_df.loc[pre_val, 'open'] <= final_df.loc[i, 'open'] <= final_df.loc[pre_val, 'high']:
-                                            book.loc[i, 'trade'] = 'sell'
-                                else: # 1분전 음봉
-                                    if final_df.loc[pre_val, 'open'] <= final_df.loc[i, 'open'] <= final_df.loc[pre_val, 'high']:
-                                            book.loc[i, 'trade'] = 'sell'
+                                if final_df.loc[pre_val, 'close'] > final_df.loc[pre_val, 'open']:  # 1분전 양봉
+                                    if final_df.loc[pre_val, 'open'] <= final_df.loc[i, 'open'] <= final_df.loc[
+                                        pre_val, 'high']:
+                                        book.loc[i, 'trade'] = 'sell'
+                                else:  # 1분전 음봉
+                                    if final_df.loc[pre_val, 'open'] <= final_df.loc[i, 'open'] <= final_df.loc[
+                                        pre_val, 'high']:
+                                        book.loc[i, 'trade'] = 'sell'
 
                 # if round(final_df.loc[i, 'upper']) == round(final_df.loc[i, 'lower']):
                 #     if final_df.loc[i, 'close'] == max_close:
@@ -1762,6 +1769,3 @@ class EventLoop:
         book = book[book.index.strftime('%Y-%m-%d %H:%M') >= '2021-02-25 15:30:00']
 
         print(book.tail(300))
-
-
-

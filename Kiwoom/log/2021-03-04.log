@@ -1,0 +1,225 @@
+[2021-03-04 08:58:54,633] I EventLoop.py | Kiwoom-_event_connect_slot-0112 I DEBUG    > 정상처리
+[2021-03-04 08:58:55,008] I EventLoop.py | Kiwoom-_msg_slot-1587 I DEBUG    > 스크린: 2000, 요청이름: 예수금상세현황요청, tr코드: opw00001, 시간: 2021-03-04 08:58:55 --- [00Z310] 모의투자 조회가 완료되었습니다
+[2021-03-04 08:58:55,078] I EventLoop.py | Kiwoom-_msg_slot-1587 I DEBUG    > 스크린: 2000, 요청이름: 계좌평가잔고내역요청, tr코드: opw00018, 시간: 2021-03-04 08:58:55 --- [00Z310] 모의투자 조회가 완료되었습니다
+[2021-03-04 08:58:55,080] I EventLoop.py | Kiwoom-_tr_data_slot-0225 I DEBUG    > 계좌평가잔고내역요청 싱글데이터 : 총매입금액 3902545, 총평가손익금액 -82627, 총수익률(%) -2.12
+[2021-03-04 08:58:55,081] I EventLoop.py | Kiwoom-_tr_data_slot-0241 I DEBUG    > 종목코드: 002210 - 종목명: 동성제약 - 보유수량: 32 - 매입가: 13000 - 수익률: -2.46 - 현재가: 12800
+[2021-03-04 08:58:55,082] I EventLoop.py | Kiwoom-_tr_data_slot-0241 I DEBUG    > 종목코드: 002620 - 종목명: 제일파마홀딩스 - 보유수량: 2 - 매입가: 19150 - 수익률: -3.77 - 현재가: 18600
+[2021-03-04 08:58:55,083] I EventLoop.py | Kiwoom-_tr_data_slot-0241 I DEBUG    > 종목코드: 005690 - 종목명: 파미셀 - 보유수량: 27 - 매입가: 16100 - 수익률: -1.55 - 현재가: 16000
+[2021-03-04 08:58:55,083] I EventLoop.py | Kiwoom-_tr_data_slot-0241 I DEBUG    > 종목코드: 006370 - 종목명: 대구백화점 - 보유수량: 58 - 매입가: 9340 - 수익률: -1.89 - 현재가: 9250
+[2021-03-04 08:58:55,083] I EventLoop.py | Kiwoom-_tr_data_slot-0241 I DEBUG    > 종목코드: 007570 - 종목명: 일양약품 - 보유수량: 2 - 매입가: 51000 - 수익률: -2.87 - 현재가: 50000
+[2021-03-04 08:58:55,084] I EventLoop.py | Kiwoom-_tr_data_slot-0241 I DEBUG    > 종목코드: 019550 - 종목명: SBI인베스트먼트 - 보유수량: 307 - 매입가: 1385 - 수익률: -3.80 - 현재가: 1345
+[2021-03-04 08:58:55,085] I EventLoop.py | Kiwoom-_tr_data_slot-0241 I DEBUG    > 종목코드: 18064K - 종목명: 한진칼우 - 보유수량: 3 - 매입가: 40450 - 수익률: -2.03 - 현재가: 40000
+[2021-03-04 08:58:55,086] I EventLoop.py | Kiwoom-_tr_data_slot-0241 I DEBUG    > 종목코드: 182360 - 종목명: 큐브엔터 - 보유수량: 136 - 매입가: 3208 - 수익률: -.40 - 현재가: 3225
+[2021-03-04 08:58:55,087] I EventLoop.py | Kiwoom-_tr_data_slot-0241 I DEBUG    > 종목코드: 213090 - 종목명: 미래테크놀로지 - 보유수량: 51 - 매입가: 8480 - 수익률: -2.34 - 현재가: 8360
+[2021-03-04 08:58:55,088] I EventLoop.py | Kiwoom-_tr_data_slot-0241 I DEBUG    > 종목코드: 270520 - 종목명: 지엔원에너지 - 보유수량: 7 - 매입가: 4555 - 수익률: -4.17 - 현재가: 4405
+[2021-03-04 08:58:55,089] I EventLoop.py | Kiwoom-_tr_data_slot-0241 I DEBUG    > 종목코드: 333430 - 종목명: 미래에셋대우스팩4호 - 보유수량: 161 - 매입가: 2738 - 수익률: -3.22 - 현재가: 2675
+[2021-03-04 08:58:55,090] I EventLoop.py | Kiwoom-_tr_data_slot-0241 I DEBUG    > 종목코드: 367340 - 종목명: DB금융스팩8호 - 보유수량: 233 - 매입가: 2067 - 수익률: -1.02 - 현재가: 2065
+[2021-03-04 08:58:55,125] I EventLoop.py | Kiwoom-_msg_slot-1587 I DEBUG    > 스크린: , 요청이름: , tr코드: , 시간: 2021-03-04 08:58:55 ---  조회가 완료되었습니다.
+[2021-03-04 08:58:59,679] I EventLoop.py | Kiwoom-_receive_real_data_slot-0956 I DEBUG    > 장 시작 전
+[2021-03-04 08:59:09,689] I EventLoop.py | Kiwoom-_receive_real_data_slot-0956 I DEBUG    > 장 시작 전
+[2021-03-04 08:59:19,685] I EventLoop.py | Kiwoom-_receive_real_data_slot-0956 I DEBUG    > 장 시작 전
+[2021-03-04 08:59:29,683] I EventLoop.py | Kiwoom-_receive_real_data_slot-0956 I DEBUG    > 장 시작 전
+[2021-03-04 08:59:39,680] I EventLoop.py | Kiwoom-_receive_real_data_slot-0956 I DEBUG    > 장 시작 전
+[2021-03-04 08:59:49,685] I EventLoop.py | Kiwoom-_receive_real_data_slot-0956 I DEBUG    > 장 시작 전
+[2021-03-04 08:59:59,684] I EventLoop.py | Kiwoom-_receive_real_data_slot-0959 I DEBUG    > 장 시작
+[2021-03-04 09:11:58,600] I Signal.py | Kiwoom-real_time_recommand_fuc-0291 I DEBUG    > 새로 들어온 종목: 021080, real_time_recommand_dict: {'ub': None, 'time': '091158', 'numbering': False}
+[2021-03-04 09:11:59,602] I Signal.py | Kiwoom-screen_number_real_time_setting-0216 I DEBUG    > 스크린 넘버 세팅 새로 들어온 종목: 021080, portfolio_stock_dict: {'매수매도': '매수', 'ub': None}
+[2021-03-04 09:12:02,622] I Signal.py | Kiwoom-screen_number_real_time_setting-0263 I DEBUG    > 실시간 등록 코드: ;021080, 실시간 등록 리턴값: 0
+[2021-03-04 09:12:05,884] I EventLoop.py | Kiwoom-_receive_real_data_slot-1399 I DEBUG    > 매수조건 통과 021080 
+[2021-03-04 09:12:05,884] I EventLoop.py | Kiwoom-_receive_real_data_slot-1400 I DEBUG    > (최우선)매도호가 2420 
+[2021-03-04 09:12:06,191] I EventLoop.py | Kiwoom-_receive_real_data_slot-1412 I DEBUG    > 코드 : 021080 매수주문 전달 성공
+[2021-03-04 09:12:06,418] I EventLoop.py | Kiwoom-_msg_slot-1587 I DEBUG    > 스크린: 8001, 요청이름: 신규매수, tr코드: KOA_NORMAL_BUY_KQ_ORD, 시간: 2021-03-04 09:12:06 --- [00Z112] 모의투자 정상처리 되었습니다
+[2021-03-04 09:12:07,286] I EventLoop.py | Kiwoom-_chejan_slot-1516 I DEBUG    > 접수, 확인, 체결 : {'종목코드': '021080', '주문번호': '0035042', '종목명': '에이티넘인베스트', '주문상태': '접수', '주문수량': 245, '주문가격': 2420, '미체결수량': 245, '원주문번호': '0000000', '주문구분': '매수', '주문/체결시간': '091207', '체결가': 0, '체결량': 0, '현재가': 2415, '(최우선)매도호가': 2420, '(최우선)매수호가': 2410}
+[2021-03-04 09:12:07,592] I EventLoop.py | Kiwoom-_receive_real_data_slot-1434 I DEBUG    > 매수취소 전달 성공
+[2021-03-04 09:12:07,899] I EventLoop.py | Kiwoom-_receive_real_data_slot-1434 I DEBUG    > 매수취소 전달 성공
+[2021-03-04 09:12:08,206] I EventLoop.py | Kiwoom-_receive_real_data_slot-1434 I DEBUG    > 매수취소 전달 성공
+[2021-03-04 09:12:08,513] I EventLoop.py | Kiwoom-_receive_real_data_slot-1434 I DEBUG    > 매수취소 전달 성공
+[2021-03-04 09:12:08,820] I EventLoop.py | Kiwoom-_receive_real_data_slot-1434 I DEBUG    > 매수취소 전달 성공
+[2021-03-04 09:12:09,127] I EventLoop.py | Kiwoom-_receive_real_data_slot-1434 I DEBUG    > 매수취소 전달 성공
+[2021-03-04 09:12:09,433] I EventLoop.py | Kiwoom-_receive_real_data_slot-1434 I DEBUG    > 매수취소 전달 성공
+[2021-03-04 09:12:09,739] I EventLoop.py | Kiwoom-_receive_real_data_slot-1434 I DEBUG    > 매수취소 전달 성공
+[2021-03-04 09:12:10,047] I EventLoop.py | Kiwoom-_receive_real_data_slot-1434 I DEBUG    > 매수취소 전달 성공
+[2021-03-04 09:12:10,353] I EventLoop.py | Kiwoom-_receive_real_data_slot-1434 I DEBUG    > 매수취소 전달 성공
+[2021-03-04 09:12:10,659] I EventLoop.py | Kiwoom-_receive_real_data_slot-1434 I DEBUG    > 매수취소 전달 성공
+[2021-03-04 09:12:10,660] I EventLoop.py | Kiwoom-_msg_slot-1587 I DEBUG    > 스크린: 6001, 요청이름: 매수취소, tr코드: KOA_NORMAL_KP_CANCEL, 시간: 2021-03-04 09:12:10 --- [00Z235] 모의투자 취소주문 수량 오류
+[2021-03-04 09:12:10,970] I EventLoop.py | Kiwoom-_receive_real_data_slot-1434 I DEBUG    > 매수취소 전달 성공
+[2021-03-04 09:12:11,275] I EventLoop.py | Kiwoom-_receive_real_data_slot-1434 I DEBUG    > 매수취소 전달 성공
+[2021-03-04 09:12:11,277] I EventLoop.py | Kiwoom-_chejan_slot-1516 I DEBUG    > 접수, 확인, 체결 : {'종목코드': '021080', '주문번호': '0035042', '종목명': '에이티넘인베스트', '주문상태': '체결', '주문수량': 245, '주문가격': 2420, '미체결수량': 0, '원주문번호': '0000000', '주문구분': '매수', '주문/체결시간': '091208', '체결가': 2415, '체결량': 245, '현재가': 2415, '(최우선)매도호가': 2420, '(최우선)매수호가': 2410}
+[2021-03-04 09:12:11,278] I EventLoop.py | Kiwoom-_chejan_slot-1564 I DEBUG    > 잔고반영: {'현재가': 2415, '종목코드': '021080', '종목명': '에이티넘인베스트', '보유수량': 245, '주문가능수량': 245, '매입단가': 2415, '총매입가': 591675, '매도매수구분': '매수', '(최우선)매도호가': 2420, '(최우선)매수호가': 2410}
+[2021-03-04 09:12:11,279] I EventLoop.py | Kiwoom-_msg_slot-1587 I DEBUG    > 스크린: 6001, 요청이름: 매수취소, tr코드: KOA_NORMAL_KP_CANCEL, 시간: 2021-03-04 09:12:11 --- [00Z235] 모의투자 취소주문 수량 오류
+[2021-03-04 09:12:11,283] I EventLoop.py | Kiwoom-_msg_slot-1587 I DEBUG    > 스크린: 6001, 요청이름: 매수취소, tr코드: KOA_NORMAL_KP_CANCEL, 시간: 2021-03-04 09:12:11 --- [00Z235] 모의투자 취소주문 수량 오류
+[2021-03-04 09:12:11,287] I EventLoop.py | Kiwoom-_msg_slot-1587 I DEBUG    > 스크린: 6001, 요청이름: 매수취소, tr코드: KOA_NORMAL_KP_CANCEL, 시간: 2021-03-04 09:12:11 --- [00Z235] 모의투자 취소주문 수량 오류
+[2021-03-04 09:12:11,292] I EventLoop.py | Kiwoom-_msg_slot-1587 I DEBUG    > 스크린: 6001, 요청이름: 매수취소, tr코드: KOA_NORMAL_KP_CANCEL, 시간: 2021-03-04 09:12:11 --- [00Z235] 모의투자 취소주문 수량 오류
+[2021-03-04 09:12:11,299] I EventLoop.py | Kiwoom-_msg_slot-1587 I DEBUG    > 스크린: 6001, 요청이름: 매수취소, tr코드: KOA_NORMAL_KP_CANCEL, 시간: 2021-03-04 09:12:11 --- [00Z235] 모의투자 취소주문 수량 오류
+[2021-03-04 09:12:11,308] I EventLoop.py | Kiwoom-_msg_slot-1587 I DEBUG    > 스크린: 6001, 요청이름: 매수취소, tr코드: KOA_NORMAL_KP_CANCEL, 시간: 2021-03-04 09:12:11 --- [00Z235] 모의투자 취소주문 수량 오류
+[2021-03-04 09:12:11,314] I EventLoop.py | Kiwoom-_msg_slot-1587 I DEBUG    > 스크린: 6001, 요청이름: 매수취소, tr코드: KOA_NORMAL_KP_CANCEL, 시간: 2021-03-04 09:12:11 --- [00Z235] 모의투자 취소주문 수량 오류
+[2021-03-04 09:12:11,325] I EventLoop.py | Kiwoom-_msg_slot-1587 I DEBUG    > 스크린: 6001, 요청이름: 매수취소, tr코드: KOA_NORMAL_KP_CANCEL, 시간: 2021-03-04 09:12:11 --- [00Z235] 모의투자 취소주문 수량 오류
+[2021-03-04 09:12:11,332] I EventLoop.py | Kiwoom-_msg_slot-1587 I DEBUG    > 스크린: 6001, 요청이름: 매수취소, tr코드: KOA_NORMAL_KP_CANCEL, 시간: 2021-03-04 09:12:11 --- [00Z235] 모의투자 취소주문 수량 오류
+[2021-03-04 09:12:11,339] I EventLoop.py | Kiwoom-_msg_slot-1587 I DEBUG    > 스크린: 6001, 요청이름: 매수취소, tr코드: KOA_NORMAL_KP_CANCEL, 시간: 2021-03-04 09:12:11 --- [00Z235] 모의투자 취소주문 수량 오류
+[2021-03-04 09:12:11,566] I EventLoop.py | Kiwoom-_msg_slot-1587 I DEBUG    > 스크린: 6001, 요청이름: 매수취소, tr코드: KOA_NORMAL_KP_CANCEL, 시간: 2021-03-04 09:12:11 --- [00Z235] 모의투자 취소주문 수량 오류
+[2021-03-04 09:12:11,723] I EventLoop.py | Kiwoom-_msg_slot-1587 I DEBUG    > 스크린: 6001, 요청이름: 매수취소, tr코드: KOA_NORMAL_KP_CANCEL, 시간: 2021-03-04 09:12:11 --- [00Z235] 모의투자 취소주문 수량 오류
+[2021-03-04 09:22:40,790] I Signal.py | Kiwoom-real_time_recommand_fuc-0291 I DEBUG    > 새로 들어온 종목: 036420, real_time_recommand_dict: {'ub': None, 'time': '092240', 'numbering': False}
+[2021-03-04 09:22:40,790] I Signal.py | Kiwoom-real_time_recommand_fuc-0291 I DEBUG    > 새로 들어온 종목: 084010, real_time_recommand_dict: {'ub': None, 'time': '092240', 'numbering': False}
+[2021-03-04 09:22:41,792] I Signal.py | Kiwoom-screen_number_real_time_setting-0216 I DEBUG    > 스크린 넘버 세팅 새로 들어온 종목: 036420, portfolio_stock_dict: {'매수매도': '매수', 'ub': None}
+[2021-03-04 09:22:41,792] I Signal.py | Kiwoom-screen_number_real_time_setting-0216 I DEBUG    > 스크린 넘버 세팅 새로 들어온 종목: 084010, portfolio_stock_dict: {'매수매도': '매수', 'ub': None}
+[2021-03-04 09:22:44,808] I Signal.py | Kiwoom-screen_number_real_time_setting-0263 I DEBUG    > 실시간 등록 코드: ;036420;084010, 실시간 등록 리턴값: 0
+[2021-03-04 09:22:45,590] I EventLoop.py | Kiwoom-_receive_real_data_slot-1399 I DEBUG    > 매수조건 통과 036420 
+[2021-03-04 09:22:45,591] I EventLoop.py | Kiwoom-_receive_real_data_slot-1400 I DEBUG    > (최우선)매도호가 47250 
+[2021-03-04 09:22:45,896] I EventLoop.py | Kiwoom-_receive_real_data_slot-1412 I DEBUG    > 코드 : 036420 매수주문 전달 성공
+[2021-03-04 09:22:46,446] I EventLoop.py | Kiwoom-_msg_slot-1587 I DEBUG    > 스크린: 8002, 요청이름: 신규매수, tr코드: KOA_NORMAL_BUY_KP_ORD, 시간: 2021-03-04 09:22:46 --- [00Z112] 모의투자 정상처리 되었습니다
+[2021-03-04 09:22:46,482] I EventLoop.py | Kiwoom-_chejan_slot-1516 I DEBUG    > 접수, 확인, 체결 : {'종목코드': '036420', '주문번호': '0046348', '종목명': '제이콘텐트리', '주문상태': '접수', '주문수량': 12, '주문가격': 47250, '미체결수량': 12, '원주문번호': '0000000', '주문구분': '매수', '주문/체결시간': '092246', '체결가': 0, '체결량': 0, '현재가': 47250, '(최우선)매도호가': 47250, '(최우선)매수호가': 47200}
+[2021-03-04 09:22:46,583] I EventLoop.py | Kiwoom-_receive_real_data_slot-1399 I DEBUG    > 매수조건 통과 084010 
+[2021-03-04 09:22:46,583] I EventLoop.py | Kiwoom-_receive_real_data_slot-1400 I DEBUG    > (최우선)매도호가 14300 
+[2021-03-04 09:22:46,889] I EventLoop.py | Kiwoom-_receive_real_data_slot-1412 I DEBUG    > 코드 : 084010 매수주문 전달 성공
+[2021-03-04 09:22:46,992] I EventLoop.py | Kiwoom-_chejan_slot-1516 I DEBUG    > 접수, 확인, 체결 : {'종목코드': '036420', '주문번호': '0046348', '종목명': '제이콘텐트리', '주문상태': '체결', '주문수량': 12, '주문가격': 47250, '미체결수량': 0, '원주문번호': '0000000', '주문구분': '매수', '주문/체결시간': '092246', '체결가': 47250, '체결량': 12, '현재가': 47250, '(최우선)매도호가': 47250, '(최우선)매수호가': 47200}
+[2021-03-04 09:22:46,993] I EventLoop.py | Kiwoom-_chejan_slot-1564 I DEBUG    > 잔고반영: {'현재가': 47250, '종목코드': '036420', '종목명': '제이콘텐트리', '보유수량': 12, '주문가능수량': 12, '매입단가': 47250, '총매입가': 567000, '매도매수구분': '매수', '(최우선)매도호가': 47250, '(최우선)매수호가': 47200}
+[2021-03-04 09:22:47,409] I EventLoop.py | Kiwoom-_msg_slot-1587 I DEBUG    > 스크린: 8002, 요청이름: 신규매수, tr코드: KOA_NORMAL_BUY_KP_ORD, 시간: 2021-03-04 09:22:47 --- [00Z112] 모의투자 정상처리 되었습니다
+[2021-03-04 09:22:47,490] I EventLoop.py | Kiwoom-_chejan_slot-1516 I DEBUG    > 접수, 확인, 체결 : {'종목코드': '084010', '주문번호': '0046366', '종목명': '대한제강', '주문상태': '접수', '주문수량': 41, '주문가격': 14300, '미체결수량': 41, '원주문번호': '0000000', '주문구분': '매수', '주문/체결시간': '092247', '체결가': 0, '체결량': 0, '현재가': 14250, '(최우선)매도호가': 14300, '(최우선)매수호가': 14250}
+[2021-03-04 09:22:47,892] I EventLoop.py | Kiwoom-_receive_real_data_slot-1434 I DEBUG    > 매수취소 전달 성공
+[2021-03-04 09:22:48,198] I EventLoop.py | Kiwoom-_receive_real_data_slot-1434 I DEBUG    > 매수취소 전달 성공
+[2021-03-04 09:22:48,502] I EventLoop.py | Kiwoom-_receive_real_data_slot-1434 I DEBUG    > 매수취소 전달 성공
+[2021-03-04 09:22:48,807] I EventLoop.py | Kiwoom-_receive_real_data_slot-1434 I DEBUG    > 매수취소 전달 성공
+[2021-03-04 09:22:49,113] I EventLoop.py | Kiwoom-_receive_real_data_slot-1434 I DEBUG    > 매수취소 전달 성공
+[2021-03-04 09:22:49,114] I EventLoop.py | Kiwoom-_msg_slot-1587 I DEBUG    > 스크린: 6001, 요청이름: 매수취소, tr코드: KOA_NORMAL_KP_CANCEL, 시간: 2021-03-04 09:22:49 --- [00Z115] 모의투자 정상처리 되었습니다
+[2021-03-04 09:22:49,120] I EventLoop.py | Kiwoom-_chejan_slot-1516 I DEBUG    > 접수, 확인, 체결 : {'종목코드': '084010', '주문번호': '0046377', '종목명': '대한제강', '주문상태': '접수', '주문수량': 41, '주문가격': 0, '미체결수량': 41, '원주문번호': '0046366', '주문구분': '매수취소', '주문/체결시간': '092247', '체결가': 0, '체결량': 0, '현재가': 14250, '(최우선)매도호가': 14300, '(최우선)매수호가': 14250}
+[2021-03-04 09:22:49,122] I EventLoop.py | Kiwoom-_chejan_slot-1516 I DEBUG    > 접수, 확인, 체결 : {'종목코드': '084010', '주문번호': '0046377', '종목명': '대한제강', '주문상태': '확인', '주문수량': 41, '주문가격': 0, '미체결수량': 0, '원주문번호': '0046366', '주문구분': '매수취소', '주문/체결시간': '092247', '체결가': 0, '체결량': 0, '현재가': 14250, '(최우선)매도호가': 14300, '(최우선)매수호가': 14250}
+[2021-03-04 09:22:49,123] I EventLoop.py | Kiwoom-_chejan_slot-1516 I DEBUG    > 접수, 확인, 체결 : {'종목코드': '084010', '주문번호': '0046366', '종목명': '대한제강', '주문상태': '접수', '주문수량': 41, '주문가격': 14300, '미체결수량': 0, '원주문번호': '0000000', '주문구분': '매수', '주문/체결시간': '092247', '체결가': 0, '체결량': 0, '현재가': 14250, '(최우선)매도호가': 14300, '(최우선)매수호가': 14250}
+[2021-03-04 09:22:49,127] I EventLoop.py | Kiwoom-_msg_slot-1587 I DEBUG    > 스크린: 6001, 요청이름: 매수취소, tr코드: KOA_NORMAL_KP_CANCEL, 시간: 2021-03-04 09:22:49 --- [00Z235] 모의투자 취소주문 수량 오류
+[2021-03-04 09:22:49,156] I EventLoop.py | Kiwoom-_msg_slot-1587 I DEBUG    > 스크린: 6001, 요청이름: 매수취소, tr코드: KOA_NORMAL_KP_CANCEL, 시간: 2021-03-04 09:22:49 --- [00Z235] 모의투자 취소주문 수량 오류
+[2021-03-04 09:22:49,285] I EventLoop.py | Kiwoom-_msg_slot-1587 I DEBUG    > 스크린: 6001, 요청이름: 매수취소, tr코드: KOA_NORMAL_KP_CANCEL, 시간: 2021-03-04 09:22:49 --- [00Z235] 모의투자 취소주문 수량 오류
+[2021-03-04 09:22:49,802] I EventLoop.py | Kiwoom-_msg_slot-1587 I DEBUG    > 스크린: 8002, 요청이름: 매수취소, tr코드: KOA_NORMAL_KP_CANCEL, 시간: 2021-03-04 09:22:49 --- [00Z235] 모의투자 취소주문 수량 오류
+[2021-03-04 11:10:56,569] I EventLoop.py | Kiwoom-_event_connect_slot-0112 I DEBUG    > 정상처리
+[2021-03-04 11:10:57,410] I EventLoop.py | Kiwoom-_msg_slot-1594 I DEBUG    > 스크린: 2000, 요청이름: 예수금상세현황요청, tr코드: opw00001, 시간: 2021-03-04 11:10:57 --- [00Z310] 모의투자 조회가 완료되었습니다
+[2021-03-04 11:10:59,096] I EventLoop.py | Kiwoom-_msg_slot-1594 I DEBUG    > 스크린: 2000, 요청이름: 계좌평가잔고내역요청, tr코드: opw00018, 시간: 2021-03-04 11:10:59 --- [00Z310] 모의투자 조회가 완료되었습니다
+[2021-03-04 11:10:59,099] I EventLoop.py | Kiwoom-_tr_data_slot-0224 I DEBUG    > 계좌평가잔고내역요청 싱글데이터 : 총매입금액 5061220, 총평가손익금액 -87206, 총수익률(%) -1.72
+[2021-03-04 11:10:59,099] I EventLoop.py | Kiwoom-_tr_data_slot-0244 I DEBUG    > 종목코드: 002210 - 종목명: 동성제약 - 보유수량: 32 - 매입가: 13000 - 수익률: -3.22 - 현재가: 12700
+[2021-03-04 11:10:59,100] I EventLoop.py | Kiwoom-_tr_data_slot-0244 I DEBUG    > 종목코드: 002620 - 종목명: 제일파마홀딩스 - 보유수량: 2 - 매입가: 19150 - 수익률: -4.79 - 현재가: 18400
+[2021-03-04 11:10:59,101] I EventLoop.py | Kiwoom-_tr_data_slot-0244 I DEBUG    > 종목코드: 005690 - 종목명: 파미셀 - 보유수량: 27 - 매입가: 16100 - 수익률: -.31 - 현재가: 16200
+[2021-03-04 11:10:59,102] I EventLoop.py | Kiwoom-_tr_data_slot-0244 I DEBUG    > 종목코드: 006370 - 종목명: 대구백화점 - 보유수량: 58 - 매입가: 9340 - 수익률: -1.78 - 현재가: 9260
+[2021-03-04 11:10:59,103] I EventLoop.py | Kiwoom-_tr_data_slot-0244 I DEBUG    > 종목코드: 007570 - 종목명: 일양약품 - 보유수량: 2 - 매입가: 51000 - 수익률: -27.73 - 현재가: 37250
+[2021-03-04 11:10:59,105] I EventLoop.py | Kiwoom-_tr_data_slot-0244 I DEBUG    > 종목코드: 019550 - 종목명: SBI인베스트먼트 - 보유수량: 307 - 매입가: 1385 - 수익률: -2.00 - 현재가: 1370
+[2021-03-04 11:10:59,106] I EventLoop.py | Kiwoom-_tr_data_slot-0244 I DEBUG    > 종목코드: 021080 - 종목명: 에이티넘인베스트 - 보유수량: 245 - 매입가: 2415 - 수익률: -1.34 - 현재가: 2405
+[2021-03-04 11:10:59,107] I EventLoop.py | Kiwoom-_tr_data_slot-0244 I DEBUG    > 종목코드: 036420 - 종목명: 제이콘텐트리 - 보유수량: 12 - 매입가: 47250 - 수익률: 3.28 - 현재가: 49250
+[2021-03-04 11:10:59,108] I EventLoop.py | Kiwoom-_tr_data_slot-0244 I DEBUG    > 종목코드: 18064K - 종목명: 한진칼우 - 보유수량: 3 - 매입가: 40450 - 수익률: -2.27 - 현재가: 39900
+[2021-03-04 11:10:59,109] I EventLoop.py | Kiwoom-_tr_data_slot-0244 I DEBUG    > 종목코드: 182360 - 종목명: 큐브엔터 - 보유수량: 136 - 매입가: 3208 - 수익률: -.40 - 현재가: 3225
+[2021-03-04 11:10:59,111] I EventLoop.py | Kiwoom-_tr_data_slot-0244 I DEBUG    > 종목코드: 213090 - 종목명: 미래테크놀로지 - 보유수량: 51 - 매입가: 8480 - 수익률: -2.69 - 현재가: 8330
+[2021-03-04 11:10:59,112] I EventLoop.py | Kiwoom-_tr_data_slot-0244 I DEBUG    > 종목코드: 270520 - 종목명: 지엔원에너지 - 보유수량: 7 - 매입가: 4555 - 수익률: -4.61 - 현재가: 4385
+[2021-03-04 11:10:59,114] I EventLoop.py | Kiwoom-_tr_data_slot-0244 I DEBUG    > 종목코드: 333430 - 종목명: 미래에셋대우스팩4호 - 보유수량: 161 - 매입가: 2738 - 수익률: -2.49 - 현재가: 2695
+[2021-03-04 11:10:59,116] I EventLoop.py | Kiwoom-_tr_data_slot-0244 I DEBUG    > 종목코드: 367340 - 종목명: DB금융스팩8호 - 보유수량: 233 - 매입가: 2067 - 수익률: -1.26 - 현재가: 2060
+[2021-03-04 11:10:59,150] I EventLoop.py | Kiwoom-_msg_slot-1594 I DEBUG    > 스크린: , 요청이름: , tr코드: , 시간: 2021-03-04 11:10:59 ---  조회가 완료되었습니다.
+[2021-03-04 11:11:01,549] I Signal.py | Kiwoom-real_time_recommand_fuc-0291 I DEBUG    > 새로 들어온 종목: 006220, real_time_recommand_dict: {'ub': None, 'time': '111101', 'numbering': False}
+[2021-03-04 11:11:01,549] I Signal.py | Kiwoom-real_time_recommand_fuc-0291 I DEBUG    > 새로 들어온 종목: 007330, real_time_recommand_dict: {'ub': None, 'time': '111101', 'numbering': False}
+[2021-03-04 11:11:01,549] I Signal.py | Kiwoom-real_time_recommand_fuc-0291 I DEBUG    > 새로 들어온 종목: 031860, real_time_recommand_dict: {'ub': None, 'time': '111101', 'numbering': False}
+[2021-03-04 11:11:01,550] I Signal.py | Kiwoom-real_time_recommand_fuc-0291 I DEBUG    > 새로 들어온 종목: 078890, real_time_recommand_dict: {'ub': None, 'time': '111101', 'numbering': False}
+[2021-03-04 11:11:01,550] I Signal.py | Kiwoom-real_time_recommand_fuc-0291 I DEBUG    > 새로 들어온 종목: 206560, real_time_recommand_dict: {'ub': None, 'time': '111101', 'numbering': False}
+[2021-03-04 11:11:01,550] I Signal.py | Kiwoom-real_time_recommand_fuc-0291 I DEBUG    > 새로 들어온 종목: 263860, real_time_recommand_dict: {'ub': None, 'time': '111101', 'numbering': False}
+[2021-03-04 11:11:02,552] I Signal.py | Kiwoom-screen_number_real_time_setting-0216 I DEBUG    > 스크린 넘버 세팅 새로 들어온 종목: 006220, portfolio_stock_dict: {'매수매도': '매수', 'ub': None}
+[2021-03-04 11:11:02,552] I Signal.py | Kiwoom-screen_number_real_time_setting-0216 I DEBUG    > 스크린 넘버 세팅 새로 들어온 종목: 007330, portfolio_stock_dict: {'매수매도': '매수', 'ub': None}
+[2021-03-04 11:11:02,552] I Signal.py | Kiwoom-screen_number_real_time_setting-0216 I DEBUG    > 스크린 넘버 세팅 새로 들어온 종목: 031860, portfolio_stock_dict: {'매수매도': '매수', 'ub': None}
+[2021-03-04 11:11:02,552] I Signal.py | Kiwoom-screen_number_real_time_setting-0216 I DEBUG    > 스크린 넘버 세팅 새로 들어온 종목: 078890, portfolio_stock_dict: {'매수매도': '매수', 'ub': None}
+[2021-03-04 11:11:02,553] I Signal.py | Kiwoom-screen_number_real_time_setting-0216 I DEBUG    > 스크린 넘버 세팅 새로 들어온 종목: 206560, portfolio_stock_dict: {'매수매도': '매수', 'ub': None}
+[2021-03-04 11:11:02,553] I Signal.py | Kiwoom-screen_number_real_time_setting-0216 I DEBUG    > 스크린 넘버 세팅 새로 들어온 종목: 263860, portfolio_stock_dict: {'매수매도': '매수', 'ub': None}
+[2021-03-04 11:13:11,182] I EventLoop.py | Kiwoom-_event_connect_slot-0112 I DEBUG    > 정상처리
+[2021-03-04 11:13:12,089] I EventLoop.py | Kiwoom-_msg_slot-1594 I DEBUG    > 스크린: 2000, 요청이름: 예수금상세현황요청, tr코드: opw00001, 시간: 2021-03-04 11:13:12 --- [00Z310] 모의투자 조회가 완료되었습니다
+[2021-03-04 11:13:13,786] I EventLoop.py | Kiwoom-_msg_slot-1594 I DEBUG    > 스크린: 2000, 요청이름: 계좌평가잔고내역요청, tr코드: opw00018, 시간: 2021-03-04 11:13:13 --- [00Z310] 모의투자 조회가 완료되었습니다
+[2021-03-04 11:13:13,789] I EventLoop.py | Kiwoom-_tr_data_slot-0224 I DEBUG    > 계좌평가잔고내역요청 싱글데이터 : 총매입금액 5061220, 총평가손익금액 -79788, 총수익률(%) -1.58
+[2021-03-04 11:13:13,790] I EventLoop.py | Kiwoom-_tr_data_slot-0244 I DEBUG    > 종목코드: 002210 - 종목명: 동성제약 - 보유수량: 32 - 매입가: 13000 - 수익률: -3.22 - 현재가: 12700
+[2021-03-04 11:13:13,791] I EventLoop.py | Kiwoom-_tr_data_slot-0244 I DEBUG    > 종목코드: 002620 - 종목명: 제일파마홀딩스 - 보유수량: 2 - 매입가: 19150 - 수익률: -4.79 - 현재가: 18400
+[2021-03-04 11:13:13,792] I EventLoop.py | Kiwoom-_tr_data_slot-0244 I DEBUG    > 종목코드: 005690 - 종목명: 파미셀 - 보유수량: 27 - 매입가: 16100 - 수익률: -.31 - 현재가: 16200
+[2021-03-04 11:13:13,793] I EventLoop.py | Kiwoom-_tr_data_slot-0244 I DEBUG    > 종목코드: 006370 - 종목명: 대구백화점 - 보유수량: 58 - 매입가: 9340 - 수익률: -1.78 - 현재가: 9260
+[2021-03-04 11:13:13,793] I EventLoop.py | Kiwoom-_tr_data_slot-0244 I DEBUG    > 종목코드: 007570 - 종목명: 일양약품 - 보유수량: 2 - 매입가: 51000 - 수익률: -27.73 - 현재가: 37250
+[2021-03-04 11:13:13,794] I EventLoop.py | Kiwoom-_tr_data_slot-0244 I DEBUG    > 종목코드: 019550 - 종목명: SBI인베스트먼트 - 보유수량: 307 - 매입가: 1385 - 수익률: -2.00 - 현재가: 1370
+[2021-03-04 11:13:13,795] I EventLoop.py | Kiwoom-_tr_data_slot-0244 I DEBUG    > 종목코드: 021080 - 종목명: 에이티넘인베스트 - 보유수량: 245 - 매입가: 2415 - 수익률: -1.13 - 현재가: 2410
+[2021-03-04 11:13:13,796] I EventLoop.py | Kiwoom-_tr_data_slot-0244 I DEBUG    > 종목코드: 036420 - 종목명: 제이콘텐트리 - 보유수량: 12 - 매입가: 47250 - 수익률: 3.81 - 현재가: 49500
+[2021-03-04 11:13:13,797] I EventLoop.py | Kiwoom-_tr_data_slot-0244 I DEBUG    > 종목코드: 18064K - 종목명: 한진칼우 - 보유수량: 3 - 매입가: 40450 - 수익률: -2.27 - 현재가: 39900
+[2021-03-04 11:13:13,798] I EventLoop.py | Kiwoom-_tr_data_slot-0244 I DEBUG    > 종목코드: 182360 - 종목명: 큐브엔터 - 보유수량: 136 - 매입가: 3208 - 수익률: -.24 - 현재가: 3230
+[2021-03-04 11:13:13,799] I EventLoop.py | Kiwoom-_tr_data_slot-0244 I DEBUG    > 종목코드: 213090 - 종목명: 미래테크놀로지 - 보유수량: 51 - 매입가: 8480 - 수익률: -2.10 - 현재가: 8380
+[2021-03-04 11:13:13,800] I EventLoop.py | Kiwoom-_tr_data_slot-0244 I DEBUG    > 종목코드: 270520 - 종목명: 지엔원에너지 - 보유수량: 7 - 매입가: 4555 - 수익률: -4.61 - 현재가: 4385
+[2021-03-04 11:13:13,801] I EventLoop.py | Kiwoom-_tr_data_slot-0244 I DEBUG    > 종목코드: 333430 - 종목명: 미래에셋대우스팩4호 - 보유수량: 161 - 매입가: 2738 - 수익률: -2.49 - 현재가: 2695
+[2021-03-04 11:13:13,802] I EventLoop.py | Kiwoom-_tr_data_slot-0244 I DEBUG    > 종목코드: 367340 - 종목명: DB금융스팩8호 - 보유수량: 233 - 매입가: 2067 - 수익률: -1.26 - 현재가: 2060
+[2021-03-04 11:13:13,836] I EventLoop.py | Kiwoom-_msg_slot-1594 I DEBUG    > 스크린: , 요청이름: , tr코드: , 시간: 2021-03-04 11:13:13 ---  조회가 완료되었습니다.
+[2021-03-04 11:13:16,184] I EventLoop.py | Kiwoom-_receive_real_data_slot-1337 I DEBUG    > 코드 : 007570 매도주문 전달 성공(계좌에 있던 거)
+[2021-03-04 11:13:16,659] I EventLoop.py | Kiwoom-_msg_slot-1594 I DEBUG    > 스크린: 6001, 요청이름: 신규매도, tr코드: KOA_NORMAL_SELL_KP_ORD, 시간: 2021-03-04 11:13:16 --- [00Z113] 모의투자 정상처리 되었습니다
+[2021-03-04 11:13:16,686] I EventLoop.py | Kiwoom-_chejan_slot-1524 I DEBUG    > 접수, 확인, 체결 : {'종목코드': '007570', '주문번호': '0114142', '종목명': '일양약품', '주문상태': '접수', '주문수량': 2, '주문가격': 0, '미체결수량': 2, '원주문번호': '0000000', '주문구분': '매도', '주문/체결시간': '111316', '체결가': 0, '체결량': 0, '현재가': 37250, '(최우선)매도호가': 37250, '(최우선)매수호가': 37200}
+[2021-03-04 11:13:16,687] I EventLoop.py | Kiwoom-_chejan_slot-1572 I DEBUG    > 잔고반영: {'현재가': 37250, '종목코드': '007570', '종목명': '일양약품', '보유수량': 2, '주문가능수량': 0, '매입단가': 51000, '총매입가': 102000, '매도매수구분': '매도', '(최우선)매도호가': 37250, '(최우선)매수호가': 37200}
+[2021-03-04 11:13:16,985] I EventLoop.py | Kiwoom-_chejan_slot-1524 I DEBUG    > 접수, 확인, 체결 : {'종목코드': '007570', '주문번호': '0114142', '종목명': '일양약품', '주문상태': '체결', '주문수량': 2, '주문가격': 0, '미체결수량': 0, '원주문번호': '0000000', '주문구분': '매도', '주문/체결시간': '111316', '체결가': 37250, '체결량': 2, '현재가': 37250, '(최우선)매도호가': 37250, '(최우선)매수호가': 37200}
+[2021-03-04 11:13:16,986] I EventLoop.py | Kiwoom-_chejan_slot-1572 I DEBUG    > 잔고반영: {'현재가': 37250, '종목코드': '007570', '종목명': '일양약품', '보유수량': 0, '주문가능수량': 0, '매입단가': 0, '총매입가': 0, '매도매수구분': '매도', '(최우선)매도호가': 37250, '(최우선)매수호가': 37200}
+[2021-03-04 11:20:22,535] I Signal.py | Kiwoom-real_time_recommand_fuc-0291 I DEBUG    > 새로 들어온 종목: 086980, real_time_recommand_dict: {'ub': None, 'time': '112022', 'numbering': False}
+[2021-03-04 11:20:23,536] I Signal.py | Kiwoom-screen_number_real_time_setting-0216 I DEBUG    > 스크린 넘버 세팅 새로 들어온 종목: 086980, portfolio_stock_dict: {'매수매도': '매수', 'ub': None}
+[2021-03-04 11:20:26,552] I Signal.py | Kiwoom-screen_number_real_time_setting-0263 I DEBUG    > 실시간 등록 코드: ;086980, 실시간 등록 리턴값: 0
+[2021-03-04 11:20:26,875] I EventLoop.py | Kiwoom-_receive_real_data_slot-1407 I DEBUG    > 매수조건 통과 086980 
+[2021-03-04 11:20:26,876] I EventLoop.py | Kiwoom-_receive_real_data_slot-1408 I DEBUG    > (최우선)매도호가 5140 
+[2021-03-04 11:20:27,181] I EventLoop.py | Kiwoom-_receive_real_data_slot-1421 I DEBUG    > 코드 : 086980 매수주문 전달 성공
+[2021-03-04 11:20:27,931] I EventLoop.py | Kiwoom-_msg_slot-1594 I DEBUG    > 스크린: 8001, 요청이름: 신규매수, tr코드: KOA_NORMAL_BUY_KQ_ORD, 시간: 2021-03-04 11:20:27 --- [00Z112] 모의투자 정상처리 되었습니다
+[2021-03-04 11:20:27,979] I EventLoop.py | Kiwoom-_chejan_slot-1524 I DEBUG    > 접수, 확인, 체결 : {'종목코드': '086980', '주문번호': '0116985', '종목명': '쇼박스', '주문상태': '접수', '주문수량': 115, '주문가격': 5140, '미체결수량': 115, '원주문번호': '0000000', '주문구분': '매수', '주문/체결시간': '112027', '체결가': 0, '체결량': 0, '현재가': 5130, '(최우선)매도호가': 5140, '(최우선)매수호가': 5130}
+[2021-03-04 11:20:28,283] I EventLoop.py | Kiwoom-_chejan_slot-1524 I DEBUG    > 접수, 확인, 체결 : {'종목코드': '086980', '주문번호': '0116985', '종목명': '쇼박스', '주문상태': '체결', '주문수량': 115, '주문가격': 5140, '미체결수량': 0, '원주문번호': '0000000', '주문구분': '매수', '주문/체결시간': '112027', '체결가': 5130, '체결량': 115, '현재가': 5130, '(최우선)매도호가': 5140, '(최우선)매수호가': 5130}
+[2021-03-04 11:20:28,285] I EventLoop.py | Kiwoom-_chejan_slot-1572 I DEBUG    > 잔고반영: {'현재가': 5130, '종목코드': '086980', '종목명': '쇼박스', '보유수량': 115, '주문가능수량': 115, '매입단가': 5130, '총매입가': 589950, '매도매수구분': '매수', '(최우선)매도호가': 5140, '(최우선)매수호가': 5130}
+[2021-03-04 12:57:28,888] I Signal.py | Kiwoom-real_time_recommand_fuc-0291 I DEBUG    > 새로 들어온 종목: 133750, real_time_recommand_dict: {'ub': None, 'time': '125728', 'numbering': False}
+[2021-03-04 12:57:29,890] I Signal.py | Kiwoom-screen_number_real_time_setting-0216 I DEBUG    > 스크린 넘버 세팅 새로 들어온 종목: 133750, portfolio_stock_dict: {'매수매도': '매수', 'ub': None}
+[2021-03-04 12:57:32,923] I Signal.py | Kiwoom-screen_number_real_time_setting-0263 I DEBUG    > 실시간 등록 코드: ;133750, 실시간 등록 리턴값: 0
+[2021-03-04 12:57:35,201] I EventLoop.py | Kiwoom-_receive_real_data_slot-1407 I DEBUG    > 매수조건 통과 133750 
+[2021-03-04 12:57:35,201] I EventLoop.py | Kiwoom-_receive_real_data_slot-1408 I DEBUG    > (최우선)매도호가 3845 
+[2021-03-04 12:57:35,508] I EventLoop.py | Kiwoom-_receive_real_data_slot-1421 I DEBUG    > 코드 : 133750 매수주문 전달 성공
+[2021-03-04 12:57:35,985] I EventLoop.py | Kiwoom-_msg_slot-1594 I DEBUG    > 스크린: 8002, 요청이름: 신규매수, tr코드: KOA_NORMAL_BUY_KQ_ORD, 시간: 2021-03-04 12:57:35 --- [00Z112] 모의투자 정상처리 되었습니다
+[2021-03-04 12:57:36,001] I EventLoop.py | Kiwoom-_chejan_slot-1524 I DEBUG    > 접수, 확인, 체결 : {'종목코드': '133750', '주문번호': '0148714', '종목명': '메가엠디', '주문상태': '접수', '주문수량': 154, '주문가격': 3845, '미체결수량': 154, '원주문번호': '0000000', '주문구분': '매수', '주문/체결시간': '125734', '체결가': 0, '체결량': 0, '현재가': 3830, '(최우선)매도호가': 3830, '(최우선)매수호가': 3825}
+[2021-03-04 12:57:36,308] I EventLoop.py | Kiwoom-_receive_real_data_slot-1443 I DEBUG    > 매수취소 전달 성공
+[2021-03-04 12:57:36,398] I EventLoop.py | Kiwoom-_chejan_slot-1524 I DEBUG    > 접수, 확인, 체결 : {'종목코드': '133750', '주문번호': '0148714', '종목명': '메가엠디', '주문상태': '체결', '주문수량': 154, '주문가격': 3845, '미체결수량': 0, '원주문번호': '0000000', '주문구분': '매수', '주문/체결시간': '125735', '체결가': 3830, '체결량': 154, '현재가': 3830, '(최우선)매도호가': 3830, '(최우선)매수호가': 3825}
+[2021-03-04 12:57:36,400] I EventLoop.py | Kiwoom-_chejan_slot-1572 I DEBUG    > 잔고반영: {'현재가': 3830, '종목코드': '133750', '종목명': '메가엠디', '보유수량': 154, '주문가능수량': 154, '매입단가': 3830, '총매입가': 589820, '매도매수구분': '매수', '(최우선)매도호가': 3830, '(최우선)매수호가': 3825}
+[2021-03-04 12:57:37,029] I EventLoop.py | Kiwoom-_msg_slot-1594 I DEBUG    > 스크린: 8001, 요청이름: 매수취소, tr코드: KOA_NORMAL_KQ_CANCEL, 시간: 2021-03-04 12:57:37 --- [00Z235] 모의투자 취소주문 수량 오류
+[2021-03-04 13:34:13,466] I Signal.py | Kiwoom-real_time_recommand_fuc-0291 I DEBUG    > 새로 들어온 종목: 027830, real_time_recommand_dict: {'ub': None, 'time': '133413', 'numbering': False}
+[2021-03-04 13:34:14,469] I Signal.py | Kiwoom-screen_number_real_time_setting-0216 I DEBUG    > 스크린 넘버 세팅 새로 들어온 종목: 027830, portfolio_stock_dict: {'매수매도': '매수', 'ub': None}
+[2021-03-04 13:34:17,482] I Signal.py | Kiwoom-screen_number_real_time_setting-0263 I DEBUG    > 실시간 등록 코드: ;027830, 실시간 등록 리턴값: 0
+[2021-03-04 13:34:21,202] I EventLoop.py | Kiwoom-_receive_real_data_slot-1407 I DEBUG    > 매수조건 통과 027830 
+[2021-03-04 13:34:21,202] I EventLoop.py | Kiwoom-_receive_real_data_slot-1408 I DEBUG    > (최우선)매도호가 2295 
+[2021-03-04 13:34:21,509] I EventLoop.py | Kiwoom-_receive_real_data_slot-1421 I DEBUG    > 코드 : 027830 매수주문 전달 성공
+[2021-03-04 13:34:22,455] I EventLoop.py | Kiwoom-_msg_slot-1594 I DEBUG    > 스크린: 8003, 요청이름: 신규매수, tr코드: KOA_NORMAL_BUY_KQ_ORD, 시간: 2021-03-04 13:34:22 --- [00Z112] 모의투자 정상처리 되었습니다
+[2021-03-04 13:34:22,503] I EventLoop.py | Kiwoom-_chejan_slot-1524 I DEBUG    > 접수, 확인, 체결 : {'종목코드': '027830', '주문번호': '0162063', '종목명': '대성창투', '주문상태': '접수', '주문수량': 259, '주문가격': 2295, '미체결수량': 259, '원주문번호': '0000000', '주문구분': '매수', '주문/체결시간': '133421', '체결가': 0, '체결량': 0, '현재가': 2290, '(최우선)매도호가': 2295, '(최우선)매수호가': 2290}
+[2021-03-04 13:34:22,505] I EventLoop.py | Kiwoom-_chejan_slot-1524 I DEBUG    > 접수, 확인, 체결 : {'종목코드': '027830', '주문번호': '0162063', '종목명': '대성창투', '주문상태': '체결', '주문수량': 259, '주문가격': 2295, '미체결수량': 237, '원주문번호': '0000000', '주문구분': '매수', '주문/체결시간': '133421', '체결가': 2290, '체결량': 22, '현재가': 2290, '(최우선)매도호가': 2295, '(최우선)매수호가': 2290}
+[2021-03-04 13:34:22,507] I EventLoop.py | Kiwoom-_chejan_slot-1572 I DEBUG    > 잔고반영: {'현재가': 2290, '종목코드': '027830', '종목명': '대성창투', '보유수량': 22, '주문가능수량': 22, '매입단가': 2290, '총매입가': 50380, '매도매수구분': '매수', '(최우선)매도호가': 2295, '(최우선)매수호가': 2290}
+[2021-03-04 13:34:23,209] I EventLoop.py | Kiwoom-_receive_real_data_slot-1443 I DEBUG    > 매수취소 전달 성공
+[2021-03-04 13:34:23,517] I EventLoop.py | Kiwoom-_receive_real_data_slot-1443 I DEBUG    > 매수취소 전달 성공
+[2021-03-04 13:34:23,822] I EventLoop.py | Kiwoom-_receive_real_data_slot-1443 I DEBUG    > 매수취소 전달 성공
+[2021-03-04 13:34:24,129] I EventLoop.py | Kiwoom-_receive_real_data_slot-1443 I DEBUG    > 매수취소 전달 성공
+[2021-03-04 13:34:24,228] I EventLoop.py | Kiwoom-_msg_slot-1594 I DEBUG    > 스크린: 6001, 요청이름: 매수취소, tr코드: KOA_NORMAL_KP_CANCEL, 시간: 2021-03-04 13:34:24 --- [00Z115] 모의투자 정상처리 되었습니다
+[2021-03-04 13:34:24,309] I EventLoop.py | Kiwoom-_chejan_slot-1524 I DEBUG    > 접수, 확인, 체결 : {'종목코드': '027830', '주문번호': '0162076', '종목명': '대성창투', '주문상태': '접수', '주문수량': 237, '주문가격': 0, '미체결수량': 237, '원주문번호': '0162063', '주문구분': '매수취소', '주문/체결시간': '133422', '체결가': 0, '체결량': 0, '현재가': 2290, '(최우선)매도호가': 2295, '(최우선)매수호가': 2290}
+[2021-03-04 13:34:24,311] I EventLoop.py | Kiwoom-_chejan_slot-1524 I DEBUG    > 접수, 확인, 체결 : {'종목코드': '027830', '주문번호': '0162076', '종목명': '대성창투', '주문상태': '확인', '주문수량': 237, '주문가격': 0, '미체결수량': 0, '원주문번호': '0162063', '주문구분': '매수취소', '주문/체결시간': '133422', '체결가': 0, '체결량': 0, '현재가': 2290, '(최우선)매도호가': 2295, '(최우선)매수호가': 2290}
+[2021-03-04 13:34:24,312] I EventLoop.py | Kiwoom-_chejan_slot-1524 I DEBUG    > 접수, 확인, 체결 : {'종목코드': '027830', '주문번호': '0162063', '종목명': '대성창투', '주문상태': '체결', '주문수량': 259, '주문가격': 2295, '미체결수량': 0, '원주문번호': '0000000', '주문구분': '매수', '주문/체결시간': '133421', '체결가': 0, '체결량': 0, '현재가': 2290, '(최우선)매도호가': 2295, '(최우선)매수호가': 2290}
+[2021-03-04 13:34:24,555] I EventLoop.py | Kiwoom-_msg_slot-1594 I DEBUG    > 스크린: 6001, 요청이름: 매수취소, tr코드: KOA_NORMAL_KP_CANCEL, 시간: 2021-03-04 13:34:24 --- [00Z235] 모의투자 취소주문 수량 오류
+[2021-03-04 13:34:24,812] I EventLoop.py | Kiwoom-_msg_slot-1594 I DEBUG    > 스크린: 6001, 요청이름: 매수취소, tr코드: KOA_NORMAL_KP_CANCEL, 시간: 2021-03-04 13:34:24 --- [00Z235] 모의투자 취소주문 수량 오류
+[2021-03-04 13:34:24,937] I EventLoop.py | Kiwoom-_msg_slot-1594 I DEBUG    > 스크린: 6001, 요청이름: 매수취소, tr코드: KOA_NORMAL_KP_CANCEL, 시간: 2021-03-04 13:34:24 --- [00Z235] 모의투자 취소주문 수량 오류
+[2021-03-04 14:47:39,835] I Signal.py | Kiwoom-real_time_recommand_fuc-0291 I DEBUG    > 새로 들어온 종목: 080530, real_time_recommand_dict: {'ub': None, 'time': '144739', 'numbering': False}
+[2021-03-04 14:47:40,837] I Signal.py | Kiwoom-screen_number_real_time_setting-0216 I DEBUG    > 스크린 넘버 세팅 새로 들어온 종목: 080530, portfolio_stock_dict: {'매수매도': '매수', 'ub': None}
+[2021-03-04 14:47:43,853] I Signal.py | Kiwoom-screen_number_real_time_setting-0263 I DEBUG    > 실시간 등록 코드: ;080530, 실시간 등록 리턴값: 0
+[2021-03-04 14:47:48,211] I EventLoop.py | Kiwoom-_receive_real_data_slot-1407 I DEBUG    > 매수조건 통과 080530 
+[2021-03-04 14:47:48,212] I EventLoop.py | Kiwoom-_receive_real_data_slot-1408 I DEBUG    > (최우선)매도호가 1990 
+[2021-03-04 14:47:48,517] I EventLoop.py | Kiwoom-_receive_real_data_slot-1421 I DEBUG    > 코드 : 080530 매수주문 전달 성공
+[2021-03-04 14:47:49,471] I EventLoop.py | Kiwoom-_msg_slot-1594 I DEBUG    > 스크린: 8004, 요청이름: 신규매수, tr코드: KOA_NORMAL_BUY_KQ_ORD, 시간: 2021-03-04 14:47:49 --- [00Z112] 모의투자 정상처리 되었습니다
+[2021-03-04 14:47:49,519] I EventLoop.py | Kiwoom-_chejan_slot-1524 I DEBUG    > 접수, 확인, 체결 : {'종목코드': '080530', '주문번호': '0191512', '종목명': '코디', '주문상태': '접수', '주문수량': 298, '주문가격': 1990, '미체결수량': 298, '원주문번호': '0000000', '주문구분': '매수', '주문/체결시간': '144747', '체결가': 0, '체결량': 0, '현재가': 1990, '(최우선)매도호가': 1990, '(최우선)매수호가': 1985}
+[2021-03-04 14:47:50,427] I EventLoop.py | Kiwoom-_receive_real_data_slot-1443 I DEBUG    > 매수취소 전달 성공
+[2021-03-04 14:47:50,719] I EventLoop.py | Kiwoom-_chejan_slot-1524 I DEBUG    > 접수, 확인, 체결 : {'종목코드': '080530', '주문번호': '0191512', '종목명': '코디', '주문상태': '체결', '주문수량': 298, '주문가격': 1990, '미체결수량': 169, '원주문번호': '0000000', '주문구분': '매수', '주문/체결시간': '144748', '체결가': 1990, '체결량': 129, '현재가': 1990, '(최우선)매도호가': 1995, '(최우선)매수호가': 1990}
+[2021-03-04 14:47:50,721] I EventLoop.py | Kiwoom-_chejan_slot-1572 I DEBUG    > 잔고반영: {'현재가': 1990, '종목코드': '080530', '종목명': '코디', '보유수량': 129, '주문가능수량': 129, '매입단가': 1990, '총매입가': 256710, '매도매수구분': '매수', '(최우선)매도호가': 1995, '(최우선)매수호가': 1990}
+[2021-03-04 14:47:51,031] I EventLoop.py | Kiwoom-_receive_real_data_slot-1443 I DEBUG    > 매수취소 전달 성공
+[2021-03-04 14:47:51,337] I EventLoop.py | Kiwoom-_receive_real_data_slot-1443 I DEBUG    > 매수취소 전달 성공
+[2021-03-04 14:47:51,338] I EventLoop.py | Kiwoom-_msg_slot-1594 I DEBUG    > 스크린: 8004, 요청이름: 매수취소, tr코드: KOA_NORMAL_KQ_CANCEL, 시간: 2021-03-04 14:47:51 --- [00Z115] 모의투자 정상처리 되었습니다
+[2021-03-04 14:47:51,344] I EventLoop.py | Kiwoom-_chejan_slot-1524 I DEBUG    > 접수, 확인, 체결 : {'종목코드': '080530', '주문번호': '0191526', '종목명': '코디', '주문상태': '접수', '주문수량': 169, '주문가격': 0, '미체결수량': 169, '원주문번호': '0191512', '주문구분': '매수취소', '주문/체결시간': '144749', '체결가': 0, '체결량': 0, '현재가': 1990, '(최우선)매도호가': 1995, '(최우선)매수호가': 1990}
+[2021-03-04 14:47:51,345] I EventLoop.py | Kiwoom-_chejan_slot-1524 I DEBUG    > 접수, 확인, 체결 : {'종목코드': '080530', '주문번호': '0191526', '종목명': '코디', '주문상태': '확인', '주문수량': 169, '주문가격': 0, '미체결수량': 0, '원주문번호': '0191512', '주문구분': '매수취소', '주문/체결시간': '144749', '체결가': 0, '체결량': 0, '현재가': 1990, '(최우선)매도호가': 1995, '(최우선)매수호가': 1990}
+[2021-03-04 14:47:51,347] I EventLoop.py | Kiwoom-_chejan_slot-1524 I DEBUG    > 접수, 확인, 체결 : {'종목코드': '080530', '주문번호': '0191512', '종목명': '코디', '주문상태': '체결', '주문수량': 298, '주문가격': 1990, '미체결수량': 0, '원주문번호': '0000000', '주문구분': '매수', '주문/체결시간': '144747', '체결가': 0, '체결량': 0, '현재가': 1990, '(최우선)매도호가': 1995, '(최우선)매수호가': 1990}
+[2021-03-04 14:47:51,488] I EventLoop.py | Kiwoom-_msg_slot-1594 I DEBUG    > 스크린: 8001, 요청이름: 매수취소, tr코드: KOA_NORMAL_KQ_CANCEL, 시간: 2021-03-04 14:47:51 --- [00Z235] 모의투자 취소주문 수량 오류
+[2021-03-04 14:47:51,862] I EventLoop.py | Kiwoom-_msg_slot-1594 I DEBUG    > 스크린: 6001, 요청이름: 매수취소, tr코드: KOA_NORMAL_KP_CANCEL, 시간: 2021-03-04 14:47:51 --- [00Z235] 모의투자 취소주문 수량 오류
+[2021-03-04 15:19:59,821] I EventLoop.py | Kiwoom-_receive_real_data_slot-0962 I DEBUG    > 장 종료, 동시호가로 넘어감
+[2021-03-04 15:20:59,821] I EventLoop.py | Kiwoom-_receive_real_data_slot-0962 I DEBUG    > 장 종료, 동시호가로 넘어감
+[2021-03-04 15:21:59,729] I EventLoop.py | Kiwoom-_receive_real_data_slot-0962 I DEBUG    > 장 종료, 동시호가로 넘어감
+[2021-03-04 15:22:59,822] I EventLoop.py | Kiwoom-_receive_real_data_slot-0962 I DEBUG    > 장 종료, 동시호가로 넘어감
+[2021-03-04 15:23:59,820] I EventLoop.py | Kiwoom-_receive_real_data_slot-0962 I DEBUG    > 장 종료, 동시호가로 넘어감
+[2021-03-04 15:24:59,826] I EventLoop.py | Kiwoom-_receive_real_data_slot-0962 I DEBUG    > 장 종료, 동시호가로 넘어감
+[2021-03-04 15:25:59,833] I EventLoop.py | Kiwoom-_receive_real_data_slot-0962 I DEBUG    > 장 종료, 동시호가로 넘어감
+[2021-03-04 15:26:59,820] I EventLoop.py | Kiwoom-_receive_real_data_slot-0962 I DEBUG    > 장 종료, 동시호가로 넘어감
+[2021-03-04 15:27:59,826] I EventLoop.py | Kiwoom-_receive_real_data_slot-0962 I DEBUG    > 장 종료, 동시호가로 넘어감
+[2021-03-04 15:28:59,822] I EventLoop.py | Kiwoom-_receive_real_data_slot-0962 I DEBUG    > 장 종료, 동시호가로 넘어감
+[2021-03-04 15:29:09,830] I EventLoop.py | Kiwoom-_receive_real_data_slot-0962 I DEBUG    > 장 종료, 동시호가로 넘어감
+[2021-03-04 15:29:19,827] I EventLoop.py | Kiwoom-_receive_real_data_slot-0962 I DEBUG    > 장 종료, 동시호가로 넘어감
+[2021-03-04 15:29:29,831] I EventLoop.py | Kiwoom-_receive_real_data_slot-0962 I DEBUG    > 장 종료, 동시호가로 넘어감
+[2021-03-04 15:29:39,822] I EventLoop.py | Kiwoom-_receive_real_data_slot-0962 I DEBUG    > 장 종료, 동시호가로 넘어감
+[2021-03-04 15:29:49,820] I EventLoop.py | Kiwoom-_receive_real_data_slot-0962 I DEBUG    > 장 종료, 동시호가로 넘어감
+[2021-03-04 15:29:59,729] I EventLoop.py | Kiwoom-_receive_real_data_slot-0965 I DEBUG    > 3시30분 장 종료
+[2021-03-04 16:45:24,331] I EventLoop.py | Kiwoom-_event_connect_slot-0112 I DEBUG    > 정상처리
