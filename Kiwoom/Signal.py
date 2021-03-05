@@ -43,6 +43,8 @@ class Signal:
 
         self.event_loop = EventLoop(self.api, self.real_type, self.logging, self.portfolio_stock_dict)
 
+        self.condition_stock = self.event_loop.condition_stock
+
         ####### 요청 스크린 번호
         self.screen_start_stop_real = "1000"  # 장 시작/종료 실시간 스크린 번호
         self.screen_real_stock = "5000"  # 지정한 종목의 실시간 정보 요청시 사용
@@ -323,7 +325,6 @@ class Signal:
     '''
     포트폴리오 테이블에 새로 들어온 종목
     '''
-
     def real_time_recommand_fuc(self):
         db = MarketDB()
         df = db.get_portfolio()
@@ -352,87 +353,6 @@ class Signal:
                         self.logging.logger.debug("새로 들어온 종목: {}, real_time_recommand_dict: {}".format(stock_code, self.real_time_recommand_dict[stock_code]))
         del db
 
-    '''
-    * 거래량 급증 종목 기준
-    * 2020-10-14 개발 시작
-    2020-10-18 
-    스켈핑으로 개발
-    2020-10-20 
-    신고가 호출하는 걸로 변경
-    ------------------------------------   
-    
-    '''
-
-    def gathering_money_fuc(self):
-        # global count, sched
-        self.new_high_req()
-
-        top_data = []
-        if self.event_loop.gathering_money_stock is not None:
-
-            for row in self.event_loop.gathering_money_stock:
-
-                if self.api.server_gubun == "1":
-                    if row[0] == '096350' or row[0] == '96040':  # 096350(대창솔루션) 모의투자 매매 불가능
-                        continue
-
-                df = self.mk.get_daily_price(row[0])
-
-                market = self.api.get_login_info(tag="GetMasterStockInfo", code=row[0]).split(";")[0].split("|")[1]
-
-                if market == '거래소' or market == '코스닥':
-                    # print("종목명 : {}, 종목코드 : {}, 시장구분 : {}".format(row[1], row[0], market))
-                    if self.analyzer_daily.get_side_by_side_rise(df) or self.analyzer_daily.get_disparity(df):
-                        top_data.append(row[0])
-
-            # print("top_data : {}".format(top_data))
-
-        for code in self.portfolio_stock_dict.keys():
-            for i in top_data:  # screen_number_setting에 갔다 온 코드는 screen_number_setting에서 부여한 스크린 번호 사용
-                if i == code:
-                    top_data.remove(i)
-
-        max_invest_num = 10
-        remain = max_invest_num - len(self.portfolio_stock_dict)
-        top_data = top_data[0:remain]
-
-        self.event_loop.vol_uprise_stock_dict.clear()
-
-        for code in top_data:
-            self.event_loop.vol_uprise_stock_dict.update({code: {}})
-        #
-        # 스크린번호 할당
-        cnt = 0
-        for code in self.event_loop.vol_uprise_stock_dict.keys():
-
-            temp_screen = int(self.temp_screen_real_stock)
-            meme_screen = int(self.temp_screen_meme_stock)
-
-            if (cnt % 50) == 0:
-                temp_screen += 1
-                self.temp_screen_real_stock = str(temp_screen)
-
-            if (cnt % 50) == 0:
-                meme_screen += 1
-                self.temp_screen_meme_stock = str(meme_screen)
-
-            self.event_loop.vol_uprise_stock_dict.update(
-                {code: {"스크린번호": str(self.temp_screen_real_stock), "주문용스크린번호": str(self.temp_screen_meme_stock)}})
-            self.portfolio_stock_dict.update(
-                {code: {"스크린번호": str(self.temp_screen_real_stock), "주문용스크린번호": str(self.temp_screen_meme_stock)}})
-            cnt += 1
-
-        print("self.vol_uprise_stock_dict : {}".format(self.event_loop.vol_uprise_stock_dict))
-
-        for code in self.event_loop.vol_uprise_stock_dict.keys():
-            screen_num = self.event_loop.vol_uprise_stock_dict[code]['스크린번호']
-            fids = self.real_type.REALTYPE['주식체결']['체결시간']
-            # a = signal.real_type.REALTYPE['주식호가잔량']['매도호가총잔량']
-            # b = signal.real_type.REALTYPE['주식체결']['체결시간']
-            # fids = str(a) + ';' + str(b)
-            # fids = b
-            # self.signal.dynamicCall("SetRealReg(QString, QString, QString, QString)", screen_num, code, fids, "1")
-            self.call_set_real_reg(screen_num, code, fids, "1")
 
     # 신고저가요청
     def new_high_req(self):
@@ -445,10 +365,11 @@ class Signal:
         self.api.set_input_value("상하한포함", "0")  # 0:미포함, 1:포함
         self.api.set_input_value("기간", "20")  # 5:5일, 10:10일, 20:20일, 60:60일, 250:250일, 250일까지 입력가능
 
-        self.api.comm_rq_data("신고저가요청", "opt10016", 0, self.event_loop.screen_calculation_stock)
+        self.api.comm_rq_data("신고저가요청", "opt10016", 0, "1111")
 
         self.event_loop.calculator_event_loop = QEventLoop()
         self.event_loop.calculator_event_loop.exec_()
+
 
     def gathering_money_fuc_bak(self, is_after="2"):
         # global count, sched
@@ -683,79 +604,6 @@ class Signal:
         self.event_loop.calculator_event_loop = QEventLoop()
         self.event_loop.calculator_event_loop.exec_()
 
-    ###############################################################
-    # 종목 분석                                                    #
-    ###############################################################
-    def analyze_fuc(self):
-        ###############################################################
-        '''
-        알고리즘 테스트
-        :return:
-        '''
-        # code_list = self.api.get_code_list_by_market("0")
-        # code_list.extend(self.api.get_code_list_by_market("10"))
-        # # code_list.extend(self.api.get_code_list_by_market("8"))
-        #
-        # # code_list = self.api.get_code_list_by_market("10")
-        # # print("code_list : {}".format(self.analyzer.mk.codes))
-        #
-        # # self.logging.logger.debug('코스닥 갯수 : {}'.format(len(code_list)))
-        # # code_list = ['041190']  #
-        # #
-        # top_data = []
-        # for idx, code in enumerate(code_list):
-        #     # self.minute_candle_req(code=code)
-        #
-        #     df = self.mk.get_daily_price(code, end_date="2020-10-19")
-        #
-        #     # if self.analyzer_daily.get_side_by_side_rise(df):
-        #     if self.analyzer_daily.get_disparity(df):
-        #         top_data.append(code)
-        #
-        #
-        # print("top_data : {}".format(top_data))
-        ###############################################################
-
-        ###############################################################
-        '''
-        tr 테스트
-        :return:
-        '''
-        code_list = self.api.get_code_list_by_market("0")
-        # code_list.extend(self.api.get_code_list_by_market("10"))
-        # code_list.extend(self.api.get_code_list_by_market("8"))
-
-        for idx, code in enumerate(code_list):
-            self.api.disconnect_real_data(self.event_loop.screen_analyze_stock) #계산용 스크린 번호 끊기
-
-            print("%s / %s : KOSDAQ Stock Code : %s is updating... " % (idx + 1, len(code_list), code))
-            self.day_candle_req(code=code)
-
-        # code_list = self.api.get_code_list_by_market("10")
-        # # print("code_list : {}".format(self.analyzer.mk.codes))
-        #
-        # # self.logging.logger.debug('코스닥 갯수 : {}'.format(len(code_list)))
-        # # code_list = ['011150']  #
-        # # #
-        # # top_data = []
-        # for idx, code in enumerate(code_list):
-        #     # self.minute_candle_req(code=code)
-        #     self.hoga_balance_top_req()
-
-        ###############################################################
-
-        ###############################################################
-        '''
-        주봉 테이블에 저장
-        :return: 
-        '''
-        # sql = "SELECT a.code, a.company FROM company_info a where code > '045300'"
-        # sql = "SELECT a.code, a.company FROM company_info a LEFT OUTER JOIN (select distinct code from week_price WHERE DATE = '2020-10-19') b on a.code = b.code WHERE b.code IS NULL"
-        # sql = "SELECT * FROM company_info"
-        # df = pd.read_sql(sql, self.mk.conn)
-        # for idx in range(len(df)):
-        #     self.week_kiwoom_db(code=df['code'].values[idx])
-        ###############################################################
 
     def make_minute_candle_func(self, code):
 

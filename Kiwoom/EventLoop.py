@@ -64,7 +64,6 @@ class EventLoop:
         self.day_candle = None  # 일봉 차트 담기
         self.real_data_dict = {}  # 분봉 차트를 만들기 위한 딕셔너리
         self.minute_candle_dict = {}  # 종목별 분봉담기 2020-10-25
-        self.gathering_money_stock = []  # 스케줄러로 종목 담기
         self.condition_stock = {}  # 조검검색 1차 필터링 종목 2021-03-04
         #######################################################
 
@@ -84,8 +83,6 @@ class EventLoop:
         self.today_open = 0  # 테스트용. 실제로 매입가 가져올 수 있으므로 필요없게 되면 삭제할 것.
 
         # self.convergence_dict = {} #수렴 여부 딕셔너리. 거래량 급증 실시간에서 사용
-        #
-        # self.vol_uprise_stock_dict = {}  # 거래량 급증 종목 딕셔너리
 
         self.event_slots()  # 슬롯을 받을 이벤트 등록
         self.real_event_slots()  # 슬롯을 받을 이벤트 등록(실시간)
@@ -149,6 +146,8 @@ class EventLoop:
             if code not in self.portfolio_stock_dict:
                 self.condition_stock.update({code: {}})
         print("코드 개수 2 : {}".format(len(self.condition_stock)))
+
+        self.api.set_real_remove("0156", "ALL") # 조건 검색한 종목들 실시간 스크린번호 삭제
 
     # 조건식 실시간으로 받기
     def _condition_real_slot(self, strCode, strType, strConditionName, strConditionIndex):
@@ -783,7 +782,7 @@ class EventLoop:
 
             # 여기 있으면 실시간 안 넘어감 OK
             # self.api.set_real_remove("2222", "ALL")  # opt10023 : 거래량급증요청 호출해서 등록된 거 삭제
-            self.api.disconnect_real_data(self.screen_calculation_stock)
+            # self.api.disconnect_real_data(self.screen_calculation_stock)
 
             ex_data = self.api.get_comm_data_ex(sTrCode, "신고저가요청")
 
@@ -791,9 +790,9 @@ class EventLoop:
             #
             # df = pd.DataFrame(ex_data, columns=colName)
             #
-            # print("ex_data : {}".format(ex_data))
+            print("ex_data : {}".format(ex_data))
 
-            self.gathering_money_stock = ex_data
+            # self.gathering_money_stock = ex_data
 
             self.calculator_event_loop.exit()
 
@@ -1303,15 +1302,34 @@ class EventLoop:
                 if sCode in self.portfolio_stock_dict.keys():
                     if "MA20" in self.portfolio_stock_dict[sCode] and "average" in self.portfolio_stock_dict[sCode] \
                             and "max10" in self.portfolio_stock_dict[sCode] and "min10" in self.portfolio_stock_dict[sCode]:
-
+                        print("들어가기 전 계좌평가잔고내역 종목코드 : {}, 매매가능수량: {}, 수익률: {}, 시간: {}, 현재가: {}".format(sCode, asd['매매가능수량'],
+                                                                                                meme_rate,
+                                                                                                datetime.datetime.now().strftime(
+                                                                                                    '%Y-%m-%d %H:%M:%S'),
+                                                                                                b))
                         if asd['매매가능수량'] > 0:
                             if meme_rate > 1:
+                                print("들어간 후 계좌평가잔고내역 종목코드 : {}, 매매가능수량: {}, 수익률: {}, 시간: {}, 현재가: {}".format(sCode, asd['매매가능수량'],
+                                                                                               meme_rate,
+                                                                                               datetime.datetime.now().strftime(
+                                                                                                   '%Y-%m-%d %H:%M:%S'), b))
+                                print("들어가기 전 MA20: {}, average: {}".format(self.portfolio_stock_dict[sCode]["MA20"],
+                                                                     self.portfolio_stock_dict[sCode]["average"]))
                                 if b < self.portfolio_stock_dict[sCode]["MA20"] and b < self.portfolio_stock_dict[sCode]["average"]:
                                     # or (self.t_sell.strftime('%Y-%m-%d %H:%M:%S') < datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S') < self.t_exit.strftime('%Y-%m-%d %H:%M:%S'))):
+                                    print("들어간 후 MA20: {}, average: {}".format(self.portfolio_stock_dict[sCode]["MA20"], self.portfolio_stock_dict[sCode]["average"]))
+                                    print(
+                                        "들어가기 전 max10: {}, min10: {}".format(self.portfolio_stock_dict[sCode]["max10"],
+                                                                            self.portfolio_stock_dict[sCode][
+                                                                                "min10"]))
                                     if self.portfolio_stock_dict[sCode]["max10"] - self.portfolio_stock_dict[sCode][
                                         "min10"] > 0:
                                         if ((self.portfolio_stock_dict[sCode]["max10"] - self.portfolio_stock_dict[sCode][
                                             "min10"]) / self.portfolio_stock_dict[sCode]["max10"]) > 0.03:
+                                            print(
+                                                "들어간 후 max10: {}, min10: {}".format(self.portfolio_stock_dict[sCode]["max10"],
+                                                                               self.portfolio_stock_dict[sCode][
+                                                                                   "min10"]))
                                             order_success = self.api.send_order("신규매도", self.portfolio_stock_dict[sCode][
                                                 "주문용스크린번호"],
                                                                                 self.account_num, 2, sCode, asd['매매가능수량'],

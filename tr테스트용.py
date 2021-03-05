@@ -3,9 +3,7 @@ from PyQt5.QtWidgets import QApplication
 from PyQt5.QtCore import QTimer
 from PyQt5.QtTest import QTest
 from Kiwoom.Signal import Signal  # 클래스가 와도 되고 파일명(모듈)이 와도 된다.
-from Kiwoom.thread import MinuteCandle, RealTimeScreenNumbering
 # from apscheduler.schedulers.background import BackgroundScheduler
-
 import time
 
 
@@ -24,8 +22,6 @@ if __name__  == "__main__":
     # QTimer.singleShot(5000, signal.not_concluded_account) # 5초 뒤에 미체결 종목들 가져오기 실행(동시성 지원. 다음 메소드를 실행하면서 이 메소드만 5초 뒤에 실행)
     #############################################
 
-    # signal.analyze_fuc() # 종목 가져와서 분석하기
-
     # QTest.qWait(10000)
     # signal.screen_number_setting() # 여기에서도 5초 딜레이 준다
     # QTest.qWait(5000) #5초
@@ -34,35 +30,21 @@ if __name__  == "__main__":
     # sched.add_job(signal.get_condition_load, 'cron', hour='09', minute='02', second="59", id='test')
     # sched.start()
 
-    signal.get_condition_load()
+    # signal.get_condition_load()
 
     # signal.real_time_condition_stock_fuc()
     # QTest.qWait(500)  # 1초
     # signal.screen_number_real_time_setting()
 
-
     # sched.add_job(signal.gathering_money_fuc, 'cron', second=30, start_date=signal.event_loop.today + ' 09:02:00',
     #               end_date=signal.event_loop.today + ' 15:30:00', args=(['2']))
     # sched.add_job(signal.get_condition_load, 'interval', seconds=10)
     # sched.start()
 
-    # signal.event_loop.sign_volume_req(code="289080")
+    signal.event_loop.sign_volume_req(code="289080")
     # signal.minute_candle_req(code="064240")
-    # signal.day_kiwoom_db(code="114450")
 
     # signal.volume_uprise_req("1", "500", "1") # 거래량 급증 요청
-
-    # signal.new_high_req()  # 신고저가요청
-
-    # signal.gathering_money_fuc()
-
-    # signal.portfolio_sche_fuc()
-
-    # sched.add_job(signal.gathering_money_fuc, 'cron', second=30, start_date=signal.event_loop.today + ' 09:02:00',
-    #               end_date=signal.event_loop.today + ' 15:30:00', args=(['2']))
-
-    # sched.add_job(signal.get_condition_load, 'interval', seconds=10)
-    # sched.start()
 
     app.exec_()
 

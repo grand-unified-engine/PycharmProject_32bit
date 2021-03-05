@@ -3,7 +3,7 @@ from PyQt5.QtWidgets import QApplication
 from PyQt5.QtCore import QTimer
 from PyQt5.QtTest import QTest
 from Kiwoom.Signal import Signal  # 클래스가 와도 되고 파일명이 와도 된다.
-from Kiwoom.thread import MinuteCandle, RealTimeScreenNumbering
+from Kiwoom.thread import BuyMinuteCandle, SellMinuteCandle, RealTimeScreenNumbering
 from apscheduler.schedulers.background import BackgroundScheduler
 
 if __name__  == "__main__":
@@ -26,13 +26,18 @@ if __name__  == "__main__":
     # screenNumbering = RealTimeScreenNumbering(signal)
     # screenNumbering.start()
 
-    sched = BackgroundScheduler()
-    sched.add_job(signal.get_condition_load, 'cron', hour='09', minute='01', second="00", id='test')
-    sched.start()
+    # sched = BackgroundScheduler()
+    # sched.add_job(signal.get_condition_load, 'cron', hour='09', minute='01', second="00", id='test')
+    # sched.start()
+    signal.get_condition_load()
 
-    QTest.qWait(2000)  # 2초
-    minuteCandle = MinuteCandle(signal)
-    minuteCandle.start()
+    QTest.qWait(2000)  # 1초
+    sMinuteCandle = SellMinuteCandle(signal)
+    sMinuteCandle.start()
+
+    QTest.qWait(2000)  # 1초
+    bMinuteCandle = BuyMinuteCandle(signal)
+    bMinuteCandle.start()
 
     app.exec_() # 이벤트 루프 실행
 
