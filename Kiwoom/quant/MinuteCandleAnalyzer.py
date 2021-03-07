@@ -30,15 +30,14 @@ class Analyzer():
         :return:
         '''
         try:
-            org_df = self.minute_candle
-            df = org_df[['체결가']].copy()
+            df = self.minute_candle
 
-            df['center'] = df['Close'].rolling(n).mean()  # 중앙 이동평균선
-            df['ub'] = df['center'] + sigma * df['Close'].rolling(n).std()  # 상단 밴드
-            df['lb'] = df['center'] - sigma * df['Close'].rolling(n).std()  # 하단 밴드
+            df['center'] = df['체결가'].rolling(n).mean()  # 중앙 이동평균선
+            df['ub'] = df['center'] + sigma * df['체결가'].rolling(n).std()  # 상단 밴드
+            df['lb'] = df['center'] - sigma * df['체결가'].rolling(n).std()  # 하단 밴드
             df['bandwidth'] = (df['ub'] - df['lb']) / df['center'] * 100
 
-            return df
+            # return df
 
         except Exception as ex:
             # self.logging.logger.debug("get_target_price() -> exception! {} ".format(str(ex)))

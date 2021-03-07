@@ -119,7 +119,7 @@ class EventLoop:
 
         condition_name_list = condition_name_list.split(";")[:-1]
 
-        condition_name_list = [x for x in condition_name_list if x.split("^")[1] == "종목탐색기 기초"]
+        condition_name_list = [x for x in condition_name_list if x.split("^")[1] == "자비스전달종목"]
 
         self.api.send_condition("0156", condition_name_list[0].split("^")[1], condition_name_list[0].split("^")[0],
                                 0)  # 조회요청 + 실시간 조회
@@ -145,7 +145,7 @@ class EventLoop:
         for code in code_list:
             if code not in self.portfolio_stock_dict:
                 self.condition_stock.update({code: {}})
-        print("코드 개수 2 : {}".format(len(self.condition_stock)))
+        print("포트폴리오 필터링 후 코드 개수 : {}".format(len(self.condition_stock)))
 
         self.api.set_real_remove("0156", "ALL") # 조건 검색한 종목들 실시간 스크린번호 삭제
 
