@@ -2,7 +2,7 @@ from PyQt5.QtCore import QThread
 import time
 from PyQt5.QtTest import QTest
 from Kiwoom.quant.DayAlgorithm import DayAlgorithm
-from Kiwoom.quant.MinuteAlgorithm import SellMinuteAlgorithm, BuyMinuteAlgorithm
+from Kiwoom.quant.MinuteCandleController import SellMinuteAlgorithm, BuyMinuteAlgorithm
 
 class SellMinuteCandle(QThread):
     def __init__(self, signal):

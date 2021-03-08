@@ -1,9 +1,10 @@
 import pandas as pd
 
-class Analyzer():
-    def __init__(self):
 
-        self.minute_candle = pd.DataFrame()
+class MinuteCandleIndicator:
+    def __init__(self, minute_df):
+
+        self.minute_candle = minute_df
 
     '''
     전고점, 전저점 가져오기
@@ -36,8 +37,6 @@ class Analyzer():
             df['ub'] = df['center'] + sigma * df['체결가'].rolling(n).std()  # 상단 밴드
             df['lb'] = df['center'] - sigma * df['체결가'].rolling(n).std()  # 하단 밴드
             df['bandwidth'] = (df['ub'] - df['lb']) / df['center'] * 100
-
-            # return df
 
         except Exception as ex:
             # self.logging.logger.debug("get_target_price() -> exception! {} ".format(str(ex)))
