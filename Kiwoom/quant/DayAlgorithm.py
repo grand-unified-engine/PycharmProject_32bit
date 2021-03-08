@@ -1,6 +1,6 @@
 from datetime import datetime
 from Kiwoom.quant.DayCandleAnalyzer import Analyzer
-from Kiwoom.quant.MariaDB import MarketDB
+# from Kiwoom.quant.MariaDB import MarketDB
 import FinanceDataReader as fdr
 import pandas as pd
 import requests
@@ -11,7 +11,7 @@ class DayAlgorithm():
     def __init__(self, code):
 
         self.dayAnaly = Analyzer()
-        self.mk = MarketDB(code)
+        # self.mk = MarketDB(code)
 
         self.pass_yn = False
         end_date = datetime.today().strftime('%Y-%m-%d')

@@ -31,9 +31,9 @@ if __name__  == "__main__":
     # sched.start()
     signal.get_condition_load()
 
-    # QTest.qWait(2000)  # 1초
-    # sMinuteCandle = SellMinuteCandle(signal)
-    # sMinuteCandle.start()
+    QTest.qWait(2000)  # 1초
+    sMinuteCandle = SellMinuteCandle(signal)
+    sMinuteCandle.start()
 
     QTest.qWait(2000)  # 1초
     bMinuteCandle = BuyMinuteCandle(signal)

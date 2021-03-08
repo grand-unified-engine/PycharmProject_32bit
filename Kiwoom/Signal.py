@@ -127,21 +127,6 @@ class Signal:
         self.api.get_condition_load()
 
     ###############################################################
-    # 포트폴리오 테이블 읽기                                         #
-    ###############################################################
-    def read_code(self):
-
-        df = self.mk.get_portfolio()
-
-        for row in df.itertuples():
-            stock_code = row[1]
-            self.portfolio_stock_dict.update({stock_code: self.init_dict})
-            # algorithm_num = row[2]
-            # self.self.portfolio_stock_dict.update({stock_code: {"알고리즘번호": algorithm_num}})
-
-        print("read_code : {}".format(self.portfolio_stock_dict))
-
-    ###############################################################
     # 포트폴리오 파일 읽기                                         #
     ###############################################################
     def screen_number_setting(self):

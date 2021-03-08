@@ -3,6 +3,7 @@ import pandas as pd
 import requests
 import datetime as dt
 from Kiwoom.quant.MinuteCandleAnalyzer import Analyzer
+from Kiwoom.config.log_class import Logging
 
 class SellMinuteAlgorithm():
     def __init__(self, code):
@@ -28,48 +29,41 @@ class SellMinuteAlgorithm():
         elif dt.date.strftime(today, '%A') == 'Saturday':
             today = today - dt.timedelta(days=1)
 
-        # 테스트용
-        yesterday = today - dt.timedelta(days=1)
-        if dt.date.strftime(yesterday, '%A') == 'Sunday':
-            yesterday = today - dt.timedelta(days=2)
-        elif dt.date.strftime(yesterday, '%A') == 'Saturday':
-            yesterday = today - dt.timedelta(days=1)
-        minute_candle(self, code, "".join(str(yesterday).split("-")) + '153000')
-        self.minute_df = self.minute_df.append(self.df)
+        ###### 테스트용 ##########################################################
+        # yesterday = today - dt.timedelta(days=1)
+        # if dt.date.strftime(yesterday, '%A') == 'Sunday':
+        #     yesterday = today - dt.timedelta(days=2)
+        # elif dt.date.strftime(yesterday, '%A') == 'Saturday':
+        #     yesterday = today - dt.timedelta(days=1)
+        # minute_candle(self, code, "".join(str(yesterday).split("-")) + '153000')
+        # self.minute_df = self.minute_df.append(self.df)
         ########################################################################
 
         # 진짜 돌릴 때 풀기
-        # if self.t_now.strftime('%Y-%m-%d %H:%M:%S') < self.t_9_22.strftime('%Y-%m-%d %H:%M:%S'): # 9시22분전까지만 portfolio_stock_dict에 D-1값 저장하므로
-        #     yesterday = today - dt.timedelta(days=1)
-        #     if dt.date.strftime(yesterday, '%A') == 'Sunday':
-        #         yesterday = today - dt.timedelta(days=2)
-        #     elif dt.date.strftime(yesterday, '%A') == 'Saturday':
-        #         yesterday = today - dt.timedelta(days=1)
-        #
-        #     minute_candle(self, code, "".join(str(yesterday).split("-")) + '153000')
-        #     self.minute_df = self.minute_df.append(self.df)
+        if self.t_now.strftime('%Y-%m-%d %H:%M:%S') < self.t_9_22.strftime('%Y-%m-%d %H:%M:%S'): # 9시22분전까지만 portfolio_stock_dict에 D-1값 저장하므로
+            yesterday = today - dt.timedelta(days=1)
+            if dt.date.strftime(yesterday, '%A') == 'Sunday':
+                yesterday = today - dt.timedelta(days=2)
+            elif dt.date.strftime(yesterday, '%A') == 'Saturday':
+                yesterday = today - dt.timedelta(days=1)
+
+            minute_candle(self, code, "".join(str(yesterday).split("-")) + '153000')
+            self.minute_df = self.minute_df.append(self.df)
 
         minute_candle(self, code, "".join(str(today).split("-")) + '153000')
         self.minute_df = self.minute_df.append(self.df)
         # 1: 체결시각, 2:체결가, 3:전일비, 4:매도, 5:매수, 6:거래량, 7:변동량
         self.minute_df['MA5'] = self.minute_df['체결가'].rolling(window=5).mean()  # 8
-        self.minute_df['MA10'] = self.minute_df['체결가'].rolling(window=10).mean() # 9
+        self.minute_df['MA20'] = self.minute_df['체결가'].rolling(window=20).mean() # 9
         self.minute_df['average'] = self.minute_df['체결가'].rolling(window=10).sum() / 10 # 10
-        self.minute_df['max20'] = self.minute_df['체결가'].rolling(window=20).max()   # 11
-        self.minute_df['min20'] = self.minute_df['체결가'].rolling(window=20).min()  # 12
+        self.minute_df['max10'] = self.minute_df['체결가'].rolling(window=10).max()   # 11
+        self.minute_df['min10'] = self.minute_df['체결가'].rolling(window=10).min()  # 12
 
-        n = 20
-        sigma = 2
-        self.m_analy.bollinger_band(code=code, n=n, sigma=sigma)
-
-        self.minute_df.reset_index(inplace=True)
-        self.minute_df.drop(['index'], axis=1, inplace=True) # inplace는 데이터프레임을 그대로 사용하고자 할 때
-
-        # self.buy(code=code)
 
 class BuyMinuteAlgorithm():
     def __init__(self, code):
         self.m_analy = Analyzer()
+        self.logging = Logging()
 
         self.session = requests.session()
         self.headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_5)' \
@@ -90,26 +84,26 @@ class BuyMinuteAlgorithm():
         elif dt.date.strftime(today, '%A') == 'Saturday':
             today = today - dt.timedelta(days=1)
 
-        # 테스트용
-        yesterday = today - dt.timedelta(days=1)
-        if dt.date.strftime(yesterday, '%A') == 'Sunday':
-            yesterday = today - dt.timedelta(days=2)
-        elif dt.date.strftime(yesterday, '%A') == 'Saturday':
-            yesterday = today - dt.timedelta(days=1)
-        minute_candle(self, code, "".join(str(yesterday).split("-")) + '153000')
-        self.m_analy.minute_candle = self.m_analy.minute_candle.append(self.df)
+        ###### 테스트용 ##########################################################
+        # yesterday = today - dt.timedelta(days=1)
+        # if dt.date.strftime(yesterday, '%A') == 'Sunday':
+        #     yesterday = today - dt.timedelta(days=2)
+        # elif dt.date.strftime(yesterday, '%A') == 'Saturday':
+        #     yesterday = today - dt.timedelta(days=1)
+        # minute_candle(self, code, "".join(str(yesterday).split("-")) + '153000')
+        # self.m_analy.minute_candle = self.m_analy.minute_candle.append(self.df)
         ########################################################################
 
         # 진짜 돌릴 때 풀기
-        # if self.t_now.strftime('%Y-%m-%d %H:%M:%S') < self.t_9_22.strftime('%Y-%m-%d %H:%M:%S'): # 9시22분전까지만 portfolio_stock_dict에 D-1값 저장하므로
-        #     yesterday = today - dt.timedelta(days=1)
-        #     if dt.date.strftime(yesterday, '%A') == 'Sunday':
-        #         yesterday = today - dt.timedelta(days=2)
-        #     elif dt.date.strftime(yesterday, '%A') == 'Saturday':
-        #         yesterday = today - dt.timedelta(days=1)
-        #
-        #     minute_candle(self, code, "".join(str(yesterday).split("-")) + '153000')
-        #     self.m_analy.minute_candle = self.m_analy.minute_candle.append(self.df)
+        if self.t_now.strftime('%Y-%m-%d %H:%M:%S') < self.t_9_22.strftime('%Y-%m-%d %H:%M:%S'): # 9시22분전까지만 portfolio_stock_dict에 D-1값 저장하므로
+            yesterday = today - dt.timedelta(days=1)
+            if dt.date.strftime(yesterday, '%A') == 'Sunday':
+                yesterday = today - dt.timedelta(days=2)
+            elif dt.date.strftime(yesterday, '%A') == 'Saturday':
+                yesterday = today - dt.timedelta(days=1)
+
+            minute_candle(self, code, "".join(str(yesterday).split("-")) + '153000')
+            self.m_analy.minute_candle = self.m_analy.minute_candle.append(self.df)
 
         minute_candle(self, code, "".join(str(today).split("-")) + '153000')
         self.m_analy.minute_candle = self.m_analy.minute_candle.append(self.df)
@@ -127,10 +121,10 @@ class BuyMinuteAlgorithm():
         sigma = 2
         self.m_analy.bollinger_band(code=code, n=n, sigma=sigma)
 
-        self.minute_df.reset_index(inplace=True)
-        self.minute_df.drop(['index'], axis=1, inplace=True)  # inplace는 데이터프레임을 그대로 사용하고자 할 때
+        # self.minute_df.reset_index(inplace=True)
+        # self.minute_df.drop(['index'], axis=1, inplace=True)  # inplace는 데이터프레임을 그대로 사용하고자 할 때
 
-        self.buy(code=code, today="".join(str(today).split("-")))
+        self.buy()
 
     def shoulder(self, code, buy_time, buy_price):  # 어깨에 판다
         for i, index in enumerate(self.minute_df.index):
@@ -155,37 +149,24 @@ class BuyMinuteAlgorithm():
                                 # print("지수이평60: {}".format(self.minute_df['지수이평60'][index]))
                                 break
 
-    def buy(self, code, today):
-        for i, index in enumerate(self.minute_df.index):
-            if self.minute_df['체결시각'][index].split(" ")[0] == today:
-                # print("bandwidth: {}".format(self.minute_df['bandwidth'][index-1]))
-                if self.minute_df['bandwidth'][index - 1] < 2:
-                    # print("pre_min20: {}, pre_close: {}, pre_max20:{}".format(self.minute_df['min20'][index-1], self.minute_df['체결가'][index-1], self.minute_df['max20'][index-1]))
-                    if self.minute_df['min20'][index - 1] <= self.minute_df['체결가'][index - 1] <= \
-                            self.minute_df['max20'][index - 1]:
-                        if self.minute_df['lb'][index - 1] <= self.minute_df['체결가'][index - 1] <= \
-                                self.minute_df['ub'][index - 1]:
-                            if self.minute_df['체결가'][index] > self.minute_df['max20'][index - 1]:
-                                if 1 <= self.minute_df['체결가'][index] / (
-                                        self.minute_df['체결가'][index] - self.minute_df['전일비'][index]) < 1.2:
-                                    # print(self.minute_df['체결가'][index] / (self.minute_df['체결가'][index] - self.minute_df['전일비'][index]))
-                                    temp_df = pd.DataFrame(self.minute_df['체결가'][index - 15:index].ge(
-                                        self.minute_df['center'][index - 15:index]), columns=['20선비교'])
-                                    if temp_df[temp_df['20선비교'] == True].empty:
-                                        continue
-                                    if temp_df[temp_df['20선비교'] == False].empty:
-                                        continue
-                                    if int(temp_df[temp_df['20선비교'] == True].value_counts()[True]) < 11:
-                                        print("코드: {}, 매수가: {}, 시간: {} 살 타이밍".format(code,
-                                                                                     self.minute_df['체결가'][index],
-                                                                                     self.minute_df['체결시각'][index]))
-                                        # print("지수이평5: {}".format(self.minute_df['지수이평5'][index]))
-                                        # print("지수이평10: {}".format(self.minute_df['지수이평10'][index]))
-                                        # print("지수이평20: {}".format(self.minute_df['지수이평20'][index]))
-                                        # print("지수이평60: {}".format(self.minute_df['지수이평60'][index]))
-                                        self.shoulder(code=code, buy_time=self.minute_df['체결시각'][index],
-                                                      buy_price=self.minute_df['ub'][index])
-                                        break
+    def buy(self):
+        if self.minute_df['bandwidth'].iloc[-2] < 2:
+            if self.minute_df['min20'].iloc[-2] <= self.minute_df['체결가'].iloc[-2] <= self.minute_df['max20'].iloc[-2]:
+                if self.minute_df['lb'].iloc[-2] <= self.minute_df['체결가'].iloc[-2] <= self.minute_df['ub'].iloc[-2]:
+                    if self.minute_df['체결가'].iloc[-1] > self.minute_df['max20'].iloc[-2]:
+                        if 1 <= self.minute_df['체결가'].iloc[-1] / (
+                                self.minute_df['체결가'].iloc[-1] - self.minute_df['전일비'].iloc[-1]) < 1.2:
+                            # print(self.minute_df['체결가'][index] / (self.minute_df['체결가'][index] - self.minute_df['전일비'][index]))
+                            temp_df = pd.DataFrame(self.minute_df['체결가'].iloc[-15:].ge(
+                                self.minute_df['center'].iloc[-15:]), columns=['20선비교'])
+                            if temp_df[temp_df['20선비교'] == True].empty:
+                                pass
+                            if temp_df[temp_df['20선비교'] == False].empty:
+                                pass
+                            if int(temp_df[temp_df['20선비교'] == True].value_counts()[True]) < 11:
+                                self.logging.logger.debug("매수가: {}, 시간: {} 살 타이밍".format(self.minute_df['체결가'].iloc[-1],
+                                                                             self.minute_df['체결시각'].iloc[-1]))
+
 
 
 def minute_candle(self, code, thistime):
@@ -234,4 +215,5 @@ def minute_candle(self, code, thistime):
 
 if __name__ == "__main__":
     # start = timeit.default_timer()
-    main = BuyMinuteAlgorithm(code='900310')
+    # main = BuyMinuteAlgorithm(code='021080')
+    main = SellMinuteAlgorithm(code='021080')
