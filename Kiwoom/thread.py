@@ -14,19 +14,19 @@ class SellMinuteCandle(QThread):
         while True:
             df_copy = self.signal.portfolio_stock_dict.copy()  # 반복문 오류를 피하기 위해
             for code in df_copy:
-                QTest.qWait(1000)
+                QTest.qWait(500)
                 try:
-                    m_algo = MinuteCandleController(code)
-
-                    if m_algo.t_now.strftime('%Y-%m-%d %H:%M:%S') < m_algo.t_9_22.strftime(
-                            '%Y-%m-%d %H:%M:%S'):  # 9시22분전까지만 portfolio_stock_dict에 D-1값 저장하므로
-                        QTest.qWait(6000)
-                    else:
-                        QTest.qWait(3000)
-                    self.signal.portfolio_stock_dict[code].update({"average": round(m_algo.minute_df['average'].iloc[-2])})  # D-1값
-                    self.signal.portfolio_stock_dict[code].update({"MA20": round(m_algo.minute_df['MA20'].iloc[-2])}) # D-1값
-                    self.signal.portfolio_stock_dict[code].update({"max10": round(m_algo.minute_df['max10'].iloc[-2])})  # D-1값
-                    self.signal.portfolio_stock_dict[code].update({"min10": round(m_algo.minute_df['min10'].iloc[-2])}) # D-1값
+                    mControll = MinuteCandleController(code)
+                    if len(mControll.minute_df['체결가']) >= 20:
+                        if mControll.t_now.strftime('%Y-%m-%d %H:%M:%S') < mControll.t_9_22.strftime(
+                                '%Y-%m-%d %H:%M:%S'):  # 9시22분전까지만 portfolio_stock_dict에 D-1값 저장하므로
+                            QTest.qWait(6000)
+                        else:
+                            QTest.qWait(3000)
+                        self.signal.portfolio_stock_dict[code].update({"average": round(mControll.minute_df['average'].iloc[-2])})  # D-1값
+                        self.signal.portfolio_stock_dict[code].update({"MA20": round(mControll.minute_df['MA20'].iloc[-2])}) # D-1값
+                        self.signal.portfolio_stock_dict[code].update({"max10": round(mControll.minute_df['max10'].iloc[-2])})  # D-1값
+                        self.signal.portfolio_stock_dict[code].update({"min10": round(mControll.minute_df['min10'].iloc[-2])}) # D-1값
                 except:
                     print("{} sell 코드 오류 발생".format(code))
             time.sleep(90)
@@ -46,37 +46,21 @@ class BuyMinuteCandle(QThread):
                     if code not in self.signal.portfolio_stock_dict:
                         QTest.qWait(500)
                         try:
-                            d_algo = DayAlgorithm(code)
-                            if d_algo.pass_yn:
-                                m_algo = MinuteCandleController(code)
-                                if m_algo.t_now.strftime('%Y-%m-%d %H:%M:%S') < m_algo.t_9_22.strftime(
-                                        '%Y-%m-%d %H:%M:%S'):  # 9시22분전까지만 portfolio_stock_dict에 D-1값 저장하므로
-                                    QTest.qWait(6000)
-                                else:
-                                    QTest.qWait(3000)
+                            mControll = MinuteCandleController(code)
+                            # if mControll.t_now.strftime('%Y-%m-%d %H:%M:%S') < mControll.t_9_22.strftime(
+                            #         '%Y-%m-%d %H:%M:%S'):  # 9시22분전까지만 portfolio_stock_dict에 D-1값 저장하므로
+                            #     QTest.qWait(6000)
+                            # else:
+                            #     QTest.qWait(3000)
+                            if len(mControll.minute_df['체결가']) >= 20:
                                 if self.signal.api.server_gubun == "1":
                                     # is_receive_real = 0이면 자꾸 들어오니까 강제로 1로 바꿈 (나중에 테이블 수정하기!!!) 2021-02-18
                                     if code == '066430' or code == '570045' or code == '036630' or code == '093230':
                                         continue
                                     else:
-                                        if m_algo.minute_df['체결가'].iloc[-1] / (
-                                                m_algo.minute_df['체결가'].iloc[-1] - m_algo.minute_df['전일비'].iloc[
-                                            -1]) < 1.17:
-                                            self.signal.real_time_recommand_dict.update(
-                                                {code: {"time": time.strftime('%H%M%S'), "numbering": False}})
-                                            self.logging.logger.debug("새로 들어온 종목: {}, real_time_recommand_dict: {}".format(code,
-                                                                                                                           self.real_time_recommand_dict[
-                                                                                                                               code]))
+                                        mControll.mAlgo.buy(code, self.signal.real_time_recommand_dict)
                                 else:
-                                    if m_algo.minute_df['체결가'].iloc[-1] / (
-                                            m_algo.minute_df['체결가'].iloc[-1] - m_algo.minute_df['전일비'].iloc[
-                                        -1]) < 1.17:
-                                        self.signal.real_time_recommand_dict.update(
-                                            {code: {"time": time.strftime('%H%M%S'), "numbering": False}})
-                                    self.logging.logger.debug(
-                                        "새로 들어온 종목: {}, real_time_recommand_dict: {}".format(code,
-                                                                                             self.real_time_recommand_dict[
-                                                                                                 code]))
+                                    mControll.mAlgo.buy(code, self.signal.real_time_recommand_dict)
 
                         except:
                             print("{} buy 코드 오류 발생".format(code))
@@ -94,8 +78,8 @@ class RealTimeScreenNumbering(QThread):
 
     def run(self):
         while True:
-            self.signal.real_time_recommand_fuc() # real_time_recommand_dict에 넣음
-            QTest.qWait(1000)  # 1초
+            # self.signal.real_time_recommand_fuc() # real_time_recommand_dict에 넣음
+            # QTest.qWait(1000)  # 1초
             self.signal.screen_number_real_time_setting()
             # QTest.qWait(8000)  # 8초
             # df_copy = self.signal.portfolio_stock_dict.copy()  # 반복문 오류를 피하기 위해

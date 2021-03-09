@@ -278,7 +278,7 @@ class Signal:
             cnt += 1
 
         # print("screen_number_real_time_setting screen_overwrite dict: {}".format(screen_overwrite))
-        db = MarketDB()
+        # db = MarketDB()
         screen_num = ''
         code_list = ''
         fids = ''
@@ -294,18 +294,18 @@ class Signal:
             fids = b
             code_list = code_list + ';' + code
             # self.logging.logger.debug("실시간 가자~ 스크린번호: {}, fids: {}, 코드: {}".format(screen_num, fids, code))
-            with db.conn.cursor() as curs:
-                sql = "UPDATE portfolio_stock SET is_receive_real = '1' WHERE code = '{}' and create_date = '{}' " \
-                    .format(code, self.event_loop.today)
-                curs.execute(sql)
-                db.conn.commit()
+            # with db.conn.cursor() as curs:
+            #     sql = "UPDATE portfolio_stock SET is_receive_real = '1' WHERE code = '{}' and create_date = '{}' " \
+            #         .format(code, self.event_loop.today)
+            #     curs.execute(sql)
+            #     db.conn.commit()
 
         if code_list != '':
             QTest.qWait(3000)
             ret = self.call_set_real_reg(screen_num, code_list[1:], fids, "1")
             self.logging.logger.debug("실시간 등록 코드: {}, 실시간 등록 리턴값: {}".format(code_list, ret))
 
-        del db
+        # del db
 
     '''
     포트폴리오 테이블에 새로 들어온 종목

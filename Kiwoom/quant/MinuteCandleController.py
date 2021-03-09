@@ -51,20 +51,22 @@ class MinuteCandleController:
 
         self.minute_df = self.mAlgo.minute_candle  # append는 새로 주소를 할당한다.
 
-        # 1: 체결시각, 2:체결가, 3:전일비, 4:매도, 5:매수, 6:거래량, 7:변동량
-        self.minute_df['MA5'] = self.minute_df['체결가'].rolling(window=5).mean()  # 8
-        self.minute_df['MA10'] = self.minute_df['체결가'].rolling(window=10).mean()  # 9
-        self.minute_df['average'] = self.minute_df['체결가'].rolling(window=10).sum() / 10  # 10
-        self.minute_df['max20'] = self.minute_df['체결가'].rolling(window=20).max()  # 11
-        self.minute_df['min20'] = self.minute_df['체결가'].rolling(window=20).min()  # 12
+        if len(self.minute_df['체결가']) >= 20:
+            # 1: 체결시각, 2:체결가, 3:전일비, 4:매도, 5:매수, 6:거래량, 7:변동량
+            self.minute_df['MA5'] = self.minute_df['체결가'].rolling(window=5).mean()  # 8
+            self.minute_df['MA10'] = self.minute_df['체결가'].rolling(window=10).mean() # 9
+            self.minute_df['MA20'] = self.minute_df['체결가'].rolling(window=20).mean()  # 10
+            self.minute_df['average'] = self.minute_df['체결가'].rolling(window=10).sum() / 10 # 11
+            self.minute_df['max10'] = self.minute_df['체결가'].rolling(window=10).max()   # 12
+            self.minute_df['min10'] = self.minute_df['체결가'].rolling(window=10).min()  # 13
+            self.minute_df['max20'] = self.minute_df['체결가'].rolling(window=20).max()   # 14
+            self.minute_df['min20'] = self.minute_df['체결가'].rolling(window=20).min()  # 15
 
-        self.mIndicator = MinuteCandleIndicator(self.minute_df)
+            self.mIndicator = MinuteCandleIndicator(self.minute_df)
 
-        n = 20
-        sigma = 2
-        self.mIndicator.bollinger_band(code=code, n=n, sigma=sigma)
-
-        self.mAlgo.buy()
+            n = 20
+            sigma = 2
+            self.mIndicator.bollinger_band(code=code, n=n, sigma=sigma)
 
 
 def minute_candle(self, code, thistime):
@@ -80,9 +82,9 @@ def minute_candle(self, code, thistime):
         s = str(pgrr.a['href']).split('=')
         last_page = s[-1]
 
-        # if "".join(str(date.today()).split("-")) + '153000' == thistime:
-        #     if int(last_page) >= 3:
-        #         last_page = 3
+        if "".join(str(dt.date.today()).split("-")) + '153000' == thistime:
+            if int(last_page) >= 3:
+                last_page = 3
 
         for page in range(1, int(last_page)+1):
             pg_url = '{}&page={}'.format(url, page)

@@ -1,13 +1,13 @@
 import pandas as pd
 import FinanceDataReader as fdr
-
+import time
 
 class MinuteCandleAlgorithm:
     def __init__(self):
 
         self.minute_candle = pd.DataFrame()
 
-    def buy(self):
+    def buy(self, code, real_time_recommand_dict):
         if self.minute_candle['bandwidth'].iloc[-2] < 2:
             if self.minute_candle['min20'].iloc[-2] <= self.minute_candle['체결가'].iloc[-2] <= self.minute_candle['max20'].iloc[-2]:
                 if self.minute_candle['lb'].iloc[-2] <= self.minute_candle['체결가'].iloc[-2] <= self.minute_candle['ub'].iloc[-2]:
@@ -24,27 +24,9 @@ class MinuteCandleAlgorithm:
                             if int(temp_df[temp_df['20선비교'] == True].value_counts()[True]) < 11:
                                 print("매수가: {}, 시간: {} 살 타이밍".format(self.minute_candle['체결가'].iloc[-1],
                                                                              self.minute_candle['체결시각'].iloc[-1]))
+                                real_time_recommand_dict.update(
+                                    {code: {"time": time.strftime('%H%M%S'), "numbering": False}})
+                                print("새로 들어온 종목: {}, real_time_recommand_dict: {}".format(code,
+                                                                                           real_time_recommand_dict[
+                                                                                               code]))
 
-
-    def shoulder(self, code, buy_time, buy_price):  # 어깨에 판다
-        for i, index in enumerate(self.minute_candle.index):
-            if self.minute_candle['체결시각'][index] > buy_time:  # 매수시간 이후(테스트용)
-                if self.minute_candle['체결가'][index] > buy_price:
-                    if self.minute_candle['체결가'][index - 1] < self.minute_candle['ub'][index - 1]:  # 고가에 팔기
-                        if self.minute_candle['체결가'][index] < self.minute_candle['체결가'][index - 1]:
-                            if self.minute_candle['bandwidth'][index] > 28:
-                                print("코드: {}, 매도가: {}, 시간: {} 팔 타이밍, bandwidth: {}".format(code,
-                                                                                            self.minute_candle['체결가'][
-                                                                                                index],
-                                                                                            self.minute_candle['체결시각'][
-                                                                                                index],
-                                                                                            self.minute_candle[
-                                                                                                'bandwidth'][
-                                                                                                index]))
-                                print(
-                                    "수익률: {}%".format((self.minute_candle['체결가'][index] - buy_price) / buy_price * 100))
-                                # print("지수이평5: {}".format(self.minute_candle['지수이평5'][index]))
-                                # print("지수이평10: {}".format(self.minute_candle['지수이평10'][index]))
-                                # print("지수이평20: {}".format(self.minute_candle['지수이평20'][index]))
-                                # print("지수이평60: {}".format(self.minute_candle['지수이평60'][index]))
-                                break
