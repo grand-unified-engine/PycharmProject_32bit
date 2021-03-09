@@ -2,7 +2,8 @@ from PyQt5.QtCore import QThread
 import time
 from PyQt5.QtTest import QTest
 from Kiwoom.quant.DayAlgorithm import DayAlgorithm
-from Kiwoom.quant.MinuteCandleController import SellMinuteAlgorithm, BuyMinuteAlgorithm
+from Kiwoom.quant.MinuteCandleController import MinuteCandleController
+
 
 class SellMinuteCandle(QThread):
     def __init__(self, signal):
@@ -15,7 +16,7 @@ class SellMinuteCandle(QThread):
             for code in df_copy:
                 QTest.qWait(1000)
                 try:
-                    m_algo = SellMinuteAlgorithm(code)
+                    m_algo = MinuteCandleController(code)
 
                     if m_algo.t_now.strftime('%Y-%m-%d %H:%M:%S') < m_algo.t_9_22.strftime(
                             '%Y-%m-%d %H:%M:%S'):  # 9시22분전까지만 portfolio_stock_dict에 D-1값 저장하므로
@@ -47,21 +48,36 @@ class BuyMinuteCandle(QThread):
                         try:
                             d_algo = DayAlgorithm(code)
                             if d_algo.pass_yn:
-                                BuyMinuteAlgorithm(code)
-                                # m_algo = BuyMinuteAlgorithm(code)
-                                #
-                                # if m_algo.t_now.strftime('%Y-%m-%d %H:%M:%S') < m_algo.t_9_22.strftime(
-                                #         '%Y-%m-%d %H:%M:%S'):  # 9시22분전까지만 portfolio_stock_dict에 D-1값 저장하므로
-                                #     QTest.qWait(6000)
-                                # else:
-                                #     QTest.qWait(3000)
-                                # print("BuyMinuteCandle code: {}".format(code))
-                                # if m_algo.minute_df['체결가'].iloc[-1] / (m_algo.minute_df['체결가'].iloc[-1] - m_algo.minute_df['전일비'].iloc[-1]) < 1.17:
-                                #     self.signal.real_time_recommand_dict.update(
-                                #         {code: {"time": time.strftime('%H%M%S'), "numbering": False}})
-                                #     self.logging.logger.debug("새로 들어온 종목: {}, real_time_recommand_dict: {}".format(code,
-                                #                                                                                    self.real_time_recommand_dict[
-                                #                                                                                        code]))
+                                m_algo = MinuteCandleController(code)
+                                if m_algo.t_now.strftime('%Y-%m-%d %H:%M:%S') < m_algo.t_9_22.strftime(
+                                        '%Y-%m-%d %H:%M:%S'):  # 9시22분전까지만 portfolio_stock_dict에 D-1값 저장하므로
+                                    QTest.qWait(6000)
+                                else:
+                                    QTest.qWait(3000)
+                                if self.signal.api.server_gubun == "1":
+                                    # is_receive_real = 0이면 자꾸 들어오니까 강제로 1로 바꿈 (나중에 테이블 수정하기!!!) 2021-02-18
+                                    if code == '066430' or code == '570045' or code == '036630' or code == '093230':
+                                        continue
+                                    else:
+                                        if m_algo.minute_df['체결가'].iloc[-1] / (
+                                                m_algo.minute_df['체결가'].iloc[-1] - m_algo.minute_df['전일비'].iloc[
+                                            -1]) < 1.17:
+                                            self.signal.real_time_recommand_dict.update(
+                                                {code: {"time": time.strftime('%H%M%S'), "numbering": False}})
+                                            self.logging.logger.debug("새로 들어온 종목: {}, real_time_recommand_dict: {}".format(code,
+                                                                                                                           self.real_time_recommand_dict[
+                                                                                                                               code]))
+                                else:
+                                    if m_algo.minute_df['체결가'].iloc[-1] / (
+                                            m_algo.minute_df['체결가'].iloc[-1] - m_algo.minute_df['전일비'].iloc[
+                                        -1]) < 1.17:
+                                        self.signal.real_time_recommand_dict.update(
+                                            {code: {"time": time.strftime('%H%M%S'), "numbering": False}})
+                                    self.logging.logger.debug(
+                                        "새로 들어온 종목: {}, real_time_recommand_dict: {}".format(code,
+                                                                                             self.real_time_recommand_dict[
+                                                                                                 code]))
+
                         except:
                             print("{} buy 코드 오류 발생".format(code))
 
