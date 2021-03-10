@@ -3,13 +3,39 @@ import pandas as pd
 import copy
 from datetime import datetime
 # from MyQuant.MariaDB import MarketDB
-# import FinanceDataReader as fdr
+import FinanceDataReader as fdr
 
-class Analyzer():
+class DayCandleIndicator:
     def __init__(self):
 
-        self.day_candle = None
+        self.day_candle = pd.DataFrame()
+        # self.mk = MarketDB(code)
 
+        # self.pass_yn = False
+        end_date = datetime.today().strftime('%Y-%m-%d')
+        # end_date = '2021-02-24' #과거꺼 테스트할 때만 사용
+        # self.dayAnaly.day_candle = self.mk.get_daily_price(code, start_date='2020-07-01', end_date=end_date)
+        self.day_candle = fdr.DataReader(code, '2020-07-01', end_date)
+
+        if len(self.day_candle['Close']) >= 20:
+            self.day_candle['MA5'] = self.day_candle['Close'].rolling(window=5).mean()
+            self.day_candle['MA10'] = self.day_candle['Close'].rolling(window=10).mean()
+            self.day_candle['MA20'] = self.day_candle['Close'].rolling(window=20).mean()
+            self.day_candle['D3OPENMIN'] = self.day_candle['Open'].rolling(window=3).min()
+            # self.day_candle['MA120'] = self.day_candle['Close'].rolling(window=120).mean()
+            # self.day_candle['MA240'] = self.day_candle['Close'].rolling(window=240).mean()
+            self.day_candle['MA20V'] = self.day_candle['Volume'].rolling(window=20).mean()
+
+            self.D1_close = self.day_candle['Close'].iloc[-2]
+
+            # if self.basic(code):
+            #     if self.newhigh():
+            #         self.pass_yn = True
+
+            # self.regression(code)
+            # print("결과dict : {}, 판단시간 : {}".format(self.result_dict, datetime.now().strftime('%Y-%m-%d %H:%M:%S')))
+
+        # print("최종결과: {}".format(self.pass_yn))
     '''
     전고점, 전저점 가져오기
     '''

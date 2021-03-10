@@ -1,5 +1,5 @@
 from datetime import datetime
-from Kiwoom.quant.DayCandleAnalyzer import Analyzer
+from Kiwoom.quant.DayCandleIndicator import DayCandleIndicator
 # from Kiwoom.quant.MariaDB import MarketDB
 import FinanceDataReader as fdr
 import pandas as pd
@@ -7,41 +7,18 @@ import requests
 from bs4 import BeautifulSoup
 
 
-class DayAlgorithm():
+class DayCandleAlgorithm():
     def __init__(self, code):
 
-        self.dayAnaly = Analyzer()
-        # self.mk = MarketDB(code)
+        self.result_dict = {}
 
-        self.pass_yn = False
-        end_date = datetime.today().strftime('%Y-%m-%d')
-        # end_date = '2021-02-24' #과거꺼 테스트할 때만 사용
-        # self.dayAnaly.day_candle = self.mk.get_daily_price(code, start_date='2020-07-01', end_date=end_date)
-        self.dayAnaly.day_candle = fdr.DataReader(code, '2020-07-01', end_date)
+        self.dIndicator = DayCandleIndicator()
 
-        self.day_df = self.dayAnaly.day_candle
+        start = 5
+        end = 20
+        self.max_high, self.min_close = self.dIndicator.get_max_min_close(start=start, end=end)  # 고점일 때는 High값으로(저항선을 의미)
+        print("전고점: {}, 전저점: {}".format(self.max_high, self.min_close))  # 저점은 종가기준
 
-        if len(self.day_df['Close']) >= 20:
-            self.day_df['MA5'] = self.day_df['Close'].rolling(window=5).mean()
-            self.day_df['MA10'] = self.day_df['Close'].rolling(window=10).mean()
-            self.day_df['MA20'] = self.day_df['Close'].rolling(window=20).mean()
-            self.day_df['D3OPENMIN'] = self.day_df['Open'].rolling(window=3).min()
-            # self.day_df['MA120'] = self.day_df['Close'].rolling(window=120).mean()
-            # self.day_df['MA240'] = self.day_df['Close'].rolling(window=240).mean()
-            self.day_df['MA20V'] = self.day_df['Volume'].rolling(window=20).mean()
-
-            self.D1_close = self.day_df['Close'].iloc[-2]
-
-            self.result_dict = {}
-
-            if self.basic(code):
-                if self.newhigh():
-                    self.pass_yn = True
-
-            # self.regression(code)
-            # print("결과dict : {}, 판단시간 : {}".format(self.result_dict, datetime.now().strftime('%Y-%m-%d %H:%M:%S')))
-
-        # print("최종결과: {}".format(self.pass_yn))
 
     def basic(self, code): #기본 조건
         self.result_dict.update({"basic": False})
