@@ -6,9 +6,9 @@ from datetime import datetime
 import FinanceDataReader as fdr
 
 class DayCandleIndicator:
-    def __init__(self):
+    def __init__(self, code):
 
-        self.day_candle = pd.DataFrame()
+        # self.day_candle = pd.DataFrame()
         # self.mk = MarketDB(code)
 
         # self.pass_yn = False

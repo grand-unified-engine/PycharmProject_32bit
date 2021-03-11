@@ -1,7 +1,6 @@
 from PyQt5.QtCore import QThread
 import time
 from PyQt5.QtTest import QTest
-from Kiwoom.quant.DayCandleAlgorithm import DayAlgorithm
 from Kiwoom.quant.MinuteCandleAlgorithm import MinuteCandleAlgorithm
 
 

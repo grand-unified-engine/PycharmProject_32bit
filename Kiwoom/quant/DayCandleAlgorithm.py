@@ -12,12 +12,16 @@ class DayCandleAlgorithm():
 
         self.result_dict = {}
 
-        self.dIndicator = DayCandleIndicator()
+        # self.dIndicator = DayCandleIndicator(code)
 
-        start = 5
-        end = 20
-        self.max_high, self.min_close = self.dIndicator.get_max_min_close(start=start, end=end)  # 고점일 때는 High값으로(저항선을 의미)
-        print("전고점: {}, 전저점: {}".format(self.max_high, self.min_close))  # 저점은 종가기준
+        # start = 5
+        # end = 20
+        # self.max_high, self.min_close = self.dIndicator.get_max_min_close(start=start, end=end)  # 고점일 때는 High값으로(저항선을 의미)
+        # print("전고점: {}, 전저점: {}".format(self.max_high, self.min_close))  # 저점은 종가기준
+        self.pass_yn = False
+
+        if self.basic(code):
+            self.pass_yn = True
 
 
     def basic(self, code): #기본 조건
@@ -99,6 +103,6 @@ class DayCandleAlgorithm():
 
 
 if __name__ == "__main__":
-    main = DayAlgorithm(code='126560')
+    main = DayCandleAlgorithm(code='126560')
 
 

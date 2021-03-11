@@ -9,9 +9,6 @@ class MinuteCandleAlgorithm:
         self.mIndicator = MinuteCandleIndicator(code)
 
     def buy(self, code, real_time_recommand_dict):
-        dayAlgo = DayCandleAlgorithm(code)
-
-        print(dayAlgo.dIndicator.day_candle['High'].iloc[-2])
 
         if self.mIndicator.minute_df['bandwidth'].iloc[-2] < 2:
             if self.mIndicator.minute_df['min20'].iloc[-2] <= self.mIndicator.minute_df['체결가'].iloc[-2] <= self.mIndicator.minute_df['max20'].iloc[-2]:
@@ -27,13 +24,16 @@ class MinuteCandleAlgorithm:
                             if temp_df[temp_df['20선비교'] == False].empty:
                                 pass
                             if int(temp_df[temp_df['20선비교'] == True]['20선비교'].value_counts()[True]) < 11:
-                                print("매수가: {}, 시간: {} 살 타이밍".format(self.mIndicator.minute_df['체결가'].iloc[-1],
-                                                                             self.mIndicator.minute_df['체결시각'].iloc[-1]))
-                                real_time_recommand_dict.update(
-                                    {code: {"time": time.strftime('%H%M%S'), "numbering": False}})
-                                print("새로 들어온 종목: {}, real_time_recommand_dict: {}".format(code,
-                                                                                           real_time_recommand_dict[
-                                                                                               code]))
+                                dayAlgo = DayCandleAlgorithm(code)
+
+                                if dayAlgo.pass_yn:
+                                    print("매수가: {}, 시간: {} 살 타이밍".format(self.mIndicator.minute_df['체결가'].iloc[-1],
+                                                                                 self.mIndicator.minute_df['체결시각'].iloc[-1]))
+                                    real_time_recommand_dict.update(
+                                        {code: {"time": time.strftime('%H%M%S'), "numbering": False}})
+                                    print("새로 들어온 종목: {}, real_time_recommand_dict: {}".format(code,
+                                                                                               real_time_recommand_dict[
+                                                                                                   code]))
 
 
 if __name__ == "__main__":

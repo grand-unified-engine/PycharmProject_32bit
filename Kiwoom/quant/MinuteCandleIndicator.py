@@ -66,7 +66,6 @@ class MinuteCandleIndicator:
             sigma = 2
             self.bollinger_band(code=code, n=n, sigma=sigma)
 
-
     def minute_candle(self, code, thistime):
 
         url = f'https://finance.naver.com/item/sise_time.nhn?code={code}&thistime={thistime}'
