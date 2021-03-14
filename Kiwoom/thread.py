@@ -2,7 +2,7 @@ from PyQt5.QtCore import QThread
 import time
 from PyQt5.QtTest import QTest
 from Kiwoom.quant.MinuteCandleAlgorithm import MinuteCandleAlgorithm
-
+from Kiwoom.quant.DayCandleAlgorithm import DayCandleAlgorithm
 
 class SellThread(QThread):
     def __init__(self, signal):
@@ -15,7 +15,12 @@ class SellThread(QThread):
             for code in df_copy:
                 QTest.qWait(500)
                 try:
-                    mAlgo = MinuteCandleAlgorithm(code)
+                    global dayObjectCreate
+                    if "당일상한가" in df_copy: # 계좌에 있는 종목은 계좌평가잔고내역 호출할 때 가져온다
+                        dayObjectCreate = False
+                    else:
+                        dayObjectCreate = True
+                    mAlgo = MinuteCandleAlgorithm(code, dayObjectCreate)
 
                     if len(mAlgo.mIndicator.minute_df['체결가']) >= 20:
                         if mAlgo.mIndicator.t_now.strftime('%Y-%m-%d %H:%M:%S') < mAlgo.mIndicator.t_9_22.strftime(
@@ -23,10 +28,13 @@ class SellThread(QThread):
                             QTest.qWait(6000)
                         else:
                             QTest.qWait(3000)
-                        self.signal.portfolio_stock_dict[code].update({"average": round(mAlgo.mIndicator.minute_df['average'].iloc[-2])})  # D-1값
-                        self.signal.portfolio_stock_dict[code].update({"MA20": round(mAlgo.mIndicator.minute_df['MA20'].iloc[-2])}) # D-1값
-                        self.signal.portfolio_stock_dict[code].update({"max10": round(mAlgo.mIndicator.minute_df['max10'].iloc[-2])})  # D-1값
-                        self.signal.portfolio_stock_dict[code].update({"min10": round(mAlgo.mIndicator.minute_df['min10'].iloc[-2])}) # D-1값
+                        self.signal.portfolio_stock_dict[code].update({"ub": round(mAlgo.mIndicator.minute_df['ub'].iloc[-1])})
+                        self.signal.portfolio_stock_dict[code].update({"D1Close": round(mAlgo.mIndicator.minute_df['체결가'].iloc[-2])}) # D-1값
+                        self.signal.portfolio_stock_dict[code].update({"bandwidth": round(mAlgo.mIndicator.minute_df['bandwidth'].iloc[-1])})
+                        self.signal.portfolio_stock_dict[code].update({"MA20": round(mAlgo.mIndicator.minute_df['min10'].iloc[-1])})
+                        if dayObjectCreate:
+                            self.signal.portfolio_stock_dict[code].update(
+                                {"당일상한가": mAlgo.dayAlgo.dIndicator.day_candle['Close'].iloc[-2] * 1.298})
                 except:
                     print("{} sell 코드 오류 발생".format(code))
             time.sleep(90)
@@ -46,17 +54,27 @@ class BuyThread(QThread):
                     if code not in self.signal.portfolio_stock_dict:
                         QTest.qWait(500)
                         try:
-                            mAlgo = MinuteCandleAlgorithm(code)
-
-                            if len(mAlgo.mIndicator.minute_df['체결가']) >= 20:
-                                if self.signal.api.server_gubun == "1":
-                                    # is_receive_real = 0이면 자꾸 들어오니까 강제로 1로 바꿈 (나중에 테이블 수정하기!!!) 2021-02-18
-                                    if code == '066430' or code == '570045' or code == '036630' or code == '093230':
-                                        continue
-                                    else:
-                                        mAlgo.buy(code, self.signal.real_time_recommand_dict)
+                            global dayObjectCreate
+                            if self.signal.api.server_gubun == "1":
+                                # is_receive_real = 0이면 자꾸 들어오니까 강제로 1로 바꿈 (나중에 테이블 수정하기!!!) 2021-02-18
+                                if code == '066430' or code == '570045' or code == '036630' or code == '093230':
+                                    continue
                                 else:
-                                    mAlgo.buy(code, self.signal.real_time_recommand_dict)
+                                    if "dayObjectCreate" in self.signal.condition_stock[code]:
+                                        dayObjectCreate = False
+                                    else:
+                                        dayObjectCreate = True
+
+                                    MinuteCandleAlgorithm(code, dayObjectCreate, self.signal.real_time_recommand_dict)
+                                    self.signal.condition_stock[code].update({"dayObjectCreate": True})
+                            else:
+                                if "dayObjectCreate" in self.signal.condition_stock[code]:
+                                    dayObjectCreate = False
+                                else:
+                                    dayObjectCreate = True
+
+                                MinuteCandleAlgorithm(code, dayObjectCreate, self.signal.real_time_recommand_dict)
+                                self.signal.condition_stock[code].update({"dayObjectCreate": True})
 
                         except:
                             print("{} buy 코드 오류 발생".format(code))

@@ -30,21 +30,21 @@ class MinuteCandleIndicator:
             today = today - dt.timedelta(days=1)
 
         ###### 테스트용 ##########################################################
-        # yesterday = today - dt.timedelta(days=1)
-        # if dt.date.strftime(yesterday, '%A') == 'Sunday':
-        #     yesterday = yesterday - dt.timedelta(days=2)
-        # minute_candle(self, code, "".join(str(yesterday).split("-")) + '153000')
-        # self.m_analy.minute_candle = self.m_analy.minute_candle.append(self.df)
+        yesterday = today - dt.timedelta(days=1)
+        if dt.date.strftime(yesterday, '%A') == 'Sunday':
+            yesterday = yesterday - dt.timedelta(days=2)
+        self.minute_candle(code, "".join(str(yesterday).split("-")) + '153000')
+        self.temp_df = self.temp_df.append(self.df)
         ########################################################################
 
         # 진짜 돌릴 때 풀기
-        if self.t_now.strftime('%Y-%m-%d %H:%M:%S') < self.t_9_22.strftime('%Y-%m-%d %H:%M:%S'): # 9시22분전까지만 portfolio_stock_dict에 D-1값 저장하므로
-            yesterday = today - dt.timedelta(days=1)
-            if dt.date.strftime(yesterday, '%A') == 'Sunday':
-                yesterday = yesterday - dt.timedelta(days=2)
-
-            self.minute_candle(code, "".join(str(yesterday).split("-")) + '153000')
-            self.temp_df = self.temp_df.append(self.df)
+        # if self.t_now.strftime('%Y-%m-%d %H:%M:%S') < self.t_9_22.strftime('%Y-%m-%d %H:%M:%S'): # 9시22분전까지만 portfolio_stock_dict에 D-1값 저장하므로
+        #     yesterday = today - dt.timedelta(days=1)
+        #     if dt.date.strftime(yesterday, '%A') == 'Sunday':
+        #         yesterday = yesterday - dt.timedelta(days=2)
+        #
+        #     self.minute_candle(code, "".join(str(yesterday).split("-")) + '153000')
+        #     self.temp_df = self.temp_df.append(self.df)
 
         self.minute_candle(code, "".join(str(today).split("-")) + '153000')
         self.temp_df = self.temp_df.append(self.df)
@@ -65,6 +65,9 @@ class MinuteCandleIndicator:
             n = 20
             sigma = 2
             self.bollinger_band(code=code, n=n, sigma=sigma)
+
+            self.minute_df.reset_index(inplace=True)
+            self.minute_df.drop(['index'], axis=1, inplace=True)  # inplace는 데이터프레임을 그대로 사용하고자 할 때
 
     def minute_candle(self, code, thistime):
 
@@ -145,4 +148,35 @@ class MinuteCandleIndicator:
         except Exception as ex:
             # self.logging.logger.debug("get_target_price() -> exception! {} ".format(str(ex)))
             print("bollinger_band() -> exception! {} ".format(str(ex)))
+            return None
+
+    '''
+    이평선 기울기
+    '''
+    def get_ma_gradient(self, interval=5):
+        try:
+            df = self.minute_df
+
+            global ma20_gradient
+            global ma60_gradient
+            if len(df['체결가']) <= 20:  # 20일 이평선을 이용해야 하므로
+                ma20_gradient = 0
+            else:
+                ma20_dpc = df['MA20'].pct_change(interval)
+                ma20_gradient = ma20_dpc[-2] # D-1
+
+            if len(df['Close']) <= 60:  # 60일 이평선을 이용해야 하므로
+                ma60_gradient = 0
+            else:
+                df['MA60'] = df['Close'].rolling(window=60).mean()
+                ma60_dpc = df['MA60'].pct_change(interval)
+                ma60_gradient = ma60_dpc[-2] # D-1
+                if -0.01 < round(ma60_gradient, 4) < 0:
+                    ma60_gradient = 0
+
+            return ma20_gradient, ma60_gradient
+
+        except Exception as ex:
+            # self.logging.logger.debug("get_target_price() -> exception! {} ".format(str(ex)))
+            print("get_ma_gradient() -> exception! {} ".format(str(ex)))
             return None

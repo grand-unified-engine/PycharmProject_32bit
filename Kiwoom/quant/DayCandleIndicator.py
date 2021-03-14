@@ -21,31 +21,21 @@ class DayCandleIndicator:
             self.day_candle['MA5'] = self.day_candle['Close'].rolling(window=5).mean()
             self.day_candle['MA10'] = self.day_candle['Close'].rolling(window=10).mean()
             self.day_candle['MA20'] = self.day_candle['Close'].rolling(window=20).mean()
-            self.day_candle['D3OPENMIN'] = self.day_candle['Open'].rolling(window=3).min()
             # self.day_candle['MA120'] = self.day_candle['Close'].rolling(window=120).mean()
             # self.day_candle['MA240'] = self.day_candle['Close'].rolling(window=240).mean()
-            self.day_candle['MA20V'] = self.day_candle['Volume'].rolling(window=20).mean()
+            self.day_candle['MA10V'] = self.day_candle['Volume'].rolling(window=10).mean()
 
-            self.D1_close = self.day_candle['Close'].iloc[-2]
-
-            # if self.basic(code):
-            #     if self.newhigh():
-            #         self.pass_yn = True
-
-            # self.regression(code)
-            # print("결과dict : {}, 판단시간 : {}".format(self.result_dict, datetime.now().strftime('%Y-%m-%d %H:%M:%S')))
-
-        # print("최종결과: {}".format(self.pass_yn))
     '''
     전고점, 전저점 가져오기
     '''
     def get_max_min_close(self, start, end):
         try:
-            copy_df = self.day_candle.copy()[:start*-1]
+            copy_df = self.day_candle.copy()[:start * -1]  # start만큼 최근일자를 자른다
 
-            max_high = max(copy_df['High'][end*-1:])
-            min_close = min(copy_df['Close'][end*-1:])
-            return max_high, min_close
+            max_high = max(copy_df['High'][end * -1:])  # Start자르고 end개수 사이에서 max값을 구함
+            max_Close = max(copy_df['Close'][end * -1:])
+            min_close = min(copy_df['Close'][end * -1:])
+            return max_high, max_Close, min_close
             # max_high = copy_df.loc[copy_df['High']==copy_df['High'][end*-1:].max()]
             # min_close = copy_df.loc[copy_df['Close'] == copy_df['Close'][end*-1:].min()]
             # return max_high, min_close
@@ -58,7 +48,7 @@ class DayCandleIndicator:
     '''
     이평선 기울기
     '''
-    def get_ma_gradient(self, interval=5):
+    def get_ma_gradient(self, interval, index):
         try:
             df = self.day_candle
 
@@ -68,14 +58,14 @@ class DayCandleIndicator:
                 ma20_gradient = 0
             else:
                 ma20_dpc = df['MA20'].pct_change(interval)
-                ma20_gradient = ma20_dpc[-2] # D-1
+                ma20_gradient = ma20_dpc[index*-1] # D-1
 
             if len(df['Close']) <= 60:  # 60일 이평선을 이용해야 하므로
                 ma60_gradient = 0
             else:
                 df['MA60'] = df['Close'].rolling(window=60).mean()
                 ma60_dpc = df['MA60'].pct_change(interval)
-                ma60_gradient = ma60_dpc[-2] # D-1
+                ma60_gradient = ma60_dpc[index*-1] # D-1
                 if -0.01 < round(ma60_gradient, 4) < 0:
                     ma60_gradient = 0
 

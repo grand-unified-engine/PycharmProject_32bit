@@ -142,10 +142,12 @@ class EventLoop:
         print("코드 종목 : {}".format(code_list))
         print("코드 개수 : {}".format(len(code_list)))
 
-        for code in code_list:
-            if code not in self.portfolio_stock_dict:
-                self.condition_stock.update({code: {}})
-        print("포트폴리오 필터링 후 코드 개수 : {}".format(len(self.condition_stock)))
+        # for code in code_list:
+        #     if code not in self.portfolio_stock_dict:
+        #         self.condition_stock.update({code: {}})
+        # print("포트폴리오 필터링 후 코드 개수 : {}".format(len(self.condition_stock)))
+
+        self.condition_stock.update({'189980': {}})
 
         self.api.set_real_remove("0156", "ALL") # 조건 검색한 종목들 실시간 스크린번호 삭제
 
@@ -239,6 +241,7 @@ class EventLoop:
                 current_price = self.api.get_comm_data(sTrCode, sRQName, i, "현재가").lstrip("0")  # 현재가 : 000000003450
                 total_chegual_price = self.api.get_comm_data(sTrCode, sRQName, i, "매입금액").lstrip("0")
                 possible_quantity = self.api.get_comm_data(sTrCode, sRQName, i, "매매가능수량").lstrip("0")
+                d1_close = self.api.get_comm_data(sTrCode, sRQName, i, "전일종가").lstrip("0")
 
                 self.logging.logger.debug("종목코드: {} - 종목명: {} - 보유수량: {} - 매입가: {} - 수익률: {} - 현재가: {}".format(
                     code, code_nm, stock_quantity, buy_price, learn_rate, current_price))
@@ -255,6 +258,7 @@ class EventLoop:
                 current_price = int(current_price.strip())
                 total_chegual_price = int(total_chegual_price.strip())
                 possible_quantity = int(possible_quantity.strip())
+                d1_close = int(d1_close.strip())
 
                 self.account_stock_dict[code].update({"종목명": code_nm})
                 self.account_stock_dict[code].update({"보유수량": stock_quantity})
@@ -263,6 +267,7 @@ class EventLoop:
                 self.account_stock_dict[code].update({"현재가": current_price})
                 self.account_stock_dict[code].update({"매입금액": total_chegual_price})
                 self.account_stock_dict[code].update({'매매가능수량': possible_quantity})
+                self.account_stock_dict[code].update({'당일상한가': d1_close * 1.298})
 
             # self.logging.logger.debug("sPreNext : %s" % next)
             print("계좌에 가지고 있는 종목은 %s " % rows)
@@ -1300,36 +1305,42 @@ class EventLoop:
                 # self.logging.logger.debug("수익률 : {}, 주문용스크린번호: {}, 계좌번호: {}".format(meme_rate, self.portfolio_stock_dict[sCode]["주문용스크린번호"], self.account_num))
                 # print("계좌평가잔고내역 종목코드 : {}, 매매가능수량: {}, 수익률: {}, 시간: {}".format(sCode, asd['매매가능수량'], meme_rate, datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')))
                 if sCode in self.portfolio_stock_dict.keys():
-                    if "MA20" in self.portfolio_stock_dict[sCode] and "average" in self.portfolio_stock_dict[sCode] \
-                            and "max10" in self.portfolio_stock_dict[sCode] and "min10" in self.portfolio_stock_dict[sCode]:
-                        print("들어가기 전 계좌평가잔고내역 종목코드 : {}, 매매가능수량: {}, 수익률: {}, 시간: {}, 현재가: {}".format(sCode, asd['매매가능수량'],
-                                                                                                meme_rate,
-                                                                                                datetime.datetime.now().strftime(
-                                                                                                    '%Y-%m-%d %H:%M:%S'),
-                                                                                                b))
+                    if "당일상한가" in self.portfolio_stock_dict[sCode]:
+                        if b > self.portfolio_stock_dict[sCode]['당일상한가']:
+                            order_success = self.api.send_order("신규매도", self.portfolio_stock_dict[sCode][
+                                "주문용스크린번호"],
+                                                                self.account_num, 2, sCode, asd['매매가능수량'],
+                                                                0,
+                                                                self.real_type.SENDTYPE['거래구분']['시장가'], "")
+
+                            if order_success == 0:
+                                self.logging.logger.debug("코드 : " + sCode + " 매도주문 전달 성공(계좌에 있던 거)")
+                                # self.slack.chat.post_message("hellojarvis", "코드 : " + sCode + " 매도주문 전달 성공")
+                                del self.account_stock_dict[sCode]
+
+                            else:
+                                self.logging.logger.debug("코드 : " + sCode + " 매도주문 전달 실패(계좌에 있던 거)")
+                                # self.slack.chat.post_message("hellojarvis", "코드 : " + sCode + " 매도주문 전달 실패")
+
+                    if "ub" in self.portfolio_stock_dict[sCode] and "D1Close" in self.portfolio_stock_dict[sCode] \
+                            and "bandwidth" in self.portfolio_stock_dict[sCode] and "MA20" in self.portfolio_stock_dict[sCode]:
+                        # print("들어가기 전 계좌평가잔고내역 종목코드 : {}, 매매가능수량: {}, 수익률: {}, 시간: {}, 현재가: {}".format(sCode, asd['매매가능수량'],
+                        #                                                                         meme_rate,
+                        #                                                                         datetime.datetime.now().strftime(
+                        #                                                                             '%Y-%m-%d %H:%M:%S'),
+                        #                                                                         b))
                         if asd['매매가능수량'] > 0:
                             if meme_rate > 1:
-                                print("들어간 후 계좌평가잔고내역 종목코드 : {}, 매매가능수량: {}, 수익률: {}, 시간: {}, 현재가: {}".format(sCode, asd['매매가능수량'],
-                                                                                               meme_rate,
-                                                                                               datetime.datetime.now().strftime(
-                                                                                                   '%Y-%m-%d %H:%M:%S'), b))
-                                print("들어가기 전 MA20: {}, average: {}".format(self.portfolio_stock_dict[sCode]["MA20"],
-                                                                     self.portfolio_stock_dict[sCode]["average"]))
-                                if b < self.portfolio_stock_dict[sCode]["MA20"] and b < self.portfolio_stock_dict[sCode]["average"]:
+                                # print("들어간 후 계좌평가잔고내역 종목코드 : {}, 매매가능수량: {}, 수익률: {}, 시간: {}, 현재가: {}".format(sCode, asd['매매가능수량'],
+                                #                                                                meme_rate,
+                                #                                                                datetime.datetime.now().strftime(
+                                #                                                                    '%Y-%m-%d %H:%M:%S'), b))
+                                # print("들어가기 전 MA20: {}, average: {}".format(self.portfolio_stock_dict[sCode]["MA20"],
+                                #                                      self.portfolio_stock_dict[sCode]["average"]))
+                                if b < self.portfolio_stock_dict[sCode]["ub"] and b < self.portfolio_stock_dict[sCode]["D1Close"]:
                                     # or (self.t_sell.strftime('%Y-%m-%d %H:%M:%S') < datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S') < self.t_exit.strftime('%Y-%m-%d %H:%M:%S'))):
-                                    print("들어간 후 MA20: {}, average: {}".format(self.portfolio_stock_dict[sCode]["MA20"], self.portfolio_stock_dict[sCode]["average"]))
-                                    print(
-                                        "들어가기 전 max10: {}, min10: {}".format(self.portfolio_stock_dict[sCode]["max10"],
-                                                                            self.portfolio_stock_dict[sCode][
-                                                                                "min10"]))
-                                    if self.portfolio_stock_dict[sCode]["max10"] - self.portfolio_stock_dict[sCode][
-                                        "min10"] > 0:
-                                        if ((self.portfolio_stock_dict[sCode]["max10"] - self.portfolio_stock_dict[sCode][
-                                            "min10"]) / self.portfolio_stock_dict[sCode]["max10"]) > 0.03:
-                                            print(
-                                                "들어간 후 max10: {}, min10: {}".format(self.portfolio_stock_dict[sCode]["max10"],
-                                                                               self.portfolio_stock_dict[sCode][
-                                                                                   "min10"]))
+                                    if self.portfolio_stock_dict[sCode]["bandwidth"] > 16:
+                                        if b <= self.portfolio_stock_dict[sCode]["MA20"]:
                                             order_success = self.api.send_order("신규매도", self.portfolio_stock_dict[sCode][
                                                 "주문용스크린번호"],
                                                                                 self.account_num, 2, sCode, asd['매매가능수량'],
@@ -1342,7 +1353,7 @@ class EventLoop:
                                                 del self.account_stock_dict[sCode]
 
                                             else:
-                                                self.logging.logger.debug("코드 : " + sCode + " 매도주문 전달 실패")
+                                                self.logging.logger.debug("코드 : " + sCode + " 매도주문 전달 실패(계좌에 있던 거)")
                                                 # self.slack.chat.post_message("hellojarvis", "코드 : " + sCode + " 매도주문 전달 실패")
 
                     if asd['매매가능수량'] > 0 and meme_rate < -5:  # 손절매
@@ -1357,7 +1368,7 @@ class EventLoop:
                             del self.account_stock_dict[sCode]
 
                         else:
-                            self.logging.logger.debug("코드 : " + sCode + " 매도주문 전달 실패")
+                            self.logging.logger.debug("코드 : " + sCode + " 매도주문 전달 실패(계좌에 있던 거)")
                             # self.slack.chat.post_message("hellojarvis", "코드 : " + sCode + " 매도주문 전달 실패")
 
 
@@ -1368,17 +1379,31 @@ class EventLoop:
                 meme_rate = (b - jd['매입단가']) / jd['매입단가'] * 100  # 수익률 (b : 현재가)
 
                 if sCode in self.portfolio_stock_dict.keys():
-                    if "MA20" in self.portfolio_stock_dict[sCode] and "average" in self.portfolio_stock_dict[sCode] \
-                            and "max10" in self.portfolio_stock_dict[sCode] and "min10" in self.portfolio_stock_dict[sCode]:
+                    if "당일상한가" in self.portfolio_stock_dict[sCode]:
+                        if b > self.portfolio_stock_dict[sCode]['당일상한가']:
+                            order_success = self.api.send_order("신규매도", self.portfolio_stock_dict[sCode][
+                                "주문용스크린번호"],
+                                                                self.account_num, 2, sCode, jd['주문가능수량'], 0,
+                                                                self.real_type.SENDTYPE['거래구분']['시장가'], "")
+
+                            if order_success == 0:
+                                self.logging.logger.debug("코드 : " + sCode + " 매도주문 전달 성공(프로그램 오픈 후)")
+                                # self.slack.chat.post_message("hellojarvis", "코드 : " + sCode + " 매도주문 전달 성공")
+                            else:
+                                self.logging.logger.debug("코드 : " + sCode + " 매도주문 전달 실패")
+                                # self.slack.chat.post_message("hellojarvis", "코드 : " + sCode + " 매도주문 전달 실패")
+
+                    if "ub" in self.portfolio_stock_dict[sCode] and "D1Close" in self.portfolio_stock_dict[sCode] \
+                            and "bandwidth" in self.portfolio_stock_dict[sCode] and "MA20" in self.portfolio_stock_dict[sCode]:
 
                         if jd['주문가능수량'] > 0:
                             # or (self.t_sell.strftime('%Y-%m-%d %H:%M:%S') < datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S') < self.t_exit.strftime('%Y-%m-%d %H:%M:%S'))):
                             if meme_rate > 1:
-                                if b < self.portfolio_stock_dict[sCode]["MA20"] and b < self.portfolio_stock_dict[sCode]["average"]:
+                                if b < self.portfolio_stock_dict[sCode]["ub"] and b < self.portfolio_stock_dict[sCode][
+                                    "D1Close"]:
                                     # or (self.t_sell.strftime('%Y-%m-%d %H:%M:%S') < datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S') < self.t_exit.strftime('%Y-%m-%d %H:%M:%S'))):
-                                    if self.portfolio_stock_dict[sCode]["max10"] - self.portfolio_stock_dict[sCode][
-                                        "min10"] > 0:
-                                        if ((self.portfolio_stock_dict[sCode]["max10"] - self.portfolio_stock_dict[sCode]["min10"]) / self.portfolio_stock_dict[sCode]["max10"]) > 0.03:
+                                    if self.portfolio_stock_dict[sCode]["bandwidth"] > 16:
+                                        if b <= self.portfolio_stock_dict[sCode]["MA20"]:
                                             order_success = self.api.send_order("신규매도", self.portfolio_stock_dict[sCode][
                                                 "주문용스크린번호"],
                                                                                 self.account_num, 2, sCode, jd['주문가능수량'], 0,
