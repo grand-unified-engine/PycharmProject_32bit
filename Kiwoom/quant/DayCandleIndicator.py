@@ -2,20 +2,20 @@
 import pandas as pd
 import copy
 from datetime import datetime
-# from MyQuant.MariaDB import MarketDB
-import FinanceDataReader as fdr
+from Kiwoom.quant.MariaDB import MarketDB
+# import FinanceDataReader as fdr
 
 class DayCandleIndicator:
     def __init__(self, code):
 
-        # self.day_candle = pd.DataFrame()
-        # self.mk = MarketDB(code)
+        self.day_candle = pd.DataFrame()
+        self.mk = MarketDB(code)
 
         # self.pass_yn = False
-        end_date = datetime.today().strftime('%Y-%m-%d')
-        # end_date = '2021-02-24' #과거꺼 테스트할 때만 사용
-        # self.dayAnaly.day_candle = self.mk.get_daily_price(code, start_date='2020-07-01', end_date=end_date)
-        self.day_candle = fdr.DataReader(code, '2020-07-01', end_date)
+        # end_date = datetime.today().strftime('%Y-%m-%d')
+        end_date = '2021-03-12' #과거꺼 테스트할 때만 사용
+        self.day_candle = self.mk.get_daily_price(code, start_date='2020-07-01', end_date=end_date)
+        # self.day_candle = fdr.DataReader(code, '2020-07-01', end_date)
 
         if len(self.day_candle['Close']) >= 20:
             self.day_candle['MA5'] = self.day_candle['Close'].rolling(window=5).mean()

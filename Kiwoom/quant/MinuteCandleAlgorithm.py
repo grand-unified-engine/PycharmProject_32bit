@@ -7,18 +7,17 @@ import datetime as dt
 from PyQt5.QtTest import QTest
 
 class MinuteCandleAlgorithm:
-    def __init__(self, code, dayObjectCreate, real_time_recommand_dict):
+    def __init__(self, code, real_time_recommand_dict):
         self.mIndicator = None
 
-        if dayObjectCreate:
-            self.dayAlgo = DayCandleAlgorithm(code)
+        self.dayAlgo = DayCandleAlgorithm(code)
 
         self.assist_dict = dict()
 
         self.real_time_recommand_dict = real_time_recommand_dict
 
         # 요일체크
-        today = dt.date.today()
+        today = dt.date.today() - dt.timedelta(days=1)
         if dt.date.strftime(today, '%A') == 'Sunday':
             today = today - dt.timedelta(days=2)
         elif dt.date.strftime(today, '%A') == 'Saturday':
@@ -47,21 +46,21 @@ class MinuteCandleAlgorithm:
         if self.dayAlgo.basic2(max_vol=15000000): #천오백만
             if self.dayAlgo.accumulate():
                 self.mIndicator = MinuteCandleIndicator(code)
-                QTest.qWait(6000)
-                print("분봉: {}".format(self.mIndicator.minute_df))
+                QTest.qWait(3000)
+                # print("분봉: {}".format(self.mIndicator.minute_df))
                 self.assist_dict.update({'갭상승': False})
-                first_time = list(np.where(self.mIndicator.minute_df['체결시각'] == today + " 09:00"))[0]
-
-                if self.mIndicator.minute_df['체결시각'].loc[first_time, '체결가'].iloc[-1] > self.dayAlgo.dIndicator.day_candle['Close'][-2]:
+                first_time = np.where(self.mIndicator.minute_df['체결시각'] == today + " 09:00")[0]
+                # print("첫: {}".format(self.mIndicator.minute_df.loc[first_time, '체결가'].iloc[-1]))
+                if self.mIndicator.minute_df.loc[first_time, '체결가'].iloc[-1] > self.dayAlgo.dIndicator.day_candle['Close'][-2]:
                     self.assist_dict.update({'갭상승': True})
-                    self.assist_dict.update({'첫봉갭상승률': self.mIndicator.minute_df['체결시각'].loc[first_time, '체결가'].iloc[-1] / (
-                                self.mIndicator.minute_df['체결시각'].loc[first_time, '체결가'].iloc[-1] - self.mIndicator.minute_df['체결시각'].loc[first_time, '전일비'].iloc[-1])})
+                    self.assist_dict.update({'첫봉갭상승률': self.mIndicator.minute_df.loc[first_time, '체결가'].iloc[-1] / (
+                                self.mIndicator.minute_df.loc[first_time, '체결가'].iloc[-1] - self.mIndicator.minute_df.loc[first_time, '전일비'].iloc[-1])})
                     if '갭상승' in self.assist_dict and '첫봉갭상승률' in self.assist_dict:
                         if self.assist_dict['갭상승']:
                             if self.mIndicator.minute_df['체결시각'].iloc[-1] > self.mIndicator.minute_df['체결시각'].iloc[-2]:
                                 if self.assist_dict['첫봉갭상승률'] < 1.03:
                                     ma10_dpc = self.mIndicator.minute_df['MA10'].pct_change(3)
-                                    if ma10_dpc.iloc[-1] > 0:
+                                    if int(ma10_dpc.iloc[-1]) > 0:
                                         if self.mIndicator.minute_df['MA10'].iloc[-1] < self.mIndicator.minute_df['체결가'].iloc[-1] < self.mIndicator.minute_df['ub'].iloc[-1]:
                                             print("매수가: {}, 시간: {} 살 타이밍".format(
                                                 self.mIndicator.minute_df['체결가'].iloc[-1],

@@ -23,7 +23,7 @@ class MinuteCandleIndicator:
         self.t_9_22 = self.t_now.replace(hour=9, minute=22, second=0, microsecond=0)
 
         # 요일체크
-        today = dt.date.today()
+        today = dt.date.today() - dt.timedelta(days=1)
         if dt.date.strftime(today, '%A') == 'Sunday':
             today = today - dt.timedelta(days=2)
         elif dt.date.strftime(today, '%A') == 'Saturday':
