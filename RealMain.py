@@ -31,9 +31,9 @@ if __name__  == "__main__":
     # sched.start()
     signal.get_condition_load()
 
-    # QTest.qWait(2000)  # 1초
-    # sThread = SellThread(signal)
-    # sThread.start()
+    QTest.qWait(2000)  # 1초
+    sThread = SellThread(signal)
+    sThread.start()
 
     QTest.qWait(2000)  # 1초
     bThread = BuyThread(signal)
