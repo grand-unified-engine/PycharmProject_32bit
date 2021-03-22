@@ -30,11 +30,11 @@ class DayCandleIndicator:
     '''
     def get_max_min_close(self, start, end):
         try:
-            copy_df = self.day_candle.copy()[:start * -1]  # start만큼 최근일자를 자른다
+            copy_df = self.day_candle.copy()[end*-1:start*-1]
 
-            max_high = max(copy_df['High'][end * -1:])  # Start자르고 end개수 사이에서 max값을 구함
-            max_Close = max(copy_df['Close'][end * -1:])
-            min_close = min(copy_df['Close'][end * -1:])
+            max_high = max(copy_df['High']) #Start자르고 end개수 사이에서 max값을 구함
+            max_Close = max(copy_df['Close'])
+            min_close = min(copy_df['Close'])
             return max_high, max_Close, min_close
             # max_high = copy_df.loc[copy_df['High']==copy_df['High'][end*-1:].max()]
             # min_close = copy_df.loc[copy_df['Close'] == copy_df['Close'][end*-1:].min()]
