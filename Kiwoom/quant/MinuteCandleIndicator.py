@@ -70,7 +70,7 @@ class MinuteCandleIndicator:
             self.minute_df.drop(['index'], axis=1, inplace=True)  # inplace는 데이터프레임을 그대로 사용하고자 할 때
 
     def minute_candle(self, code, thistime):
-
+        # 네이버에서 분봉은 일주일치 데이터 제공함 21.03.25 확인
         url = f'https://finance.naver.com/item/sise_time.nhn?code={code}&thistime={thistime}'
         res = self.session.get(url, headers=self.headers)
         res.raise_for_status()
