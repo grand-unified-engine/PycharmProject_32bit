@@ -28,7 +28,7 @@ class DBUpdater:
         # 30: K - OTC
         code_list = self.signal.api.get_code_list_by_market("0")
         code_list.extend(self.signal.api.get_code_list_by_market("10"))
-        # code_list.append(self.signal.api.get_code_list_by_market("8"))
+        code_list.extend(self.signal.api.get_code_list_by_market("8"))
 
         # code_df = self.mk.get_company_info()
         # print("code_list : {}".format(code_list))
