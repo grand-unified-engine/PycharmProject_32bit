@@ -413,7 +413,7 @@ class Signal:
 
     # 일봉 데이터 요청
     def day_candle_req(self, code=None, date=None, sPrevNext="0"):
-        QTest.qWait(3600)
+        # QTest.qWait(3600)
         # self.ohlcv = {'date': [], 'open': [], 'high': [], 'low': [], 'close': [], 'volume': []}
         self.api.set_input_value("종목코드", code)
         self.api.set_input_value("수정주가구분", "1")

@@ -172,7 +172,7 @@ class EventLoop:
     # 조회요청 응답을 받거나 조회데이터를 수신했을때
     # sTrCode : TR이름 ex)opt10075
     def _tr_data_slot(self, sScrNo, sRQName, sTrCode, sRecordName, sPrevNext, unused1, unused2, unused3, unused4):
-        # from Kiwoom.Signal import Signal
+        from Kiwoom.Signal import Signal
         # print("OnReceiveTrData 이벤트 루프 큐 실행: ", screen_no, sRQName, sTrCode, record_name, sPrevNext)
 
         # if sRQName == "신규매수" or sRQName == "신규매도" or sRQName == "매수취소":
