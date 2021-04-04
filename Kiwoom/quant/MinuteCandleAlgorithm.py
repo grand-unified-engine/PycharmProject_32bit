@@ -8,6 +8,7 @@ from PyQt5.QtTest import QTest
 
 class MinuteCandleAlgorithm:
     def __init__(self, code, real_time_recommand_dict):
+
         self.mIndicator = None
 
         self.dayAlgo = DayCandleAlgorithm(code)

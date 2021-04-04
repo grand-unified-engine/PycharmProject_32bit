@@ -115,11 +115,12 @@ class EventLoop:
     def _condition_ver_slot(self, lRet, sMsg):
         # self.logging.logger.debug("호출 성공 여부 %s, 호출결과 메시지 %s" % (lRet, sMsg))
         condition_name_list = self.api.get_condition_name_list()
+        print("HTS의 조건검색식 이름 가져오기 %s" % condition_name_list)
         # self.logging.logger.debug("HTS의 조건검색식 이름 가져오기 %s" % condition_name_list)
 
         condition_name_list = condition_name_list.split(";")[:-1]
 
-        condition_name_list = [x for x in condition_name_list if x.split("^")[1] == "자비스전달종목"]
+        condition_name_list = [x for x in condition_name_list if x.split("^")[1] == "매일분석"]
 
         self.api.send_condition("0156", condition_name_list[0].split("^")[1], condition_name_list[0].split("^")[0],
                                 0)  # 조회요청 + 실시간 조회
@@ -139,15 +140,18 @@ class EventLoop:
         # self.logging.logger.debug("화면번호: %s, 종목코드 리스트: %s, 조건식 이름: %s, 조건식 인덱스: %s, 연속조회: %s" % (sScrNo, strCodeList, strConditionName, index, nNext))
 
         code_list = strCodeList.split(";")[:-1]
-        print("코드 종목 : {}".format(code_list))
+        print("코드 종목 : {}".format(code_list)) # 코드번호순으로 나옴
         print("코드 개수 : {}".format(len(code_list)))
+
+        for code in code_list:
+            self.condition_stock.update({code: {}})
 
         # for code in code_list:
         #     if code not in self.portfolio_stock_dict:
         #         self.condition_stock.update({code: {}})
         # print("포트폴리오 필터링 후 코드 개수 : {}".format(len(self.condition_stock)))
 
-        self.condition_stock.update({'189980': {}})
+        # self.condition_stock.update({'189980': {}})
 
         self.api.set_real_remove("0156", "ALL") # 조건 검색한 종목들 실시간 스크린번호 삭제
 
@@ -573,7 +577,6 @@ class EventLoop:
             #
             # final_df = final_df[final_df.index.strftime('%Y-%m-%d %H:%M') == datetime.today().strftime('%Y-%m-%d %H:%M')]
             self.calculator_event_loop.exit()
-
 
         elif sRQName == "주식분봉차트조회":  # opt10080 : 주식분봉차트조회요청 (single, multi)
 
@@ -1296,7 +1299,9 @@ class EventLoop:
 
             # print("self.portfolio_stock_dict : {}".format(self.portfolio_stock_dict))
 
-            # 계좌평가잔고내역 종목 매도하기 - 로그인 전 매수한 건
+            '''
+            계좌평가잔고내역 종목 매도하기 - 로그인 전 매수한 건
+            '''
             if sCode in self.account_stock_dict.keys() and sCode not in self.jango_dict.keys():
                 asd = self.account_stock_dict[sCode]
 
@@ -1355,8 +1360,10 @@ class EventLoop:
                                             else:
                                                 self.logging.logger.debug("코드 : " + sCode + " 매도주문 전달 실패(계좌에 있던 거)")
                                                 # self.slack.chat.post_message("hellojarvis", "코드 : " + sCode + " 매도주문 전달 실패")
-
-                    if asd['매매가능수량'] > 0 and meme_rate < -5:  # 손절매
+                    '''
+                    손절매
+                    '''
+                    if asd['매매가능수량'] > 0 and meme_rate < -5:
                         order_success = self.api.send_order("신규매도",
                                                             self.portfolio_stock_dict[sCode]["주문용스크린번호"],
                                                             self.account_num, 2, sCode, asd['매매가능수량'], 0,
@@ -1371,8 +1378,7 @@ class EventLoop:
                             self.logging.logger.debug("코드 : " + sCode + " 매도주문 전달 실패(계좌에 있던 거)")
                             # self.slack.chat.post_message("hellojarvis", "코드 : " + sCode + " 매도주문 전달 실패")
 
-
-            #  프로그램 run 한 후 주문한 종목 팔기
+            # 프로그램 run 한 후 주문한 종목 팔기
             elif sCode in self.jango_dict.keys():
                 # print("self.jango_dict : {}".format(self.jango_dict))
                 jd = self.jango_dict[sCode]
@@ -1415,8 +1421,10 @@ class EventLoop:
                                             else:
                                                 self.logging.logger.debug("코드 : " + sCode + " 매도주문 전달 실패")
                                                 # self.slack.chat.post_message("hellojarvis", "코드 : " + sCode + " 매도주문 전달 실패")
-
-                    if jd['주문가능수량'] > 0 and meme_rate < -5:  # 손절매
+                    '''
+                    손절매
+                    '''
+                    if jd['주문가능수량'] > 0 and meme_rate < -5:
                         order_success = self.api.send_order("신규매도",
                                                             self.portfolio_stock_dict[sCode]["주문용스크린번호"],
                                                             self.account_num, 2, sCode, jd['주문가능수량'], 0,
@@ -1732,13 +1740,23 @@ class EventLoop:
         첫종가 = 0
         cnt = 0
 
+        d_high = 3260
         for i in final_df.index:
 
-            if i.strftime('%Y-%m-%d %H:%M:%S') == '2021-04-01 09:00:00':
+            '''
+            매수
+            '''
+            if i.strftime('%Y-%m-%d %H:%M:%S') == '2021-04-02 09:00:00':
                 첫종가 = final_df.loc[i, 'close']
 
-            if i.strftime('%Y-%m-%d %H:%M:%S') > '2021-04-01 09:00:00':
-                print(final_df.loc[i, 'close'] / 첫종가)
+            if i.strftime('%Y-%m-%d %H:%M:%S') > '2021-04-02 09:00:00':
+                if final_df.loc[i, 'close'] > final_df.loc[i, 'open']:
+                    if final_df.loc[i, 'close'] > d_high > final_df.loc[i, 'open']:
+                        book.loc[i, 'trade'] = 'buy'
+
+            '''
+            매도
+            '''
 
             #     if pre_val != '':
             #         '''
@@ -1817,8 +1835,8 @@ class EventLoop:
             #
             #     pre_val = i
             #
-            # book = book[(book['trade'] == 'buy') | (book['trade'] == 'sell')]
-            #
-            # # book = book[book.index.strftime('%Y-%m-%d %H:%M') >= '2021-02-25 15:30:00']
-            #
-            # print(book.tail(300))
+        book = book[(book['trade'] == 'buy') | (book['trade'] == 'sell')]
+
+        # book = book[book.index.strftime('%Y-%m-%d %H:%M') >= '2021-02-25 15:30:00']
+
+        print("code: {}, bookList: {}".format(self.test_code, book))

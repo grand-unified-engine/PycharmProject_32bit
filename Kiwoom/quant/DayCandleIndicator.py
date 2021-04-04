@@ -2,20 +2,21 @@
 import pandas as pd
 import copy
 from datetime import datetime
-# from Kiwoom.quant.MariaDB import MarketDB
+from Kiwoom.quant.MariaDB import MarketDB
 import FinanceDataReader as fdr
+
 
 class DayCandleIndicator:
     def __init__(self, code):
 
-        self.day_candle = pd.DataFrame()
-        # self.mk = MarketDB(code)
+        # self.day_candle = pd.DataFrame()
+        self.mk = MarketDB(code)
 
         # self.pass_yn = False
-        end_date = datetime.today().strftime('%Y-%m-%d')
-        end_date = '2021-03-12' #과거꺼 테스트할 때만 사용
-        # self.day_candle = self.mk.get_daily_price(code, start_date='2020-07-01', end_date=end_date)
-        self.day_candle = fdr.DataReader(code, '2020-07-01', end_date)
+        # end_date = datetime.today().strftime('%Y-%m-%d')
+        end_date = '2021-04-02' #과거꺼 테스트할 때만 사용
+        self.day_candle = self.mk.get_daily_price(code, start_date='2018-01-03', end_date=end_date)
+        # self.day_candle = fdr.DataReader(code, '2018-01-03', end_date)
 
         if len(self.day_candle['Close']) >= 20:
             self.day_candle['MA5'] = self.day_candle['Close'].rolling(window=5).mean()
@@ -104,16 +105,68 @@ class DayCandleIndicator:
             print("bollinger_band() -> exception! {} ".format(str(ex)))
             return None
 
+    def get_demark(self): # Demark
+        '''
+        :param code:
+        :return:
+        '''
+        try:
+            d_high = 0
+            d_low = 0
+            # df = self.mk.get_daily_price(code)
+            df = self.day_candle
 
+            pre_open = int(df['Open'].shift(1).iloc[-1])
+            pre_high = int(df['High'].shift(1).iloc[-1])
+            pre_low = int(df['Low'].shift(1).iloc[-1])
+            pre_close = int(df['Close'].shift(1).iloc[-1])
+
+            '''
+            if(predayclose()>predayopen(),
+              (predayhigh()+predaylow()+predayclose()+predayhigh())/2-predaylow(),
+              (if(predayclose()<predayopen(),
+                  (predayhigh()+predaylow()+predayclose()+predaylow())/2-predaylow()
+                  (predayhigh()+predaylow()+predayclose()+predayclose())/2-predaylow())
+               )
+            )
+            '''
+            if pre_close > pre_open :
+                d_high = (pre_high  + pre_low  + pre_close  + pre_high )/ 2 - pre_low
+            elif pre_close < pre_open :
+                d_high = (pre_high  + pre_low  + pre_close  + pre_low )/ 2 - pre_low
+            else:
+                d_high = (pre_high + pre_low + pre_close + pre_close) / 2 - pre_low
+
+            # print("d_high : {} ".format(d_high))
+
+            '''
+            if(predayclose()>predayopen(),
+              (predayhigh()+predaylow()+predayclose()+predayhigh())/2-predayhigh(),
+              (if(predayclose()<predayopen(),
+                  (predayhigh()+predaylow()+predayclose()+predaylow())/2-predayhigh()
+                  (predayhigh()+predaylow()+predayclose()+predayclose())/2-predayhigh())
+                )
+              )  
+            '''
+            #
+            # if df['close'].shift(1) > df['open'].shift(1):
+            #     d_low = (df['high'].shift(1) + df['low'].shift(1) + df['close'].shift(1) + df['high'].shift(1))/ 2 - df['high'].shift(1)
+            # else:
+            #     d_low = (df['high'].shift(1) + df['low'].shift(1) + df['close'].shift(1) + df['low'].shift(1))/ 2 - df['high'].shift(1)
+            #
+            # print("d_high : {} , d_high : {} ".format(d_high, d_high))
+
+            return d_high
+
+            # return d_high, d_high
+
+        except Exception as ex:
+            # self.logging.logger.debug("get_target_price() -> exception! {} ".format(str(ex)))
+            print("get_get_demark() -> exception! {} ".format(str(ex)))
+            return None
 
 if __name__ == "__main__":
-    analy = Analyzer()
-    mk = MarketDB()
-    code = '024900'
-    end_date = datetime.today().strftime('%Y-%m-%d')
-    # end_date = '2021-02-16'
-    df = mk.get_daily_price(code, end_date=end_date)
-    final_df = df.sort_index(ascending=False)
-    # print(final_df)
-
+    code = '001380'
+    d_high = DayCandleIndicator(code).get_demark()
+    print(d_high)
 
