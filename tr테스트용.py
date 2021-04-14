@@ -35,7 +35,7 @@ if __name__  == "__main__":
     # sched.add_job(signal.get_condition_load, 'interval', seconds=10)
     # sched.start()
 
-    signal.get_condition_load()
+    # signal.get_condition_load()
 
     # QTest.qWait(1000)  # 1초
     # for code in signal.condition_stock.keys():
@@ -62,7 +62,7 @@ if __name__  == "__main__":
     # signal.event_loop.sign_volume_req(code="289080")
     # d_high = DayCandleAlgorithm(code="000440").dIndicator.get_demark()
     # print(d_high)
-    # signal.minute_candle_req(code="001380")
+    signal.minute_candle_req(code="900310")
 
     # signal.volume_uprise_req("1", "500", "1") # 거래량 급증 요청
 

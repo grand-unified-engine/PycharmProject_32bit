@@ -90,9 +90,11 @@ class BuyThread(QThread):
                                 if code == '066430' or code == '570045' or code == '036630' or code == '093230':
                                     continue
                                 else:
-                                    MinuteCandleAlgorithm(code, self.signal.real_time_recommand_dict)
+                                    self.signal.minute_candle_req(code=code)
+                                    # MinuteCandleAlgorithm(code, self.signal.real_time_recommand_dict)
                             else:
-                                MinuteCandleAlgorithm(code, self.signal.real_time_recommand_dict)
+                                self.signal.minute_candle_req(code=code)
+                                # MinuteCandleAlgorithm(code, self.signal.real_time_recommand_dict)
 
                         except:
                             print("{} buy 코드 오류 발생".format(code))

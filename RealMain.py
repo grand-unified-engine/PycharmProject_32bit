@@ -23,17 +23,17 @@ if __name__  == "__main__":
     signal.screen_number_setting()
     QTest.qWait(1000) #1초
 
-    screenNumbering = RealTimeScreenNumbering(signal)
-    screenNumbering.start()
+    # screenNumbering = RealTimeScreenNumbering(signal)
+    # screenNumbering.start()
 
     # sched = BackgroundScheduler()
     # sched.add_job(signal.get_condition_load, 'cron', hour='09', minute='01', second="00", id='test')
     # sched.start()
     signal.get_condition_load()
 
-    QTest.qWait(2000)  # 1초
-    sThread = SellThread(signal)
-    sThread.start()
+    # QTest.qWait(2000)  # 1초
+    # sThread = SellThread(signal)
+    # sThread.start()
 
     QTest.qWait(2000)  # 1초
     bThread = BuyThread(signal)

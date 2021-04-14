@@ -13,25 +13,25 @@ class MinuteCandleAlgorithm:
 
         self.dayAlgo = DayCandleAlgorithm(code)
 
-        self.assist_dict = dict()
-
-        self.real_time_recommand_dict = real_time_recommand_dict
-
-        # 요일체크
-        today = dt.date.today() - dt.timedelta(days=1)
-        if dt.date.strftime(today, '%A') == 'Sunday':
-            today = today - dt.timedelta(days=2)
-        elif dt.date.strftime(today, '%A') == 'Saturday':
-            today = today - dt.timedelta(days=1)
-
-        print("code: {}, ma20_gradient: {}, ma60_gradient: {}".format(code, self.dayAlgo.ma20_gradient,
-                                                                      self.dayAlgo.ma60_gradient))
-        if self.dayAlgo.ma20_gradient < -0.004:
-            self.buy210312_025880(code=code, today="".join(str(today).split("-")))
-        elif self.dayAlgo.ma20_gradient < 0.09:
-            self.buy210312_189980(code=code, today="".join(str(today).split("-")))
-        elif self.dayAlgo.ma20_gradient < 0.12:
-            self.buy210312_068290(code=code, today="".join(str(today).split("-")))
+        # self.assist_dict = dict()
+        #
+        # self.real_time_recommand_dict = real_time_recommand_dict
+        #
+        # # 요일체크
+        # today = dt.date.today() - dt.timedelta(days=1)
+        # if dt.date.strftime(today, '%A') == 'Sunday':
+        #     today = today - dt.timedelta(days=2)
+        # elif dt.date.strftime(today, '%A') == 'Saturday':
+        #     today = today - dt.timedelta(days=1)
+        #
+        # print("code: {}, ma20_gradient: {}, ma60_gradient: {}".format(code, self.dayAlgo.ma20_gradient,
+        #                                                               self.dayAlgo.ma60_gradient))
+        # if self.dayAlgo.ma20_gradient < -0.004:
+        #     self.buy210312_025880(code=code, today="".join(str(today).split("-")))
+        # elif self.dayAlgo.ma20_gradient < 0.09:
+        #     self.buy210312_189980(code=code, today="".join(str(today).split("-")))
+        # elif self.dayAlgo.ma20_gradient < 0.12:
+        #     self.buy210312_068290(code=code, today="".join(str(today).split("-")))
 
 
     def buy210312_025880(self, code, today):

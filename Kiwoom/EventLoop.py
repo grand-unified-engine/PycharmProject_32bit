@@ -1683,17 +1683,17 @@ class EventLoop:
         # print("self.minute_candle_dict 분봉 : {}".format(self.minute_candle_dict[self.test_code]))
 
     def _opt10080_test(self, ex_data):  # 분봉 테스트
-        colName = ['close', 'volumn', 'date', 'open', 'high', 'low',
+        colName = ['close', 'volume', 'date', 'open', 'high', 'low',
                    '수정주가구분', '수정비율', '대업종구분', '소업종구분', '종목정보', '수정주가이벤트', '전일종가']
 
         df = pd.DataFrame(ex_data, columns=colName)
 
         df.index = pd.to_datetime(df.date)
 
-        df = df[['close', 'volumn', 'open', 'high', 'low']]
+        df = df[['close', 'volume', 'open', 'high', 'low']]
 
-        df[['close', 'volumn', 'open', 'high', 'low']] = df[
-            ['close', 'volumn', 'open', 'high', 'low']].astype(int)
+        df[['close', 'volume', 'open', 'high', 'low']] = df[
+            ['close', 'volume', 'open', 'high', 'low']].astype(int)
 
         # df는 현재에서 과거로, final_df는 과거에서 현재로 - 이평선 컬럼 만들기 위해
         final_df = df.sort_index()
@@ -1706,24 +1706,29 @@ class EventLoop:
         book = final_df.copy()
         book['trade'] = ''
 
-        final_df['MA3'] = final_df['close'].rolling(window=3).mean()
+        # final_df['MA3'] = final_df['close'].rolling(window=3).mean()
         final_df['MA5'] = final_df['close'].rolling(window=5).mean()
-        final_df['MA10'] = final_df['close'].rolling(window=10).mean()
-        final_df['MA20'] = final_df['close'].rolling(window=20).mean()
-        final_df['MA60'] = final_df['close'].rolling(window=60).mean()
+        # final_df['MA10'] = final_df['close'].rolling(window=10).mean()
+        # final_df['MA20'] = final_df['close'].rolling(window=20).mean()
+        # final_df['MA60'] = final_df['close'].rolling(window=60).mean()
 
         # print(final_df)
         # final_df['MA5_dpc'] = final_df['MA5'].pct_change(5)
 
-        final_df['MA240'] = final_df['close'].rolling(window=240).mean()
-        final_df['bandwidth5-20'] = ((final_df['MA5'] - final_df['MA20']) / (
-                (final_df['MA5'] + final_df['MA20']) / 2)) * 100
+        # final_df['MA240'] = final_df['close'].rolling(window=240).mean()
+        # final_df['bandwidth5-20'] = ((final_df['MA5'] - final_df['MA20']) / (
+        #         (final_df['MA5'] + final_df['MA20']) / 2)) * 100
+        final_df['center'] = final_df['close'].rolling(window=20).mean()
         final_df['stddev'] = final_df['close'].rolling(window=20).std()
-        final_df['upper'] = final_df['MA20'] + (final_df['stddev'] * 2)
-        final_df['lower'] = final_df['MA20'] - (final_df['stddev'] * 2)
-        final_df['bandwidth'] = (final_df['upper'] - final_df['lower']) / final_df['MA20'] * 100
+        final_df['ub'] = final_df['center'] + (final_df['stddev'] * 2)
+        final_df['lb'] = final_df['center'] - (final_df['stddev'] * 2)
+        final_df['bandwidth'] = (final_df['ub'] - final_df['lb']) / final_df['center'] * 100
 
-        # print(final_df.loc['2021-02-24 15:09:00', 'MA5_dpc'])
+        final_df['vol_dpc'] = final_df['volume'].pct_change()
+
+        # print(final_df.loc['2021-04-13 15:35:00', 'volume'])
+        # print(final_df.loc['2021-04-14 09:00:00', 'volume'])
+        # print(final_df.loc['2021-04-14 09:00:00', 'vol_dpc'])
         # print(final_df.loc['2020-11-18 10:22:00', 'lower'])
         # print(final_df.loc['2020-11-18 10:22:00', 'MA20'])
         # print(final_df.loc['2020-11-18 11:05:00', 'upper'])
@@ -1737,78 +1742,35 @@ class EventLoop:
         max_volume = 0
         min_volume = 0
 
-        첫종가 = 0
-        cnt = 0
-
-        d_high = 3260
+        # cnt = 0
+        #
+        # d_high = 3260
         for i in final_df.index:
 
             '''
             매수
             '''
-            if i.strftime('%Y-%m-%d %H:%M:%S') == '2021-04-02 09:00:00':
-                첫종가 = final_df.loc[i, 'close']
-
-            if i.strftime('%Y-%m-%d %H:%M:%S') > '2021-04-02 09:00:00':
-                if final_df.loc[i, 'close'] > final_df.loc[i, 'open']:
-                    if final_df.loc[i, 'close'] > d_high > final_df.loc[i, 'open']:
-                        book.loc[i, 'trade'] = 'buy'
+            if i.strftime('%Y-%m-%d %H:%M:%S') == '2021-04-14 09:00:00':
+                if final_df.loc[i, 'vol_dpc'] > 68:
+                    book.loc[i, 'trade'] = 'buy'
 
             '''
             매도
             '''
+            if pre_val != '':
+                if final_df.loc[pre_val, 'MA5'] < final_df.loc[i, 'MA5']:
+                    if max_volume > final_df.loc[i, 'volume'] * 2:
+                        if final_df.loc[i, 'close'] < final_df.loc[i, 'open']:  # 현재 음봉
+                            if final_df.loc[i, 'bandwidth'] > 7.8:
+                                if final_df.loc[pre_val, 'close'] > final_df.loc[pre_val, 'open']:  # 1분전 양봉
+                                    if final_df.loc[pre_val, 'open'] <= final_df.loc[i, 'open'] <= final_df.loc[
+                                        pre_val, 'high']:
+                                        book.loc[i, 'trade'] = 'sell'
+                                else:  # 1분전 음봉
+                                    if final_df.loc[pre_val, 'open'] <= final_df.loc[i, 'open'] <= final_df.loc[
+                                        pre_val, 'high']:
+                                        book.loc[i, 'trade'] = 'sell'
 
-            #     if pre_val != '':
-            #         '''
-            #         매수
-            #         '''
-            #         if 1 < final_df.loc[pre_val, 'bandwidth'] <= 2.5:  # 밴드폭이 1~2 사이
-            #             if final_df.loc[pre_val, 'MA5'] < final_df.loc[i, 'MA5']:
-            #                 if final_df.loc[i, 'close'] > final_df.loc[i, 'open']:  # 현재 양봉
-            #                     if final_df.loc[i, 'close'] > final_df.loc[i, 'upper'] > final_df.loc[
-            #                         i, 'open']:  # 볼린저 밴드 상향선 돌파
-            #                         if final_df.loc[i, 'volumn'] > final_df.loc[pre_val, 'volumn'] * 2.9:  # 거래량 급증
-            #                             book.loc[i, 'trade'] = 'buy'
-            #
-            #         # if final_df.loc[pre_val, 'MA5'] > final_df.loc[pre_val, 'MA20']:
-            #         #     if 1 < final_df.loc[pre_val, 'bandwidth'] <= 2:  # 밴드폭이 1~2 사이
-            #         #         if final_df.loc[i, 'close'] > final_df.loc[i, 'open']: # 현재 양봉
-            #         #             # if final_df.loc[i, 'open'] == final_df.loc[i, 'low']: # 저가와 시가가 같을 때
-            #         #                 if final_df.loc[i, 'close'] > final_df.loc[i, 'upper'] > final_df.loc[i, 'open']: # 볼린저 밴드 상향선 돌파
-            #         #                     if final_df.loc[i, 'volumn'] > final_df.loc[pre_val, 'volumn'] * 4: # 거래량 급증
-            #         #                         book.loc[i, 'trade'] = 'buy'
-            #         #     elif final_df.loc[pre_val, 'bandwidth'] > 2:
-            #         #         if final_df.loc[pre_val, 'MA10_dpc'] > 0.00075:
-            #         #             if final_df.loc[i, 'close'] > final_df.loc[i, 'open']: # 현재 양봉
-            #         #                 # if final_df.loc[i, 'open'] == final_df.loc[i, 'low']: # 저가와 시가가 같을 때
-            #         #                     if (final_df.loc[i, 'close'] > final_df.loc[i, 'upper'] > final_df.loc[i, 'open']) \
-            #         #                             or (final_df.loc[i, 'upper'] > final_df.loc[i, 'close'] > final_df.loc[i, 'MA5']): #
-            #         #                         if final_df.loc[i, 'volumn'] > final_df.loc[pre_val, 'volumn'] * 2: #
-            #         #                             book.loc[i, 'trade'] = 'buy'
-            #         # else:
-            #         #     if final_df.loc[pre_val, 'bandwidth'] > 5:
-            #         #         if final_df.loc[i, 'close'] > final_df.loc[i, 'open']: # 현재 양봉
-            #         #             # if final_df.loc[i, 'open'] == final_df.loc[i, 'low']: # 저가와 시가가 같을 때
-            #         #                 if final_df.loc[i, 'close'] > final_df.loc[i, 'MA20'] > final_df.loc[i, 'open']: # 20일선 상향선 돌파
-            #         #                     if final_df.loc[i, 'volumn'] > final_df.loc[pre_val, 'volumn'] * 2: #
-            #         #                         book.loc[i, 'trade'] = 'buy'
-            #
-            #         '''
-            #         매도
-            #         '''
-            #         if final_df.loc[pre_val, 'MA5'] < final_df.loc[i, 'MA5']:
-            #             if max_volume > final_df.loc[i, 'volumn'] * 2:
-            #                 if final_df.loc[i, 'close'] < final_df.loc[i, 'open']:  # 현재 음봉
-            #                     if final_df.loc[i, 'bandwidth'] > 7.8:
-            #                         if final_df.loc[pre_val, 'close'] > final_df.loc[pre_val, 'open']:  # 1분전 양봉
-            #                             if final_df.loc[pre_val, 'open'] <= final_df.loc[i, 'open'] <= final_df.loc[
-            #                                 pre_val, 'high']:
-            #                                 book.loc[i, 'trade'] = 'sell'
-            #                         else:  # 1분전 음봉
-            #                             if final_df.loc[pre_val, 'open'] <= final_df.loc[i, 'open'] <= final_df.loc[
-            #                                 pre_val, 'high']:
-            #                                 book.loc[i, 'trade'] = 'sell'
-            #
             #         # if round(final_df.loc[i, 'upper']) == round(final_df.loc[i, 'lower']):
             #         #     if final_df.loc[i, 'close'] == max_close:
             #         #         book.loc[i, 'trade'] = 'sell'
@@ -1821,20 +1783,57 @@ class EventLoop:
             #         #                         if final_df.loc[i, 'close'] < final_df.loc[i, 'MA3'] < final_df.loc[i, 'open']:
             #         #                             book.loc[i, 'trade'] = 'sell'
             #
-            #         if len(close_list) == 5:
-            #             close_list.pop(0)
-            #         close_list.append(final_df.loc[i, 'close'])
-            #         max_close = max(close_list)
-            #         min_close = min(close_list)
             #
-            #         if len(volume_list) == 5:
-            #             volume_list.pop(0)
-            #         volume_list.append(final_df.loc[i, 'volumn'])
-            #         max_volume = max(volume_list)
-            #         min_volume = min(volume_list)
-            #
-            #     pre_val = i
-            #
+            # #     if pre_val != '':
+            # #         '''
+            # #         매수
+            # #         '''
+            # #         if 1 < final_df.loc[pre_val, 'bandwidth'] <= 2.5:  # 밴드폭이 1~2 사이
+            # #             if final_df.loc[pre_val, 'MA5'] < final_df.loc[i, 'MA5']:
+            # #                 if final_df.loc[i, 'close'] > final_df.loc[i, 'open']:  # 현재 양봉
+            # #                     if final_df.loc[i, 'close'] > final_df.loc[i, 'upper'] > final_df.loc[
+            # #                         i, 'open']:  # 볼린저 밴드 상향선 돌파
+            # #                         if final_df.loc[i, 'volumn'] > final_df.loc[pre_val, 'volumn'] * 2.9:  # 거래량 급증
+            # #                             book.loc[i, 'trade'] = 'buy'
+            # #
+            # #         # if final_df.loc[pre_val, 'MA5'] > final_df.loc[pre_val, 'MA20']:
+            # #         #     if 1 < final_df.loc[pre_val, 'bandwidth'] <= 2:  # 밴드폭이 1~2 사이
+            # #         #         if final_df.loc[i, 'close'] > final_df.loc[i, 'open']: # 현재 양봉
+            # #         #             # if final_df.loc[i, 'open'] == final_df.loc[i, 'low']: # 저가와 시가가 같을 때
+            # #         #                 if final_df.loc[i, 'close'] > final_df.loc[i, 'upper'] > final_df.loc[i, 'open']: # 볼린저 밴드 상향선 돌파
+            # #         #                     if final_df.loc[i, 'volumn'] > final_df.loc[pre_val, 'volumn'] * 4: # 거래량 급증
+            # #         #                         book.loc[i, 'trade'] = 'buy'
+            # #         #     elif final_df.loc[pre_val, 'bandwidth'] > 2:
+            # #         #         if final_df.loc[pre_val, 'MA10_dpc'] > 0.00075:
+            # #         #             if final_df.loc[i, 'close'] > final_df.loc[i, 'open']: # 현재 양봉
+            # #         #                 # if final_df.loc[i, 'open'] == final_df.loc[i, 'low']: # 저가와 시가가 같을 때
+            # #         #                     if (final_df.loc[i, 'close'] > final_df.loc[i, 'upper'] > final_df.loc[i, 'open']) \
+            # #         #                             or (final_df.loc[i, 'upper'] > final_df.loc[i, 'close'] > final_df.loc[i, 'MA5']): #
+            # #         #                         if final_df.loc[i, 'volumn'] > final_df.loc[pre_val, 'volumn'] * 2: #
+            # #         #                             book.loc[i, 'trade'] = 'buy'
+            # #         # else:
+            # #         #     if final_df.loc[pre_val, 'bandwidth'] > 5:
+            # #         #         if final_df.loc[i, 'close'] > final_df.loc[i, 'open']: # 현재 양봉
+            # #         #             # if final_df.loc[i, 'open'] == final_df.loc[i, 'low']: # 저가와 시가가 같을 때
+            # #         #                 if final_df.loc[i, 'close'] > final_df.loc[i, 'MA20'] > final_df.loc[i, 'open']: # 20일선 상향선 돌파
+            # #         #                     if final_df.loc[i, 'volumn'] > final_df.loc[pre_val, 'volumn'] * 2: #
+            # #         #                         book.loc[i, 'trade'] = 'buy'
+            # #
+
+                if len(close_list) == 5:
+                    close_list.pop(0)
+                close_list.append(final_df.loc[i, 'close'])
+                max_close = max(close_list)
+                min_close = min(close_list)
+
+                if len(volume_list) == 5:
+                    volume_list.pop(0)
+                volume_list.append(final_df.loc[i, 'volume'])
+                max_volume = max(volume_list)
+                min_volume = min(volume_list)
+
+            pre_val = i
+
         book = book[(book['trade'] == 'buy') | (book['trade'] == 'sell')]
 
         # book = book[book.index.strftime('%Y-%m-%d %H:%M') >= '2021-02-25 15:30:00']

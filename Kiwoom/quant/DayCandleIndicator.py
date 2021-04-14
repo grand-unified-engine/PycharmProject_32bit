@@ -1,10 +1,9 @@
-# from datetime import datetime
+from datetime import date
 import pandas as pd
 import copy
-from datetime import datetime
 from Kiwoom.quant.MariaDB import MarketDB
 import FinanceDataReader as fdr
-
+from Kiwoom.quant.CandleShape import candle_info
 
 class DayCandleIndicator:
     def __init__(self, code):
@@ -12,31 +11,49 @@ class DayCandleIndicator:
         # self.day_candle = pd.DataFrame()
         self.mk = MarketDB(code)
 
-        # self.pass_yn = False
-        # end_date = datetime.today().strftime('%Y-%m-%d')
-        end_date = '2021-04-02' #과거꺼 테스트할 때만 사용
-        self.day_candle = self.mk.get_daily_price(code, start_date='2018-01-03', end_date=end_date)
+        start_date = '2018-08-03'
+        self.end_date = date.today()
+        self.str_end_date = self.end_date.strftime('%Y-%m-%d')
+        # self.end_date = '2021-04-02' #과거꺼 테스트할 때만 사용
+        self.day_candle = self.mk.get_daily_price(code, start_date=start_date, end_date=self.str_end_date)
         # self.day_candle = fdr.DataReader(code, '2018-01-03', end_date)
 
-        if len(self.day_candle['Close']) >= 20:
-            self.day_candle['MA5'] = self.day_candle['Close'].rolling(window=5).mean()
-            self.day_candle['MA10'] = self.day_candle['Close'].rolling(window=10).mean()
-            self.day_candle['MA20'] = self.day_candle['Close'].rolling(window=20).mean()
-            # self.day_candle['MA120'] = self.day_candle['Close'].rolling(window=120).mean()
-            # self.day_candle['MA240'] = self.day_candle['Close'].rolling(window=240).mean()
-            self.day_candle['MA10V'] = self.day_candle['Volume'].rolling(window=10).mean()
+        self.color, self.rise_rate, self.body_rate, self.top_tail_rate, self.bottom_tail_rate = candle_info(self.day_candle['Open'].iloc[-2], self.day_candle['High'].iloc[-2], self.day_candle['Low'].iloc[-2], self.day_candle['Close'].iloc[-2])
+
+        # print("color : {}, 상승률: {}, 몸통비율(전체대비): {}, 위꼬리비율: {}, 아래꼬리비율: {}".format(self.color, self.rise_rate, self.body_rate, self.top_tail_rate, self.bottom_tail_rate))
+
+        # if len(self.day_candle['Close']) >= 20:
+        #     self.day_candle['MA5'] = self.day_candle['Close'].rolling(window=5).mean()
+        #     self.day_candle['MA10'] = self.day_candle['Close'].rolling(window=10).mean()
+        #     self.day_candle['MA20'] = self.day_candle['Close'].rolling(window=20).mean()
+        #     # self.day_candle['MA120'] = self.day_candle['Close'].rolling(window=120).mean()
+        #     # self.day_candle['MA240'] = self.day_candle['Close'].rolling(window=240).mean()
+        #     self.day_candle['MA10V'] = self.day_candle['Volume'].rolling(window=10).mean()
 
     '''
     전고점, 전저점 가져오기
     '''
     def get_max_min_close(self, start, end):
         try:
-            copy_df = self.day_candle.copy()[end*-1:start*-1]
+            copy_df = self.day_candle.copy()[end*-1:start*-1] #start만큼 최근일자를 자른다
 
-            max_high = max(copy_df['High']) #Start자르고 end개수 사이에서 max값을 구함
-            max_Close = max(copy_df['Close'])
-            min_close = min(copy_df['Close'])
-            return max_high, max_Close, min_close
+            # max_high = max(copy_df['High']) #Start자르고 end개수 사이에서 max값을 구함
+            # max_Close = max(copy_df['Close'])
+            # min_close = min(copy_df['Close'])
+
+            max_day = copy_df.loc[copy_df['High'] == copy_df['High'][end * -1:].max()]
+
+            # print(max_day)
+
+            maxdayOpen = max_day['Open'][-1]
+            maxdayHigh = max_day['High'][-1]
+            maxdayLow = max_day['Low'][-1]
+            maxdayClose = max_day['Close'][-1]
+
+            # color, rise_rate, body_rate, top_tail_rate, bottom_tail_rate = candle_info(maxdayOpen, maxdayHigh, maxdayLow, maxdayClose)
+
+            return (maxdayClose + maxdayOpen) / 2
+            # return max_high, max_Close, min_close
             # max_high = copy_df.loc[copy_df['High']==copy_df['High'][end*-1:].max()]
             # min_close = copy_df.loc[copy_df['Close'] == copy_df['Close'][end*-1:].min()]
             # return max_high, min_close
