@@ -12,7 +12,7 @@ def candle_info(Open, High, Low, Close):
                 body_rate = ((Close - Open) / (High - Low))
                 top_tail_rate = ((High - Close) / (High - Low))
                 bottom_tail_rate = ((Open - Low) / (High - Low))
-        else:
+        else: # 시가 = 종가 포함
             color = 'blue'
             rise_rate = (1 - (Open / Close)) * 100
             if (High - Low) > 0:

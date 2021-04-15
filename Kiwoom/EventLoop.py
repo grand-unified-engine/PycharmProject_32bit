@@ -1750,7 +1750,7 @@ class EventLoop:
             '''
             매수
             '''
-            if i.strftime('%Y-%m-%d %H:%M:%S') == '2021-04-14 09:00:00':
+            if i.strftime('%Y-%m-%d %H:%M:%S') == '2021-04-15 09:00:00':
                 if final_df.loc[i, 'vol_dpc'] > 68:
                     book.loc[i, 'trade'] = 'buy'
 

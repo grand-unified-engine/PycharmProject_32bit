@@ -34,8 +34,9 @@ class DayCandleAlgorithm():
 
             # print(self.middle, self.dIndicator.day_candle['Low'].iloc[-2])
             if self.dIndicator.color == 'blue': #테스트날
-                if self.dIndicator.day_candle['Close'].iloc[-2] >= self.middle:
-                    self.result_dict.update({"yesterday": True})
+                if self.dIndicator.body_rate > 0.85:
+                    if self.middle * 1.03 >= self.dIndicator.day_candle['Close'].iloc[-2] >= self.middle * 0.97:
+                        self.result_dict.update({"yesterday": True})
 
         # if len(self.dIndicator.day_candle['Close']) >= 20:
         #     if self.dIndicator.day_candle['Close'][-2] > 1000:
