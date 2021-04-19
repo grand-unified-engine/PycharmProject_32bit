@@ -115,7 +115,7 @@ class EventLoop:
     def _condition_ver_slot(self, lRet, sMsg):
         # self.logging.logger.debug("호출 성공 여부 %s, 호출결과 메시지 %s" % (lRet, sMsg))
         condition_name_list = self.api.get_condition_name_list()
-        print("HTS의 조건검색식 이름 가져오기 %s" % condition_name_list)
+        # print("HTS의 조건검색식 이름 가져오기 %s" % condition_name_list)
         # self.logging.logger.debug("HTS의 조건검색식 이름 가져오기 %s" % condition_name_list)
 
         condition_name_list = condition_name_list.split(";")[:-1]

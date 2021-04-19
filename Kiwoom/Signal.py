@@ -173,7 +173,7 @@ class Signal:
 
             cnt += 1
 
-        print("screen_number_setting : {}".format(self.portfolio_stock_dict))
+        # print("screen_number_setting : {}".format(self.portfolio_stock_dict))
 
         #실시간 수신 관련 함수
         # self.call_set_real_reg(self.screen_start_stop_real, ' ', self.real_type.REALTYPE['장시작시간']['장운영구분'], "0")

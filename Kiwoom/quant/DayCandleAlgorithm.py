@@ -14,7 +14,7 @@ class DayCandleAlgorithm():
 
         self.dIndicator = DayCandleIndicator(code)
 
-        if self.yesterday():
+        if self.long_decline():
             print("매수 코드: ", code)
         # start = 2
         # end = 20
@@ -23,14 +23,31 @@ class DayCandleAlgorithm():
         #     # print("전고점: {}, 전저점: {}".format(self.max_high, self.min_close))  # 저점은 종가기준
         #     self.ma20_gradient, self.ma60_gradient = self.dIndicator.get_ma_gradient(interval=5, index=2)
 
+    def long_decline(self):  # 장기하락
+        self.result_dict.update({"long_decline": False})
+        self.result_dict.update({"score": 0})
+
+        # 10일 안 최저점 찾기
+        start = 2
+        end = 10
+        if len(self.dIndicator.day_candle['Close']) >= 60:
+            self.middle, min_close, bandwidth = self.dIndicator.get_max_min_close(start=start, end=end)
+            # print(bandwidth)
+            if self.dIndicator.day_candle['Close'][-60] > min_close: #하락
+                if bandwidth < 14:
+                    self.result_dict.update({"long_decline": True})
+
+        return self.result_dict["long_decline"]
+
     def yesterday(self):  # 종가와 거래량
         self.result_dict.update({"yesterday": False})
         self.result_dict.update({"score": 0})
 
+        # 10일 안 최저점 찾기
         start = 2
-        end = 20
+        end = 10
         if len(self.dIndicator.day_candle['Close']) >= end:
-            self.middle = self.dIndicator.get_max_min_close(start=start, end=end)
+            self.middle, min_close = self.dIndicator.get_max_min_close(start=start, end=end)
 
             # print(self.middle, self.dIndicator.day_candle['Low'].iloc[-2])
             if self.dIndicator.color == 'blue': #테스트날
@@ -147,6 +164,6 @@ class DayCandleAlgorithm():
 
 
 if __name__ == "__main__":
-    main = DayCandleAlgorithm(code='900310')
+    main = DayCandleAlgorithm(code='195990')
 
 
