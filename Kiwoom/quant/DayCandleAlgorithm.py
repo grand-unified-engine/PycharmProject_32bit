@@ -14,8 +14,8 @@ class DayCandleAlgorithm():
 
         self.dIndicator = DayCandleIndicator(code)
 
-        if self.long_decline():
-            print("매수 코드: ", code)
+        # if self.long_decline():
+        #     print("매수 코드: ", code)
         # start = 2
         # end = 20
         # if len(self.dIndicator.day_candle['Close']) >= end:

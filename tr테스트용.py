@@ -62,7 +62,7 @@ if __name__  == "__main__":
     # signal.event_loop.sign_volume_req(code="289080")
     # d_high = DayCandleAlgorithm(code="000440").dIndicator.get_demark()
     # print(d_high)
-    signal.minute_candle_req(code="086890")
+    signal.minute_candle_req(code="037440")
 
     # signal.volume_uprise_req("1", "500", "1") # 거래량 급증 요청
 

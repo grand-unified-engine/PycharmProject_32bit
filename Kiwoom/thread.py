@@ -40,66 +40,35 @@ class SellThread(QThread):
             time.sleep(90)
 
 
-class BuyThreadCon002(QThread): #확률높은돌파매매
-    def __init__(self, signal):
-        QThread.__init__(self)
-        self.signal = signal
-
-    def run(self):
-        i = 0
-        max = len(self.signal.condition_stock)
-        if max > 0:
-            while i == 0:
-                for code in self.signal.condition_stock.keys():
-                    if code not in self.signal.portfolio_stock_dict:
-                        QTest.qWait(3000)
-                        try:
-                            if self.signal.api.server_gubun == "1":
-                                # is_receive_real = 0이면 자꾸 들어오니까 강제로 1로 바꿈 (나중에 테이블 수정하기!!!) 2021-02-18
-                                if code == '066430' or code == '570045' or code == '036630' or code == '093230':
-                                    continue
-                                else:
-                                    self.signal.minute_candle_req(code=code)
-                            else:
-                                self.signal.minute_candle_req(code=code)
-
-                        except:
-                            print("{} buy 코드 오류 발생".format(code))
-
-                i += 1
-                if i == max:
-                    i = 0
-
-
 class BuyThread(QThread):
     def __init__(self, signal):
         QThread.__init__(self)
         self.signal = signal
 
     def run(self):
-        i = 0
-        max = len(self.signal.condition_stock)
-        if max > 0:
-            while i == 0:
-                for code in self.signal.condition_stock.keys():
-                    if code not in self.signal.portfolio_stock_dict:
-                        QTest.qWait(500)
-                        try:
-                            if self.signal.api.server_gubun == "1":
-                                # is_receive_real = 0이면 자꾸 들어오니까 강제로 1로 바꿈 (나중에 테이블 수정하기!!!) 2021-02-18
-                                if code == '066430' or code == '570045' or code == '036630' or code == '093230':
-                                    continue
-                                else:
-                                    MinuteCandleAlgorithm(code, self.signal.real_time_recommand_dict)
-                            else:
-                                MinuteCandleAlgorithm(code, self.signal.real_time_recommand_dict)
+        # i = 0
+        # max = len(self.signal.condition_stock)
+        # if max > 0:
+        #     while i == 0:
+        for code in self.signal.condition_stock.keys():
+            if code not in self.signal.portfolio_stock_dict:
+                QTest.qWait(500)
+                try:
+                    if self.signal.api.server_gubun == "1":
+                        # is_receive_real = 0이면 자꾸 들어오니까 강제로 1로 바꿈 (나중에 테이블 수정하기!!!) 2021-02-18
+                        if code == '066430' or code == '570045' or code == '036630' or code == '093230':
+                            continue
+                        else:
+                            MinuteCandleAlgorithm(code, self.signal.real_time_recommand_dict)
+                    else:
+                        MinuteCandleAlgorithm(code, self.signal.real_time_recommand_dict)
 
-                        except:
-                            print("{} buy 코드 오류 발생".format(code))
+                except:
+                    print("{} buy 코드 오류 발생".format(code))
 
-                i += 1
-                if i == max:
-                    i = 0
+                # i += 1
+                # if i == max:
+                #     i = 0
         # print("끝났다")
 
 

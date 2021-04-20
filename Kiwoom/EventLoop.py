@@ -1750,26 +1750,27 @@ class EventLoop:
             '''
             매수
             '''
-            if i.strftime('%Y-%m-%d %H:%M:%S') == '2021-04-15 09:00:00':
-                if final_df.loc[i, 'vol_dpc'] > 68:
+            if i.strftime('%Y-%m-%d %H:%M:%S') >= '2021-04-20 09:00:00':
+                if final_df.loc[i, 'volume'] > 50000:
                     book.loc[i, 'trade'] = 'buy'
+                    break
 
             '''
             매도
             '''
-            if pre_val != '':
-                if final_df.loc[pre_val, 'MA5'] < final_df.loc[i, 'MA5']:
-                    if max_volume > final_df.loc[i, 'volume'] * 2:
-                        if final_df.loc[i, 'close'] < final_df.loc[i, 'open']:  # 현재 음봉
-                            if final_df.loc[i, 'bandwidth'] > 7.8:
-                                if final_df.loc[pre_val, 'close'] > final_df.loc[pre_val, 'open']:  # 1분전 양봉
-                                    if final_df.loc[pre_val, 'open'] <= final_df.loc[i, 'open'] <= final_df.loc[
-                                        pre_val, 'high']:
-                                        book.loc[i, 'trade'] = 'sell'
-                                else:  # 1분전 음봉
-                                    if final_df.loc[pre_val, 'open'] <= final_df.loc[i, 'open'] <= final_df.loc[
-                                        pre_val, 'high']:
-                                        book.loc[i, 'trade'] = 'sell'
+            # if pre_val != '':
+            #     if final_df.loc[pre_val, 'MA5'] < final_df.loc[i, 'MA5']:
+            #         if max_volume > final_df.loc[i, 'volume'] * 2:
+            #             if final_df.loc[i, 'close'] < final_df.loc[i, 'open']:  # 현재 음봉
+            #                 if final_df.loc[i, 'bandwidth'] > 7.8:
+            #                     if final_df.loc[pre_val, 'close'] > final_df.loc[pre_val, 'open']:  # 1분전 양봉
+            #                         if final_df.loc[pre_val, 'open'] <= final_df.loc[i, 'open'] <= final_df.loc[
+            #                             pre_val, 'high']:
+            #                             book.loc[i, 'trade'] = 'sell'
+            #                     else:  # 1분전 음봉
+            #                         if final_df.loc[pre_val, 'open'] <= final_df.loc[i, 'open'] <= final_df.loc[
+            #                             pre_val, 'high']:
+            #                             book.loc[i, 'trade'] = 'sell'
 
             #         # if round(final_df.loc[i, 'upper']) == round(final_df.loc[i, 'lower']):
             #         #     if final_df.loc[i, 'close'] == max_close:
@@ -1820,19 +1821,19 @@ class EventLoop:
             # #         #                         book.loc[i, 'trade'] = 'buy'
             # #
 
-                if len(close_list) == 5:
-                    close_list.pop(0)
-                close_list.append(final_df.loc[i, 'close'])
-                max_close = max(close_list)
-                min_close = min(close_list)
+                # if len(close_list) == 5:
+                #     close_list.pop(0)
+                # close_list.append(final_df.loc[i, 'close'])
+                # max_close = max(close_list)
+                # min_close = min(close_list)
+                #
+                # if len(volume_list) == 5:
+                #     volume_list.pop(0)
+                # volume_list.append(final_df.loc[i, 'volume'])
+                # max_volume = max(volume_list)
+                # min_volume = min(volume_list)
 
-                if len(volume_list) == 5:
-                    volume_list.pop(0)
-                volume_list.append(final_df.loc[i, 'volume'])
-                max_volume = max(volume_list)
-                min_volume = min(volume_list)
-
-            pre_val = i
+            # pre_val = i
 
         book = book[(book['trade'] == 'buy') | (book['trade'] == 'sell')]
 
