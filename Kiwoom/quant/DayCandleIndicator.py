@@ -22,10 +22,10 @@ class DayCandleIndicator:
 
         # print("color : {}, 상승률: {}, 몸통비율(전체대비): {}, 위꼬리비율: {}, 아래꼬리비율: {}".format(self.color, self.rise_rate, self.body_rate, self.top_tail_rate, self.bottom_tail_rate))
 
-        if len(self.day_candle['Close']) >= 20:
-            n = 20
-            sigma = 2
-            self.bollinger_band(n=n, sigma=sigma)
+        # if len(self.day_candle['Close']) >= 20:
+        #     n = 20
+        #     sigma = 2
+        #     self.bollinger_band(n=n, sigma=sigma)
         #     self.day_candle['MA5'] = self.day_candle['Close'].rolling(window=5).mean()
         #     self.day_candle['MA10'] = self.day_candle['Close'].rolling(window=10).mean()
         #     self.day_candle['MA20'] = self.day_candle['Close'].rolling(window=20).mean()
@@ -42,9 +42,9 @@ class DayCandleIndicator:
         try:
             copy_df = self.day_candle.copy()[end*-1:start*-1] #start만큼 최근일자를 자른다
 
-            # max_high = max(copy_df['High']) #Start자르고 end개수 사이에서 max값을 구함
-            # max_Close = max(copy_df['Close'])
-            # min_close = min(copy_df['Close'])
+            max_high = max(copy_df['High']) #Start자르고 end개수 사이에서 max값을 구함
+            max_close = max(copy_df['Close'])
+            min_close = min(copy_df['Close'])
 
             max_day = copy_df.loc[copy_df['High'] == copy_df['High'][end * -1:].max()]
             min_day = copy_df.loc[copy_df['Close'] == copy_df['Close'][end * -1:].min()]
@@ -57,8 +57,8 @@ class DayCandleIndicator:
 
             # color, rise_rate, body_rate, top_tail_rate, bottom_tail_rate = candle_info(maxdayOpen, maxdayHigh, maxdayLow, maxdayClose)
 
-            return (maxdayClose + maxdayOpen) / 2, min_day['Close'][-1], min_day['bandwidth'][-1]
-            # return max_high, max_Close, min_close
+            # return (maxdayClose + maxdayOpen) / 2, min_day['Close'][-1], min_day['bandwidth'][-1]
+            return max_high, max_close, min_close
             # max_high = copy_df.loc[copy_df['High']==copy_df['High'][end*-1:].max()]
             # min_close = copy_df.loc[copy_df['Close'] == copy_df['Close'][end*-1:].min()]
             # return max_high, min_close

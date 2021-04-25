@@ -16,14 +16,14 @@ class MinuteCandleIndicator:
                         'Accept': 'text/html,application/xhtml+xml,application/xml;' \
                                   'q=0.9,image/webp,*/*;q=0.8'}
 
-        self.df = None
+        self.df = None #분봉 크롤링 DataFrame
 
         # 시분초
         self.t_now = dt.datetime.now()
         self.t_9_22 = self.t_now.replace(hour=9, minute=22, second=0, microsecond=0)
 
         # 요일체크
-        today = dt.date.today()
+        today = dt.date.today() - dt.timedelta(days=2)
         if dt.date.strftime(today, '%A') == 'Sunday':
             today = today - dt.timedelta(days=2)
         elif dt.date.strftime(today, '%A') == 'Saturday':
@@ -114,21 +114,20 @@ class MinuteCandleIndicator:
             self.df['체결시각'] = self.df['체결시각'].apply(lambda x: thistime[:8] + ' ' + x)
 
     '''
-    전고점, 전저점 가져오기
+    이전 거래량 최고점
     '''
-    def get_max_min_close(self, start, end):
+    def get_max_vol_ago(self, now_index):
         try:
-            copy_df = self.minute_df.copy()[:start*-1]
+            copy_df = self.minute_df.copy()[now_index-10:now_index-1]
 
-            max_high = max(copy_df['High'][end*-1:])
-            min_close = min(copy_df['Close'][end*-1:])
-            return max_high, min_close
+            max_vol = max(copy_df['변동량'])
+            return max_vol
             # max_close = copy_df.loc[copy_df['Close']==copy_df['Close'].max()]
             # return max['Close'].iloc[0]
 
         except Exception as ex:
             # self.logging.logger.debug("get_target_price() -> exception! {} ".format(str(ex)))
-            print("get_max_min_close() -> exception! {} ".format(str(ex)))
+            print("get_max_min() -> exception! {} ".format(str(ex)))
             return None
 
     def bollinger_band(self, code, n, sigma): # 볼린저 밴드

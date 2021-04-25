@@ -16,11 +16,11 @@ class DayCandleAlgorithm():
 
         # if self.long_decline():
         #     print("매수 코드: ", code)
-        # start = 2
-        # end = 20
-        # if len(self.dIndicator.day_candle['Close']) >= end:
-        #     self.max_high, self.max_Close, self.min_close = self.dIndicator.get_max_min_close(start=start, end=end)  # 고점일 때는 High값으로(저항선을 의미)
-        #     # print("전고점: {}, 전저점: {}".format(self.max_high, self.min_close))  # 저점은 종가기준
+        start = 1
+        end = 20
+        if len(self.dIndicator.day_candle['Close']) >= end:
+            self.max_high, self.max_close, self.min_close = self.dIndicator.get_max_min_close(start=start, end=end)  # 고점일 때는 High값으로(저항선을 의미)
+            # print("전고점: {}, 전저점: {}".format(self.max_close, self.min_close))  # 저점은 종가기준
         #     self.ma20_gradient, self.ma60_gradient = self.dIndicator.get_ma_gradient(interval=5, index=2)
 
     def long_decline(self):  # 장기하락

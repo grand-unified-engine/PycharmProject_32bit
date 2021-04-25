@@ -140,7 +140,7 @@ class EventLoop:
         # self.logging.logger.debug("화면번호: %s, 종목코드 리스트: %s, 조건식 이름: %s, 조건식 인덱스: %s, 연속조회: %s" % (sScrNo, strCodeList, strConditionName, index, nNext))
 
         code_list = strCodeList.split(";")[:-1]
-        print("코드 종목 : {}".format(code_list)) # 코드번호순으로 나옴
+        # print("코드 종목 : {}".format(code_list)) # 코드번호순으로 나옴
         print("코드 개수 : {}".format(len(code_list)))
 
         for code in code_list:

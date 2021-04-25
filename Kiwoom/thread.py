@@ -54,22 +54,23 @@ class BuyThread(QThread):
             if code not in self.signal.portfolio_stock_dict:
                 QTest.qWait(500)
                 try:
-                    if self.signal.api.server_gubun == "1":
+                    if self.signal.api.server_gubun == "1": # 모의서버
                         # is_receive_real = 0이면 자꾸 들어오니까 강제로 1로 바꿈 (나중에 테이블 수정하기!!!) 2021-02-18
                         if code == '066430' or code == '570045' or code == '036630' or code == '093230':
                             continue
                         else:
-                            MinuteCandleAlgorithm(code, self.signal.real_time_recommand_dict)
+                            code_name = self.signal.api.get_master_code_name(code)
+                            MinuteCandleAlgorithm(code, code_name)
                     else:
-                        MinuteCandleAlgorithm(code, self.signal.real_time_recommand_dict)
-
+                        code_name = self.signal.api.get_master_code_name(code)
+                        MinuteCandleAlgorithm(code, code_name)
                 except:
                     print("{} buy 코드 오류 발생".format(code))
 
                 # i += 1
                 # if i == max:
                 #     i = 0
-        # print("끝났다")
+        print("끝났다")
 
 
 class RealTimeScreenNumbering(QThread):

@@ -7,24 +7,24 @@ import datetime as dt
 from PyQt5.QtTest import QTest
 
 class MinuteCandleAlgorithm:
-    def __init__(self, code, real_time_recommand_dict):
+    def __init__(self, code, code_name):
 
         self.mIndicator = None
 
-        # self.dayAlgo = DayCandleAlgorithm(code)
+        self.dayAlgo = DayCandleAlgorithm(code)
 
         # self.assist_dict = dict()
         #
         # self.real_time_recommand_dict = real_time_recommand_dict
         #
         # 요일체크
-        today = dt.date.today()
+        today = dt.date.today() - dt.timedelta(days=2)
         if dt.date.strftime(today, '%A') == 'Sunday':
             today = today - dt.timedelta(days=2)
         elif dt.date.strftime(today, '%A') == 'Saturday':
             today = today - dt.timedelta(days=1)
 
-        self.buy210420_037440(code=code, today="".join(str(today).split("-")))
+        self.buy210424_238090(code=code, code_name=code_name, today="".join(str(today).split("-")))
 
         # print("code: {}, ma20_gradient: {}, ma60_gradient: {}".format(code, self.dayAlgo.ma20_gradient,
         #                                                               self.dayAlgo.ma60_gradient))
@@ -34,6 +34,17 @@ class MinuteCandleAlgorithm:
         #     self.buy210312_189980(code=code, today="".join(str(today).split("-")))
         # elif self.dayAlgo.ma20_gradient < 0.12:
         #     self.buy210312_068290(code=code, today="".join(str(today).split("-")))
+
+    def buy210424_238090(self, code, code_name, today):
+            self.mIndicator = MinuteCandleIndicator(code)
+            for i, index in enumerate(self.mIndicator.minute_df.index):
+                if self.mIndicator.minute_df['체결시각'][index].split(" ")[0] == today:
+                    if self.mIndicator.minute_df['체결가'][index] > (self.dayAlgo.max_close * 1.02):
+                        if self.mIndicator.minute_df['변동량'][index] > self.mIndicator.get_max_vol_ago(i): #거래량이 최근 max값보다 높을 때
+                            if self.mIndicator.minute_df['체결가'][index] > self.mIndicator.minute_df['체결가'][index-1]:
+                                print("종목: {}, 종목명: {}. 체결시각: {}".format(code, code_name, self.mIndicator.minute_df['체결시각'][index]))
+                                break
+
 
     def buy210420_037440(self, code, today): # 거래량 분봉기준 5만 이상
             self.mIndicator = MinuteCandleIndicator(code)

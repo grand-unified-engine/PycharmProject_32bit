@@ -35,7 +35,7 @@ if __name__  == "__main__":
     # sThread = SellThread(signal)
     # sThread.start()
 
-    QTest.qWait(2000)  # 1초
+    QTest.qWait(1000)  # 1초
     bThread = BuyThread(signal)
     bThread.start()
 
