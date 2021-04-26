@@ -23,7 +23,7 @@ class MinuteCandleIndicator:
         self.t_9_22 = self.t_now.replace(hour=9, minute=22, second=0, microsecond=0)
 
         # 요일체크
-        today = dt.date.today() - dt.timedelta(days=2)
+        today = dt.date.today()
         if dt.date.strftime(today, '%A') == 'Sunday':
             today = today - dt.timedelta(days=2)
         elif dt.date.strftime(today, '%A') == 'Saturday':
@@ -55,16 +55,16 @@ class MinuteCandleIndicator:
             # 1: 체결시각, 2:체결가, 3:전일비, 4:매도, 5:매수, 6:거래량, 7:변동량
             # self.minute_df['MA5'] = self.minute_df['체결가'].rolling(window=5).mean()  # 8
             # self.minute_df['MA10'] = self.minute_df['체결가'].rolling(window=10).mean() # 9
-            # self.minute_df['MA20'] = self.minute_df['체결가'].rolling(window=20).mean()  # 10
+            self.minute_df['MA20'] = self.minute_df['체결가'].rolling(window=20).mean()  # 10
             # self.minute_df['average'] = self.minute_df['체결가'].rolling(window=10).sum() / 10 # 11
             # self.minute_df['max10'] = self.minute_df['체결가'].rolling(window=10).max()   # 12
             # self.minute_df['min10'] = self.minute_df['체결가'].rolling(window=10).min()  # 13
             # self.minute_df['max20'] = self.minute_df['체결가'].rolling(window=20).max()   # 14
             # self.minute_df['min20'] = self.minute_df['체결가'].rolling(window=20).min()  # 15
-            #
-            # n = 20
-            # sigma = 2
-            # self.bollinger_band(code=code, n=n, sigma=sigma)
+
+            n = 20
+            sigma = 2
+            self.bollinger_band(code=code, n=n, sigma=sigma)
 
             self.minute_df.reset_index(inplace=True)
             self.minute_df.drop(['index'], axis=1, inplace=True)  # inplace는 데이터프레임을 그대로 사용하고자 할 때
