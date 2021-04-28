@@ -143,7 +143,7 @@ class EventLoop:
         # # print("코드 종목 : {}".format(code_list)) # 코드번호순으로 나옴
         # print("코드 개수 : {}".format(len(code_list)))
 
-        code_list = ['300080']
+        code_list = ['109820']
 
         for code in code_list:
             self.condition_stock.update({code: {}})

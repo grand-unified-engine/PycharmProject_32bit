@@ -16,7 +16,7 @@ class DayCandleIndicator:
         self.str_end_date = self.end_date.strftime('%Y-%m-%d')
         # self.end_date = '2021-04-02' #과거꺼 테스트할 때만 사용
         self.day_candle = self.mk.get_daily_price(code, start_date=start_date, end_date=self.str_end_date)
-        # self.day_candle = fdr.DataReader(code, '2018-01-03', end_date)
+        # self.day_candle = fdr.DataReader(code, start_date, self.end_date)
 
         # self.color, self.rise_rate, self.body_rate, self.top_tail_rate, self.bottom_tail_rate = candle_info(self.day_candle['Open'].iloc[-2], self.day_candle['High'].iloc[-2], self.day_candle['Low'].iloc[-2], self.day_candle['Close'].iloc[-2])
 
