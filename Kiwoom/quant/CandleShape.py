@@ -7,7 +7,7 @@ def candle_info(Open, High, Low, Close):
         bottom_tail_rate = 0.0
         if (Close - Open) > 0: # 양봉일 때
             color = 'red'
-            rise_rate = (1 - (Close / Open)) * 100
+            rise_rate = ((Close / Open) - 1) * 100
             if (High - Low) > 0:
                 body_rate = ((Close - Open) / (High - Low))
                 top_tail_rate = ((High - Close) / (High - Low))
@@ -20,7 +20,7 @@ def candle_info(Open, High, Low, Close):
                 top_tail_rate = ((High - Open) / (High - Low))
                 bottom_tail_rate = ((Close - Low) / (High - Low))
 
-        return color, rise_rate, body_rate, top_tail_rate, bottom_tail_rate
+        return {"color": color, "상승률": rise_rate, "몸통비율(전체대비)": body_rate, "위꼬리비율": top_tail_rate, "아래꼬리비율": bottom_tail_rate}
     except Exception as ex:
         print("candle_info() -> exception! {} ".format(str(ex)))
         return None

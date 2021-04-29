@@ -5,6 +5,7 @@ from Kiwoom.quant.MariaDB import MarketDB
 import FinanceDataReader as fdr
 from Kiwoom.quant.CandleShape import candle_info
 
+
 class DayCandleIndicator:
     def __init__(self, code):
 
@@ -18,9 +19,10 @@ class DayCandleIndicator:
         self.day_candle = self.mk.get_daily_price(code, start_date=start_date, end_date=self.str_end_date)
         # self.day_candle = fdr.DataReader(code, start_date, self.end_date)
 
-        # self.color, self.rise_rate, self.body_rate, self.top_tail_rate, self.bottom_tail_rate = candle_info(self.day_candle['Open'].iloc[-2], self.day_candle['High'].iloc[-2], self.day_candle['Low'].iloc[-2], self.day_candle['Close'].iloc[-2])
+        self.d1_candle = candle_info(self.day_candle['Open'].iloc[-2], self.day_candle['High'].iloc[-2], self.day_candle['Low'].iloc[-2], self.day_candle['Close'].iloc[-2])
+        self.d1_candle.update({"종가": self.day_candle['Close'].iloc[-2]})
 
-        # print("color : {}, 상승률: {}, 몸통비율(전체대비): {}, 위꼬리비율: {}, 아래꼬리비율: {}".format(self.color, self.rise_rate, self.body_rate, self.top_tail_rate, self.bottom_tail_rate))
+        # print("D-1 캔들 정보: {}".format(self.d1_candle))
 
         if self.day_candle.empty is False:  # 비어 있지 않으면
             self.highlimit = self.day_candle['Close'].iloc[-2] * 1.298 # 상한가

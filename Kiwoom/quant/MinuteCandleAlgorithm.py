@@ -36,21 +36,22 @@ class MinuteCandleAlgorithm:
         #     self.buy210312_068290(code=code, today="".join(str(today).split("-")))
 
     def buy210424_238090(self, code, code_name, today):
-            self.mIndicator = MinuteCandleIndicator(code)
-            for i, index in enumerate(self.mIndicator.minute_df.index):
-                if self.mIndicator.minute_df['체결시각'][index].split(" ")[0] == today: # 실제로 돌릴 때는 주석처리?
+        self.mIndicator = MinuteCandleIndicator(code)
+        buy_timing = ''
+        buy_index = 0
+        for i, index in enumerate(self.mIndicator.minute_df.index):
+            if self.mIndicator.minute_df['체결시각'][index].split(" ")[0] == today: # 실제로 돌릴 때는 주석처리?
+                if self.dayAlgo.max_close != self.dayAlgo.dIndicator.d1_candle["종가"]: #전고점이 D-1종가가 아닐 때만
                     if self.mIndicator.minute_df['체결가'][index] > (self.dayAlgo.max_close * 1.02):
                         if self.mIndicator.minute_df['변동량'][index] > self.mIndicator.get_max_vol_ago(i): #거래량이 최근 max값보다 높을 때
                             if self.mIndicator.minute_df['체결가'][index] > self.mIndicator.minute_df['체결가'][index-1]:
-                                self.buy_timing = self.mIndicator.minute_df['체결시각'][index]
+                                buy_timing = self.mIndicator.minute_df['체결시각'][index]
+                                buy_index = index
                                 print("종목코드: {}, 종목명: {}. 매수가: {}, 체결시각: {}".format(code, code_name, self.mIndicator.minute_df['체결가'][index], self.mIndicator.minute_df['체결시각'][index]))
                                 break
-            self.shoulder(code=code, code_name=code_name, buy_time=self.mIndicator.minute_df['체결시각'][index],
-                                                                          buy_price=self.mIndicator.minute_df['체결가'][index])
-                # if self.mIndicator.minute_df['체결시각'][index] > self.buy_timing:
-
-
-
+        if buy_timing != '':
+            self.percent4(code=code, code_name=code_name, buy_time=self.mIndicator.minute_df['체결시각'][buy_index],
+                                                                          buy_price=self.mIndicator.minute_df['체결가'][buy_index])
 
     def buy210420_037440(self, code, today): # 거래량 분봉기준 5만 이상
             self.mIndicator = MinuteCandleIndicator(code)
@@ -168,6 +169,17 @@ class MinuteCandleAlgorithm:
                             print("수익률: {}%".format(
                                 (self.mIndicator.minute_df['체결가'][index] - buy_price) / buy_price * 100))
                             break
+
+    def percent4(self, code, code_name, buy_time, buy_price): # 4%만 먹기
+        for i, index in enumerate(self.mIndicator.minute_df.index):
+            if self.mIndicator.minute_df['체결시각'][index] > buy_time:  # 매수시간 이후(테스트용)
+                if (self.mIndicator.minute_df['체결가'][index] - buy_price) / buy_price * 100 > 4:
+                    print("종목코드: {}, 종목명: {}, 매도가: {}, 시간: {} 팔 타이밍, bandwidth: {}".format(code, code_name, self.mIndicator.minute_df[
+                        '체결가'][index], self.mIndicator.minute_df['체결시각'][index], self.mIndicator.minute_df[
+                                                                                    'bandwidth'][index]))
+                    print("수익률: {}%".format(
+                        (self.mIndicator.minute_df['체결가'][index] - buy_price) / buy_price * 100))
+                    break
 
 if __name__ == "__main__":
     # start = timeit.default_timer()
